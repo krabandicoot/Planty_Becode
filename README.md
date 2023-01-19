@@ -12,16 +12,10 @@ This project has been elaborate by the BeCode.org training.
 ```npm install npm@latest -g```
 ## Installation
 Clone repo :
-```git clone git@github.com:krabandicoot/Planty_Becode.git ```
+- ```git clone git@github.com:krabandicoot/Planty_Becode.git ```
 Install npm package : 
-```cd ./app/client && npm install```
-```cd ./app/server && npm install```
-Add the node modules : 
-```npm i express mongoose nodemon dotenv```
-- Express will be used for the middleware to create various CRUD endpoints.
-- Mongoose for managing data in MongoDB using various queries.
-- Nodemon to restart our server every time we save our file.
-- Dotenv to manage a .env file.
+- ```cd ./app/client && npm install```
+- ```cd ./app/server && npm install```
 
 ## Walkthrough
 ....
