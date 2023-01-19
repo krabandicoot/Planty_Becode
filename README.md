@@ -1,2 +1,29 @@
-# Planty_Becode
-WebApp consisting of a REST-like API (back-end) and a React SPA (front-end). This WebApp is an online IDLE Game, based in Liège.
+# LeafApp project
+
+This project has been elaborate by the BeCode.org training. 
+
+## Project description
+>..
+
+## Table of content
+..
+## How to install and run the project 
+Add the node modules : 
+```npm i express mongoose nodemon dotenv```
+- Express will be used for the middleware to create various CRUD endpoints.
+- Mongoose for managing data in MongoDB using various queries.
+- Nodemon to restart our server every time we save our file.
+- Dotenv to manage a .env file.
+
+## Walkthrough
+....
+## Collaborators 
+- [Jade Muratet](https://www.linkedin.com/in/jademuratet/) | Frontend|[GitHub](https://github.com/TreshMiralissa)
+- [Lisa Mazzarisi](https://www.linkedin.com/in/lisa-mazzarisi/) | Frontend|[GitHub](hhttps://github.com/lilouMazzarisi)
+- [Danaé Grosjean](linkedin.com/in/danae-grosjean/) | Backend |[GitHub](https://github.com/Da-nae)
+- [Khadja Paux](https://www.linkedin.com/in/khadja-paux/) | Backend |[GitHub](https://github.com/krabandicoot)
+
+## Credits
+
+Database from [Belgium OpenData Initiative website](https://data.gov.be/en)
+## License
