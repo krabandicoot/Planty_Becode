@@ -7,7 +7,15 @@ This project has been elaborate by the BeCode.org training.
 
 ## Table of content
 ..
-## How to install and run the project 
+## Prerequisites
+- npm 
+```npm install npm@latest -g```
+## Installation
+Clone repo :
+```git clone git@github.com:krabandicoot/Planty_Becode.git ```
+Install npm package : 
+```cd ./app/client && npm install```
+```cd ./app/server && npm install```
 Add the node modules : 
 ```npm i express mongoose nodemon dotenv```
 - Express will be used for the middleware to create various CRUD endpoints.
