@@ -1,4 +1,22 @@
 {
+  "name": "planty-rest-api",
+  "version": "1.0.0",
+  "description": "A web-based game of conquests in Liege",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krabandicoot/Planty_Becode.git"
+  },
+  "author": "Da-nae, krabandicoot",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krabandicoot/Planty_Becode/issues"
+  },
+  "homepage": "https://github.com/krabandicoot/Planty_Becode#readme",
+  "scripts": {
+    "start": "nodemon ./server/server.js"
+  },
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
