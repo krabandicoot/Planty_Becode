@@ -1,11 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,jsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        PineTree: "#1B1B02",
+        DarkSpringGreen: "#007F43",
+        GreenPantum: "#54A543",
+        YellowGreen: "##8BCC3A",
+        GreenYellow: "#9FCA56",
+        Crayola: "##B2E186",
+        SmokyBlack: "#121212",
+        Magnolia: "#ECE8EF",
+      },
+      backgroundImage: {
+        body: "url(' ')",
+        overlay: "url(' ')",
+      },
+    },
   },
   plugins: [],
-}
+};
