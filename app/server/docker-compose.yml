@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:5.0.2
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - $DB_USER
+      - $DB_PASSWORD
+    ports:
+      - $DB_PORT
+    volumes:
+      - db:/config
+  app:
+    depends_on:
+      - mongodb
+    build: ./
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - $NODE_DOCKER_PORT
+    environment:
+      - $DB_HOST
+      - $DB_USER
+      - $DB_PASSWORD
+      - $DB_NAME
+    stdin_open: true
+    tty: true
+
+volumes:
+  db:
