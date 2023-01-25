@@ -1,9 +1,17 @@
-export function LandinPage() {
+export function LandingPage() {
   return (
     <div>
       <div className="flex flex-col">
-        <button>Login</button>
-        <button>Sign Up</button>
+        <button>
+          <a href="/login">
+            Login
+          </a>
+        </button>
+        <button>
+          <a href="/signup">
+            Sign Up
+          </a>
+        </button>
       </div>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
