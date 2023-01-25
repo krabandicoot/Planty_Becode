@@ -9,7 +9,7 @@ export default function App() {
   return (
     <div>
       <Title/>
-      {/* <LandinPage/> */}
+      <LandinPage/>
     </div>
   );
 }

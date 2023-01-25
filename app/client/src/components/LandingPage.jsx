@@ -1,7 +1,7 @@
 export function LandinPage() {
   return (
     <div>
-      <div className="flex flex-col m-5 relative">
+      <div className="flex flex-col m-10">
         <button>Login</button>
         <button>Sign Up</button>
       </div>
