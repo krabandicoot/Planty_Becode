@@ -1,14 +1,15 @@
 import "./App.css";
+import Lottie from "lottie-react";
+import animationData from './lotties/logo-Planty.json';
 import { LandinPage } from "./components/LandingPage";
 import { Title } from "./components/Title";
 
-function App() {
+export default function App() {
+  
   return (
     <div>
-      <Title />
-      <LandinPage />
+      <Title/>
+      {/* <LandinPage/> */}
     </div>
   );
 }
-
-export default App;
