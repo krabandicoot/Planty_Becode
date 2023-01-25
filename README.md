@@ -10,6 +10,8 @@ This project has been elaborate by the BeCode.org training.
 ## Prerequisites
 - npm 
 ```npm install npm@latest -g```
+
+Server wise :
 - mongoose
 - nodemon
 - express
