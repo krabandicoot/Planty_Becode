@@ -8,7 +8,8 @@ import {
 } from "react-router-dom";
 
 
-function App() {
+export default function App() {
+
   return (
     <div>
       <BrowserRouter>
@@ -21,5 +22,3 @@ function App() {
     </div >
   );
 }
-
-export default App;
