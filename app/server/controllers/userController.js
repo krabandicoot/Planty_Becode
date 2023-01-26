@@ -11,14 +11,14 @@ const createToken = (_id )=>{//id =  is part of the payload of the token
 
 //login user 
 const signInUser = async(req, res) => {
-    const {email, password} = req.body;
+    const {username, password} = req.body;
     
     try{
-        const user = await User.login(email, password);
+        const user = await User.signin(username, password);
 
         //create token
         const signInToken = createToken(user._id); 
-        res.status(200).json({email, signInToken});
+        res.status(200).json({username, signInToken});
     }catch(error){
         res.status(400).json({error: error.message});
     }
@@ -38,4 +38,8 @@ const signUpUser = async(req, res) => {
     }
 }
 
-module.exports = { signInUser, signUpUser};
+// const signOutUser = async(req, res)=>{
+//     const {username, password} = req.body
+// }
+
+module.exports = { signInUser, signUpUser, signOutUser};

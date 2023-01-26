@@ -68,20 +68,22 @@ userSchema.statics.signup = async function(username, email, password, color){
     return user;
 }
 
-userSchema.statics.signin = async function(email, password){
-    if(!email || !password){
+userSchema.statics.signin = async function(username, password){
+    if(!username || !password ){
         throw Error('All fields need to be filled');
     }
 
-    const user = await this.findOne({email});
+    const user = await this.findOne({username});
     if(!user){
-        throw Error('Incorrect email');
+        throw Error(`This username doesn't exist`);
     }
 
     const match = await bcrypt.compare(password, user.password);
     if(!match){
-        throw Error('Incorrect password');
+        throw Error('Wrong password');
     }
     return user;
 }
+
+// userSchema.statics.signout = async function(username, password){}
 module.exports = mongoose.model('User',userSchema);
