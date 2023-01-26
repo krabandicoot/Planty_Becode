@@ -24,8 +24,8 @@ const playerSchema = new Schema({
     },
     color:{
         type:String, 
-        minLength: 3, 
-        maxLength: 6,
+        minLength: 4,
+        maxLength: 7,
         required: true,
     },
     bio:{
@@ -35,6 +35,10 @@ const playerSchema = new Schema({
     leafs:{
         type: Number
     },
-    // trees:Trees
-});
+    // trees:Trees (link to the schema, need to import the model
+}, {timestamps: true});
 
+
+
+
+module.exports = mongoose.model('Player',playerSchema);
