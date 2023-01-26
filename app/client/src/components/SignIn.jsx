@@ -11,9 +11,10 @@ export function SignIn(setLoginUser) {
     })
 
     const handleChange = e => {
+        const { username, value } = e.target
         setUser({
             ...user,
-            [e.target.username]: e.target.value
+            [username]: value
         })
     }
 
@@ -34,23 +35,44 @@ export function SignIn(setLoginUser) {
             <form method="post" autoComplete="off">
                 <div className="form__username">
                     <label>Username</label>
-                    <input type="text" placeholder="Enter Username" name="username" id="username" value={user.username} onChange={handleChange} required />
+                    <input
+                        type="text"
+                        placeholder="Enter Username"
+                        name="username" id="username"
+                        value={user.username}
+                        onChange={handleChange}
+                        required
+                    />
 
                 </div>
 
                 <div className="form__password">
                     <label>Password</label>
-                    <input type="password" placeholder="Enter Password" name="password" value={user.password} onChange={handleChange} required />
+                    <input
+                        type="password"
+                        placeholder="Enter Password"
+                        name="password"
+                        value={user.password}
+                        onChange={handleChange}
+                        required
+                    />
 
                 </div>
 
-                <button type="submit" onClick={login}>Login</button>
+                <button
+                    type="submit"
+                    onClick={login}>Login</button>
 
-                <input type="checkbox" checked="checked" name="rememberMe" id="rememberMe" />
+                <input
+                    type="checkbox"
+                    checked="checked"
+                    name="rememberMe"
+                    id="rememberMe"
+                />
                 <label>Remember me</label>
             </form>
             <div className="flex items-center justify-center mt-6">
-                <a href="signup" onClick={navigateTo("/")}>
+                <a href="signup" onClick={navigateTo("/map")}>
                     <span className="ml-2">
                         You don't have an account?
                     </span>

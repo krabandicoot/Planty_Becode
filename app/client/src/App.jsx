@@ -2,6 +2,7 @@ import { LandingPage } from "./components/LandingPage";
 import { Title } from "./components/Title";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
+import { Map } from "./components/Map";
 import {
   BrowserRouter, Routes, Route
 } from "react-router-dom";
@@ -9,9 +10,7 @@ import { useState } from "react";
 
 
 export default function App() {
-  const [user, setLoginUser] = useState({
-
-  })
+  const [user, setLoginUser] = useState({})
   return (
     <div className="min-h-screen">
       <BrowserRouter>
@@ -19,6 +18,7 @@ export default function App() {
           <Route path="/" element={<><Title /><LandingPage /></>} />
           <Route path="/signin" element={<><Title /><SignIn setLoginUser={setLoginUser} /></>} />
           <Route path="/signup" element={<><Title /><SignUp /></>} />
+          <Route path="/map" element={<Map />} />
         </Routes>
       </BrowserRouter >
     </div >
