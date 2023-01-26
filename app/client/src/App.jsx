@@ -1,7 +1,7 @@
 import "./App.css";
 import { LandingPage } from "./components/LandingPage";
 import { Title } from "./components/Title";
-import { Login } from "./components/Login";
+import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
 import {
   BrowserRouter, Routes, Route
@@ -15,7 +15,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<><Title /><LandingPage /></>} />
-          <Route path="/login" element={<><Title /><Login /></>} />
+          <Route path="/signin" element={<><Title /><SignIn /></>} />
           <Route path="/signup" element={<><Title /><SignUp /></>} />
         </Routes>
       </BrowserRouter >

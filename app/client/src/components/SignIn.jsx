@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function Login() {
+export function SignIn() {
 
     async function loginUser(credentials) {
         return fetch('localhost:8080/api/user/signin', {
