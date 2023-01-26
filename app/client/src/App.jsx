@@ -11,7 +11,7 @@ import {
 export default function App() {
 
   return (
-    <div>
+    <div className="min-h-screen">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<><Title /><LandingPage /></>} />
