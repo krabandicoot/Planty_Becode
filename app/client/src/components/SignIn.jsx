@@ -1,46 +1,61 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"
 
-export function SignIn() {
 
+export function SignIn(setLoginUser) {
+    const navigateTo = useNavigate()
+    const [user, setUser] = useState({
+        username: "",
+        password: ""
+    })
 
-    // fetch data from API
-    async function loginUser(credentials) {
-        return fetch('localhost:8080/api/user/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(credentials)
+    const handleChange = e => {
+        setUser({
+            ...user,
+            [e.target.username]: e.target.value
         })
-            .then(data => data.json())
     }
 
+    // fetch data from API
+    const login = () => {
+        axios.post("http://localhost:8080/api/user/signin", user)
+            .then(res => {
+                alert(res.data.message)
+                setLoginUser(res.data.user)
+                navigateTo("/map")
+            })
+    }
 
-
-    // Remember me Checkbox
-
+    // TODO Remember me Checkbox
 
     return (
         <div className="form__container">
-            <form method="post">
+            <form method="post" autoComplete="off">
                 <div className="form__username">
                     <label>Username</label>
-                    <input type="text" placeholder="Enter Username" name="username" id="username" required />
+                    <input type="text" placeholder="Enter Username" name="username" id="username" value={user.username} onChange={handleChange} required />
 
                 </div>
 
                 <div className="form__password">
                     <label>Password</label>
-                    <input type="password" placeholder="Enter Password" name="password" required />
+                    <input type="password" placeholder="Enter Password" name="password" value={user.password} onChange={handleChange} required />
 
                 </div>
 
-                <button type="submit">Login</button>
+                <button type="submit" onClick={login}>Login</button>
 
                 <input type="checkbox" checked="checked" name="rememberMe" id="rememberMe" />
                 <label>Remember me</label>
             </form>
+            <div className="flex items-center justify-center mt-6">
+                <a href="signup" onClick={navigateTo("/")}>
+                    <span className="ml-2">
+                        You don't have an account?
+                    </span>
+                </a>
+            </div>
         </div>
     )
 }
