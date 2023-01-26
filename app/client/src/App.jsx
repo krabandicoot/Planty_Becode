@@ -1,4 +1,3 @@
-import "./App.css";
 import { LandingPage } from "./components/LandingPage";
 import { Title } from "./components/Title";
 import { SignIn } from "./components/SignIn";

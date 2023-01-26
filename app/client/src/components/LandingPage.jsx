@@ -3,7 +3,7 @@ export function LandingPage() {
     <div>
       <div className="flex flex-col">
         <button>
-          <a href="/login">
+          <a href="/signin">
             Login
           </a>
         </button>
