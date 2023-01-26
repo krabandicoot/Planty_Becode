@@ -30,7 +30,7 @@ Install npm package :
 ....
 ## Collaborators 
 - [Jade Muratet](https://www.linkedin.com/in/jademuratet/) | Frontend|[GitHub](https://github.com/TreshMiralissa)
-- [Lisa Mazzarisi](https://www.linkedin.com/in/lisa-mazzarisi/) | Frontend|[GitHub](hhttps://github.com/lilouMazzarisi)
+- [Lisa Mazzarisi](https://www.linkedin.com/in/lisa-mazzarisi/) | Frontend|[GitHub](https://github.com/lilouMazzarisi)
 - [Danaé Grosjean](linkedin.com/in/danae-grosjean/) | Backend |[GitHub](https://github.com/Da-nae)
 - [Khadja Paux](https://www.linkedin.com/in/khadja-paux/) | Backend |[GitHub](https://github.com/krabandicoot)
 
