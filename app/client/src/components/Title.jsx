@@ -10,15 +10,6 @@ export function Title() {
         <span className="block relative left-32">Plant</span>
         <Lottie className="container__title-logo absolute w-[190px] top-[15px] left-[145px]" animationData={animationData} loop={false} />
       </h1>
-
-
-      {/*
-      <Lottie className="container__title-logo absolute h-[75px] right-[18px] top-[-34px]" animationData={animationData}
-        loop={false}/>
-      */}
-
-
-
     </div>
   );
 }
