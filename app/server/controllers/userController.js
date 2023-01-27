@@ -5,7 +5,7 @@ require ('dotenv').config();
 const TOKEN = process.env.NODE_TOKEN;
 
 //function to generate a token in the signin and signup user 
-const createToken = (_id )=>{//id =  is part of the payload of the token 
+const createToken = (_id ) => {//id =  is part of the payload of the token 
     return jwt.sign({_id},TOKEN, {expiresIn : '3d'});//the second is the secret string only know by the server, the third means the user stays logged in for 3 days before the token expires
 }
 
@@ -23,7 +23,7 @@ const signInUser = async(req, res) => {
         res.status(400).json({error: error.message});
     }
 }
-//signup user 
+//Sign up user 
 const signUpUser = async(req, res) => {
     const {username,email, password,color} = req.body;
 
@@ -37,9 +37,9 @@ const signUpUser = async(req, res) => {
         res.status(400).json({error: error.message});
     }
 }
-
+//Sign out user
 // const signOutUser = async(req, res)=>{
-//     const {username, password} = req.body
+//     res.cookie('jwt', 'expiredtoken');
 // }
 
-module.exports = { signInUser, signUpUser, signOutUser};
+module.exports = { signInUser, signUpUser};
