@@ -22,6 +22,15 @@ export function SignUp () {
         [name]:value
         })
     }
+
+    const validationPW = () =>{
+        if (password !== confirmPassword){
+            alert("Different password !")
+        } else {
+            return true
+        }
+
+    }
 //register function 
     // const register = ()=>{
     //     const {name,email,password} = user
@@ -35,7 +44,7 @@ export function SignUp () {
 
         return (
             <div className="signup__container-form relative -z-11 bg-zinc-200/[0.2] p-[20px] rounded-xl">
-            <form method="POST" className="signup__form" onSubmit={handleChange}>
+            <form method="POST" className="signup__form" onSubmit={validationPW}>
     {/* username */}
                 < div className="signup__form-username relative z-0 w-full mb-6 group">
                     <input 
@@ -84,6 +93,7 @@ export function SignUp () {
                     <label 
                     htmlFor="floating_password" 
                     className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Choose password</label>
+    {/* button visibility password */}                    
                     <button onClick={()=> setPasswordVisible(! passwordVisible)} className="absolute top-0 right-0">{eyeIcon}</button>
                     
                 </div>
@@ -103,7 +113,9 @@ export function SignUp () {
                     className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
                 </div>
     {/* button sign up */}
-                <button type="submit" className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Sign Up</button>
+                <button 
+                type="submit" 
+                className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Sign Up</button>
             </form>
             </div>
         )
