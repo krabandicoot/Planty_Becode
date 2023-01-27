@@ -15,9 +15,6 @@ const playerSchema = new Schema({
     // trees:Trees (link to the schema, need to import the model
 }, {timestamps: true});
 
-
-
-
 // playerSchema.aggregate.lookup({ from: 'users', localField: 'username_id', foreignField: '_id', as: 'username_id' });
 
 

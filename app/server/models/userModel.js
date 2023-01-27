@@ -35,22 +35,9 @@ const userSchema = new Schema({
 Player.aggregate([{
     $lookup:{
         from: "users",
-        localField: "username_id",
-        foreignField: "_id",
-        as: "username_id"
-    }},
-    {
-        $match: {
-            joined: []
-        }
-}]);
-
-Player.aggregate([{
-    $lookup:{
-        from: "users",
-        localField: "username_id",
-        foreignField: "_id",
-        as: "username_id"
+        localField: "color",
+        foreignField: "color",
+        as: "color"
     }},
     {
         $match: {
