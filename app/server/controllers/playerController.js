@@ -1,4 +1,4 @@
-const User = require('../models/playerModel');
+const Player = require('../models/playerModel')
 
 // Get all info of a player
 const getAccount = async(req,res) => {

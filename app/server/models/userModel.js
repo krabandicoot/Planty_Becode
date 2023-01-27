@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+const Player = require('./playerModel')
 
 const Schema = mongoose.Schema;
 
@@ -15,6 +16,19 @@ const userSchema = new Schema({
         required:true,
     }
 });
+
+Player.aggregate([{
+    $lookup:{
+        from: "users",
+        localField: "username_id",
+        foreignField: "_id",
+        as: "username_id"
+    }},
+    {
+        $match: {
+            joined: []
+        }
+}]);
 
 userSchema.statics.signup = async function(email, password){
 
@@ -56,4 +70,5 @@ userSchema.statics.login = async function(email, password){
     }
     return user;
 }
+
 module.exports = mongoose.model('User',userSchema);
