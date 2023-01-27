@@ -1,19 +1,17 @@
+require ('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const routes = require('./routes/routes');
-require ('dotenv').config();
 
-//transter Express content in a variable called app
+const userRoutes = require('./routes/user');
+
 const app = express();
 const PORT = process.env.NODE_DOCKER_PORT;
-//storing the URL in a variable MongoString
 const mongoString = process.env.DB_URL;
 
-//connection the database to our server with mongoose
+// --------- connect to DB 
 mongoose.connect(mongoString);
 const database = mongoose.connection;
 
-//throw a sucess or error message on the database connection 
 database.on('error', (error) => {
     console.log(`Database couldn't connect properly :\n ${error}`)
 });
@@ -22,9 +20,9 @@ database.once('connected', () => {
 });
 
 app.use(express.json());
-app.use('/api',routes);
+app.use('/api/user', userRoutes);
 app.get("/", (req, res) => {
-    res.json("Welcome to planty application.");
+    res.json("Welcome to planty application ☘️");
 });
 //server set on .env
 app.listen(PORT, () => {
