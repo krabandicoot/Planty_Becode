@@ -5,11 +5,10 @@ const {signInUser, signUpUser} = require('../controllers/userController');
     //instance of the express router 
 const router = express.Router();
 
-//Signin route
+ //Signin route
 router.post('/signin', signInUser); 
 //Signup route
 router.post('/signup', signUpUser); 
-//Signout route
-// router.get('/signout', signOutUser);
+//Reset Password route 
 
 module.exports = router; 
