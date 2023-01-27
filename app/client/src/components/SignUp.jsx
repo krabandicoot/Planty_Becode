@@ -29,7 +29,7 @@ export function SignUp () {
     //     };
 
         return (
-            <div className="signup__container-form m-[2em] relative -z-11 bg-zinc-200/[0.2]">
+            <div className="signup__container-form relative -z-11 bg-zinc-200/[0.2] p-[20px] rounded-xl">
             <form method="POST" className="signup__form" onSubmit={handleChange}>
     {/* username */}
                 < div className="signup__form-username relative z-0 w-full mb-6 group">
@@ -37,7 +37,7 @@ export function SignUp () {
                     type="text" 
                     name="username" 
                     id="username" 
-                    className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-Crayola/40 peer" 
+                    className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
                     placeholder=" " 
                     required 
                     value={user.username} 
@@ -52,7 +52,7 @@ export function SignUp () {
                     type="email" 
                     name="email" 
                     id="email" 
-                    className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-Crayola/40 peer" 
+                    className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
                     placeholder=" " 
                     required 
                     value={user.email} 
@@ -67,7 +67,7 @@ export function SignUp () {
                     type={passwordVisible ? "text" : "password"} 
                     name="password" 
                     id="password" 
-                    className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-Crayola/40 peer" 
+                    className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
                     placeholder=" " 
                     required 
                     minLength={8} 
@@ -76,7 +76,7 @@ export function SignUp () {
                     <label 
                     htmlFor="floating_password" 
                     className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Choose password</label>
-                    <button onClick={()=> setPasswordVisible(! passwordVisible)}>( )</button>
+                    <button onClick={()=> setPasswordVisible(! passwordVisible)} className="bg-"><FontAwesomeIcon icon="fa-thin fa-eye" /></button>
                 </div>
     {/* confirm password */}
                 <div className="signup__form-repeat_password relative z-0 w-full mb-6 group">
