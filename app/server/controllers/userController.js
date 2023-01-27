@@ -38,8 +38,8 @@ const signUpUser = async (req, res) => {
     }
 }
 
-// const signOutUser = async(req, res)=>{
-//     const {username, password} = req.body
-// }
+const signOutUser = async (req, res) => {
+    const { username, password } = req.body
+}
 
 module.exports = { signInUser, signUpUser, signOutUser };
