@@ -12,6 +12,7 @@ module.exports = {
         Crayola: "#B2E186",
         SmokyBlack: "#121212",
         Magnolia: "#ECE8EF",
+        TuscanRed: "#814A4A",
       },
       backgroundImage: {
         body: "url(' ')",
