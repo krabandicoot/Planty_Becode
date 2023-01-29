@@ -24,22 +24,24 @@ export function SignIn() {
     }, [user, pwd]) // empties out the error message if the user changes the user or password state
 
     const handleSubmit = async (e) => {
-        e.preventdefault();
+        e.preventDefault();
 
         try {
-            const data = JSON.stringify({ username, password });
-            const config = {
-                headers: { 'content-type': 'application/json' },
-                withCredentials: true
-            };
 
-            const response = await axios.post(SIGNIN_URL, data, config);
+            const response = await axios.post(
+                SIGNIN_URL,
+                JSON.stringify({ user: username, pwd: password }),
+                {
+                    headers: { 'Content-type': 'application/json' },
+                    withCredentials: true
+                }
+            );
 
             console.log(JSON.stringify(response?.data));
 
             const accessToken = response?.data.accessToken;
             //const roles = response?.data?.roles;
-            setAuth({ username, password, accessToken });
+            setAuth({ user: username, pwd: password, accessToken });
             setUser("");
             setPwd("");
             setSuccess(true);
@@ -47,8 +49,8 @@ export function SignIn() {
         } catch (err) {
             if (!err?.response) {
                 setErrMsg("No server Response");
-            } else if (err.response?.satus === 404) {
-                setErrMsg("Missing Username or Passward");
+            } else if (err.response?.satus === 400) {
+                setErrMsg("Missing Username or Password");
             } else if (err.response?.satus === 401) {
                 setErrMsg("Unauthorized");
             } else {
