@@ -35,7 +35,7 @@ export function SignIn() {
 
             const response = await axios.post(
                 SIGNIN_URL,
-                JSON.stringify({ user: username, pwd: password }),
+                JSON.stringify({ username: user, password: pwd }),
                 {
                     headers: { 'Content-type': 'application/json' },
                     withCredentials: true
@@ -46,7 +46,7 @@ export function SignIn() {
 
             const accessToken = response?.data.accessToken;
             //const roles = response?.data?.roles;
-            setAuth({ user: username, pwd: password, accessToken });
+            setAuth({ sername: user, password: pwd, accessToken });
             setUser("");
             setPwd("");
             setSuccess(true);
@@ -95,13 +95,13 @@ export function SignIn() {
                                     autoComplete="off"
                                     value={user}
                                     onChange={(e) => setUser(e.target.value)}
-                                    className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
+                                    className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
                                     placeholder=" "
                                     required
                                 />
                                 <label
                                     htmlFor="username"
-                                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                    className="peer-focus:font-medium absolute text-sm text-SmokyBlack duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Username
                                 </label>
                             </div>
@@ -113,13 +113,13 @@ export function SignIn() {
                                     id="password"
                                     value={pwd}
                                     onChange={(e) => setPwd(e.target.value)}
-                                    className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
+                                    className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
                                     placeholder=" "
                                     required
                                 />
                                 <label
                                     htmlFor="password"
-                                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                    className="peer-focus:font-medium absolute text-sm text-SmokyBlack duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Password
                                 </label>
                                 <button onClick={() => setPasswordVisible(!passwordVisible)} className="absolute top-0 right-0">{eyeIcon}</button>
