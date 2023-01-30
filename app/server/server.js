@@ -1,5 +1,3 @@
-const cors = require('cors');
-
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -30,8 +28,8 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cors({
-    origin:['http://localhost:8080','http://locahost:5173'],
-    credentials:true
+    origin: ['http://localhost:8080', 'http://locahost:5173'],
+    credentials: true
 }));
 
 app.use(function (req, res, next) {
