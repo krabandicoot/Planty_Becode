@@ -37,9 +37,9 @@ const signUpUser = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 }
-
+//Sign out user
 // const signOutUser = async(req, res)=>{
-//     const {username, password} = req.body
+//     res.cookie('jwt', 'expiredtoken');
 // }
 
-module.exports = { signInUser, signUpUser, signOutUser };
+module.exports = { signInUser, signUpUser };
