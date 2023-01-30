@@ -11,6 +11,8 @@ import { User } from "./components/User";
 import { Tree } from "./components/Tree";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
+
+import RequireAuth from "./components/RequireAuth";
 import { Routes, Route } from 'react-router-dom'
 
 export default function App() {
@@ -25,9 +27,11 @@ export default function App() {
         <Route path="/signup" element={<><Title /><SignUp /><Footer /></>} />
 
         {/* protected routes */}
-        <Route path="/" element={<><Header /><Map /><Navbar /><Footer /></>} />
-        <Route path="/account" element={<><Header /><User /><Navbar /><Footer /></>} />
-        <Route path="/tree" element={<><Header /><Tree /><Navbar /><Footer /></>} />
+        <Route element={<RequireAuth />}>
+          <Route path="/" element={<><Header /><Map /><Navbar /><Footer /></>} />
+          <Route path="/account" element={<><Header /><User /><Navbar /><Footer /></>} />
+          <Route path="/tree" element={<><Header /><Tree /><Navbar /><Footer /></>} />
+        </Route>
 
       </Route>
     </Routes >
