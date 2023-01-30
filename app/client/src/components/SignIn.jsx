@@ -1,6 +1,6 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect } from "react";
 import { FaEye } from 'react-icons/fa';
-import AuthContext from "../context/AuthProvider";
+import useAuth from "../hooks/useAuth";
 
 import axios from "../api/axios";
 const SIGNIN_URL = "/api/user/signin";
@@ -13,7 +13,7 @@ export function SignIn() {
     const eyeIcon = <FaEye />
     const [passwordVisible, setPasswordVisible] = useState(false);
 
-    const { setAuth } = useContext(AuthContext);
+    const { setAuth } = useAuth;
 
     const [user, setUser] = useState(""); // corresponds to user input
     const [pwd, setPwd] = useState(""); // corresponds to pwd input
