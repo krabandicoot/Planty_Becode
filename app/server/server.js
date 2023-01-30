@@ -1,4 +1,6 @@
-require ('dotenv').config();
+const cors = require('cors');
+
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -19,6 +21,9 @@ database.once('connected', () => {
     console.log('Database Connected 📬');
 });
 
+app.use(cors({
+    origin: ['http://localhost:8080', 'http://locahost:5173']
+}));
 app.use(express.json());
 app.use('/api/user', userRoutes);
 app.get("/", (req, res) => {
