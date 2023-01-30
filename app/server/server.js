@@ -1,4 +1,6 @@
 require('dotenv').config();
+import "./config/cors";
+
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -46,7 +48,7 @@ app.get("/", (req, res) => {
     res.json("Welcome to planty application ☘️");
 });
 app.use('/api/user', userRoutes);
-
+app.use(cors(corsOptions));
 //server set on .env
 app.listen(PORT, () => {
     console.log(`Server Started at ${PORT} 🚀`)
