@@ -87,8 +87,16 @@ export function SignUp () {
     }
 
 
-        return (
-            
+        return ( 
+            <>
+            {success ? (
+                <section>
+                    <h1>Success!</h1>
+                    <p>
+                        <a href="#">Sign In</a>
+                    </p>
+                </section>
+            ) : (
             <section className="signup__container-form relative -z-11 bg-zinc-200/[0.2] p-[20px] rounded-xl">
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                 <form method="POST" className="signup__form" onSubmit={handleSubmit}>
@@ -99,11 +107,10 @@ export function SignUp () {
                         name="username" 
                         id="username" 
                         ref={useRef}
-                        autoComplete={off}
-                        onChange={(e) => setUser(e.target.value)}
+                        autoComplete="off"        onChange={(e) => setUser(e.target.value)}
                         required
-                        aria-onInvalid={validName ? "false" : "true"}
-                        aria-describedby="uidnote"
+                        // aria-onInvalid={validName ? "false" : "true"}
+                        // aria-describedby="uidnote"
                         onFocus={() => setUserFocus(true)}
                         onBlur={() => setUserFocus(false)}
                         className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
@@ -111,12 +118,11 @@ export function SignUp () {
                         <label
                         htmlFor="username" 
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username
-                        <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
-                        <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} />
                         </label>
                     </div>
                     <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
-                            <icon></icon>4 to 30 characters.<br />
+                                {/* mettre icon */}
+                                4 to 30 characters.<br />
                         </p>
         {/* email */}
                     <div className="signup__form-email relative z-0 w-full mb-6 group">
@@ -127,8 +133,7 @@ export function SignUp () {
                         className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
                         placeholder=" " 
                         required 
-                        value={user.email} 
-                        onChange={handleChange}/>
+                        onChange={handleSubmit}/>
                         <label 
                         htmlFor="email" 
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
@@ -142,22 +147,20 @@ export function SignUp () {
                         onChange={(e) => setPwd(e.target.value)}
                         value={pwd}
                         required
-                        aria-invalid={validPwd ? "false" : "true"}
-                        aria-describedby="pwdnote"
+                        // aria-invalid={validPwd ? "false" : "true"}
+                        // aria-describedby="pwdnote"
                         onFocus={() => setPwdFocus(true)}
                         onBlur={() => setPwdFocus(false)}
                         className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
                         placeholder=" "/>
                         <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
+                            {/* mettre icon */}
                             7 to 250 characters.<br />
                             {/* Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span> */}
                         </p>
                         <label 
                         htmlFor="password" 
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Choose password
-                        <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
-                        <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
                         </label>
         {/* button visibility password */}                    
                         <button onClick={()=> setPasswordVisible(! passwordVisible)} className="absolute top-0 right-0">{eyeIcon}</button>
@@ -172,21 +175,19 @@ export function SignUp () {
                         onChange={(e) => setMatchPwd(e.target.value)}
                         value={matchPwd}
                         required
-                        aria-invalid={validMatch ? "false" : "true"}
-                        aria-describedby="confirmnote"
+                        // aria-invalid={validMatch ? "false" : "true"}
+                        // aria-describedby="confirmnote"
                         onFocus={() => setMatchFocus(true)}
                         onBlur={() => setMatchFocus(false)} 
                         className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
                         placeholder=" "/>
                         <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                        <FontAwesomeIcon icon={faInfoCircle} />
+                        {/* mettre icon */}
                             Must match the first password input field.
                         </p>
                         <label 
                         htmlFor="floating_repeat_password" 
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password
-                        <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
-                        <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
                         </label>
                     </div>
         {/* button sign up */}
@@ -197,11 +198,12 @@ export function SignUp () {
                 </form>
                 <p>
                     Already registered?<br />
-                    <span className="line">
-                    {/*put router link here*/}
-                    <a href="#">Sign In</a>
+                    <span>
+                    {/* <a href="signin" onClick={navigateTo("/signin")}>Sign In</a> */}
                     </span>
                 </p>
             </section>
-        )
-    }
+            )}
+        </>
+    )
+}
