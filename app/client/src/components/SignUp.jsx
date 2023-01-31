@@ -1,10 +1,11 @@
 import React, {useState, useRef, useEffect} from "react";
-import axios from "axios";
+import axios from "../api/axios";
+
 import { FaEye } from 'react-icons/fa';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,29}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,254}$/;
-const REGISTER_URL = '/register';
+const REGISTER_URL = "/api/user/signup";
 
 //icon eye
 const eyeIcon = <FaEye/>
@@ -13,19 +14,23 @@ export function SignUp () {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState('');
-    const [validName, setValidName] = useState(false);
-    const [userFocus, setUserFocus] = useState(false);
+    const [username, setUsername] = useState("");
+    const [validUsername, setValidUsername] = useState(false);
+    const [usernameFocus, setUsernameFocus] = useState(false);
 
-    const [pwd, setPwd] = useState('');
+    const [email, setEmail] = useState("");
+    const [validEmail, setValidEmail] = useState (false);
+    const [emailFocus, setEmailFocus] = useState (false);
+
+    const [pwd, setPwd] = useState("");
     const [validPwd, setValidPwd] = useState(false);
     const [pwdFocus, setPwdFocus] = useState(false);
 
-    const [matchPwd, setMatchPwd] = useState('');
+    const [matchPwd, setMatchPwd] = useState("");
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
 
-    const [errMsg, setErrMsg] = useState('');
+    const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
 
     // visibility password
@@ -36,8 +41,8 @@ export function SignUp () {
     }, [])
 
     useEffect(() => {
-        setValidName(USER_REGEX.test(user));
-    }, [user])
+        setValidUsername(USER_REGEX.test(username));
+    }, [username])
 
     useEffect(() => {
         setValidPwd(PWD_REGEX.test(pwd));
@@ -45,13 +50,13 @@ export function SignUp () {
     }, [pwd, matchPwd])
 
     useEffect(() => {
-        setErrMsg('');
-    }, [user, pwd, matchPwd])
+        setErrMsg("");
+    }, [username, email, pwd, matchPwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if button enabled with JS hack
-        const v1 = USER_REGEX.test(user);
+        const v1 = USER_REGEX.test(username);
         const v2 = PWD_REGEX.test(pwd);
         if (!v1 || !v2) {
             setErrMsg("Invalid Entry");
@@ -59,7 +64,7 @@ export function SignUp () {
         }
         try {
             const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd }),
+                JSON.stringify({ username, password : pwd }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
@@ -71,9 +76,10 @@ export function SignUp () {
             setSuccess(true);
             //clear state and controlled inputs
             //need value attrib on inputs for this
-            setUser('');
-            setPwd('');
-            setMatchPwd('');
+            setUsername("");
+            setEmail("")
+            setPwd("");
+            setMatchPwd("");
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -106,13 +112,14 @@ export function SignUp () {
                         type="text" 
                         name="username" 
                         id="username" 
-                        ref={useRef}
-                        autoComplete="off"        onChange={(e) => setUser(e.target.value)}
+                        ref={userRef}
+                        autoComplete="off"        
+                        onChange={(e) => setUsername(e.target.value)}
                         required
-                        // aria-onInvalid={validName ? "false" : "true"}
-                        // aria-describedby="uidnote"
-                        onFocus={() => setUserFocus(true)}
-                        onBlur={() => setUserFocus(false)}
+                        aria-invalid={validUsername ? "false" : "true"}
+                        aria-describedby="uidnote"
+                        onFocus={() => setUsernameFocus(true)}
+                        onBlur={() => setUsernameFocus(false)}
                         className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
                         placeholder=" "/>
                         <label
@@ -120,7 +127,7 @@ export function SignUp () {
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username
                         </label>
                     </div>
-                    <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
+                    <p id="uidnote" className={usernameFocus && username && !validUsername ? "instructions" : "offscreen"}>
                                 {/* mettre icon */}
                                 4 to 30 characters.<br />
                         </p>
@@ -129,11 +136,11 @@ export function SignUp () {
                         <input 
                         type="email" 
                         name="email" 
-                        id="email" 
+                        id="email"
+                        onChange={(e) => setEmail(e.target.value)} 
                         className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
                         placeholder=" " 
-                        required 
-                        onChange={handleSubmit}/>
+                        required/>
                         <label 
                         htmlFor="email" 
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
@@ -147,8 +154,8 @@ export function SignUp () {
                         onChange={(e) => setPwd(e.target.value)}
                         value={pwd}
                         required
-                        // aria-invalid={validPwd ? "false" : "true"}
-                        // aria-describedby="pwdnote"
+                        aria-invalid={validPwd ? "false" : "true"}
+                        aria-describedby="pwdnote"
                         onFocus={() => setPwdFocus(true)}
                         onBlur={() => setPwdFocus(false)}
                         className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
@@ -175,8 +182,8 @@ export function SignUp () {
                         onChange={(e) => setMatchPwd(e.target.value)}
                         value={matchPwd}
                         required
-                        // aria-invalid={validMatch ? "false" : "true"}
-                        // aria-describedby="confirmnote"
+                        aria-invalid={validMatch ? "false" : "true"}
+                        aria-describedby="confirmnote"
                         onFocus={() => setMatchFocus(true)}
                         onBlur={() => setMatchFocus(false)} 
                         className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
@@ -193,7 +200,7 @@ export function SignUp () {
         {/* button sign up */}
                     <button 
                     type="submit"
-                    disabled={!validName || !validPwd || !validMatch ? true : false} 
+                    disabled={!validUsername || !validEmail ||!validPwd || !validMatch ? true : false} 
                     className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Sign Up</button>
                 </form>
                 <p>
