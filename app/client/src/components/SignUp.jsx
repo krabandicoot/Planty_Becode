@@ -66,8 +66,7 @@ export function SignUp () {
             const response = await axios.post(REGISTER_URL,
                 JSON.stringify({ username, password : pwd }),
                 {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
+                    headers: { 'Content-Type': 'application/json' }
                 }
             );
             console.log(response?.data);
@@ -137,10 +136,15 @@ export function SignUp () {
                         type="email" 
                         name="email" 
                         id="email"
+                        autoComplete="off" 
+                        required
+                        aria-invalid={validEmail ? "false" : "true"}
+                        // aria-describedby="uidnote"
+                        onFocus={() => setEmailFocus(true)}
+                        onBlur={() => setEmailFocus(false)}
                         onChange={(e) => setEmail(e.target.value)} 
                         className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
-                        placeholder=" " 
-                        required/>
+                        placeholder=" "/>
                         <label 
                         htmlFor="email" 
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
