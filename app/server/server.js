@@ -35,4 +35,3 @@ app.use('/api/user', userRoutes);
 app.listen(PORT, () => {
     console.log(`Server Started at ${PORT} 🚀`)
 });
-
