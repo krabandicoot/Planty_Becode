@@ -20,8 +20,8 @@ export function SignIn() {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
-    const [user, setUser] = useState(""); // corresponds to user input
-    const [pwd, setPwd] = useState(""); // corresponds to pwd input
+    const [username, setUsername] = useState(""); // corresponds to user input
+    const [password, setPassword] = useState(""); // corresponds to pwd input
     const [errMsg, setErrMsg] = useState(""); // corresponds to error msg we might display
 
     useEffect(() => {
@@ -30,7 +30,7 @@ export function SignIn() {
 
     useEffect(() => {
         setErrMsg("");
-    }, [user, pwd]) // empties out the error message if the user changes the user or password state
+    }, [username, password]) // empties out the error message if the user changes the user or password state
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +39,7 @@ export function SignIn() {
 
             const response = await axios.post(
                 SIGNIN_URL,
-                JSON.stringify({ username: user, password: pwd }),
+                JSON.stringify({ username, password }),
                 {
                     headers: { 'Content-type': 'application/json' },
                     withCredentials: true
@@ -50,9 +50,9 @@ export function SignIn() {
 
             const accessToken = response?.data.accessToken;
             //const roles = response?.data?.roles;
-            setAuth({ sername: user, password: pwd, signInToken: accessToken });
-            setUser("");
-            setPwd("");
+            setAuth({ username, password, signInToken: accessToken });
+            setUsername("");
+            setPassword("");
             navigate(from, { replace: true });
 
         } catch (err) {
@@ -75,7 +75,7 @@ export function SignIn() {
         <section>
             <p ref={errRef} className={"errMsg" ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
 
-            <div className="signin__container--form">
+            <div method="POST" className="signin__container--form">
                 <form method="POST" className="signin__form" onSubmit={handleSubmit}>
 
                     {/* username */}
@@ -86,8 +86,8 @@ export function SignIn() {
                             id="username"
                             ref={userRef}
                             autoComplete="off"
-                            value={user}
-                            onChange={(e) => setUser(e.target.value)}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
                             placeholder=" "
                             required
@@ -104,8 +104,8 @@ export function SignIn() {
                             type={passwordVisible ? "text" : "password"}
                             name="password"
                             id="password"
-                            value={pwd}
-                            onChange={(e) => setPwd(e.target.value)}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
                             placeholder=" "
                             required
@@ -134,7 +134,7 @@ export function SignIn() {
                 {/* no account redirect */}
                 <div className="flex items-center justify-center mt-6">
                     {/* put router link here*/}
-                    <Link href="signup" className="ml-2 text-DarkSpringGreen">
+                    <Link to="/signup" className="ml-2 text-DarkSpringGreen">
                         You don't have an account?
                     </Link>
 
