@@ -23,8 +23,8 @@ database.once('connected', () => {
     console.log('Database Connected 📬');
 });
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
 app.use(morgan('common'));
 app.get("/", (req, res) => {
