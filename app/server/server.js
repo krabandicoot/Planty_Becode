@@ -24,10 +24,7 @@ database.once('connected', () => {
 });
 
 app.use(express.json());
-app.use(cors({
-    origin: ['http://localhost:8080', 'http://locahost:5173'],
-    methods: ['GET', 'POST', 'DELETE'],
-}));
+app.use(cors());
 
 app.use(morgan('common'));
 app.get("/", (req, res) => {

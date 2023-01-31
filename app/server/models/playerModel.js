@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
-
 const Schema = mongoose.Schema;
 
 const playerSchema = new Schema({
@@ -37,6 +36,7 @@ const playerSchema = new Schema({
     },
     // trees:Trees (link to the schema, need to import the model
 }, {timestamps: true});
+
 
 
 
