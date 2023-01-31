@@ -22,9 +22,9 @@ export function SignUp () {
     const [validEmail, setValidEmail] = useState (false);
     const [emailFocus, setEmailFocus] = useState (false);
 
-    const [pwd, setPwd] = useState("");
-    const [validPwd, setValidPwd] = useState(false);
-    const [pwdFocus, setPwdFocus] = useState(false);
+    const [password, setPassword] = useState("");
+    const [validPassword, setValidPassword] = useState(false);
+    const [passwordFocus, setPasswordFocus] = useState(false);
 
     const [matchPwd, setMatchPwd] = useState("");
     const [validMatch, setValidMatch] = useState(false);
@@ -45,50 +45,63 @@ export function SignUp () {
     }, [username])
 
     useEffect(() => {
-        setValidPwd(PWD_REGEX.test(pwd));
-        setValidMatch(pwd === matchPwd);
-    }, [pwd, matchPwd])
+        setValidPassword(PWD_REGEX.test(password));
+        setValidMatch(password === matchPwd);
+    }, [password, matchPwd])
 
     useEffect(() => {
         setErrMsg("");
-    }, [username, email, pwd, matchPwd])
+    }, [username, email, password, matchPwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if button enabled with JS hack
         const v1 = USER_REGEX.test(username);
-        const v2 = PWD_REGEX.test(pwd);
+        const v2 = PWD_REGEX.test(password);
         if (!v1 || !v2) {
             setErrMsg("Invalid Entry");
             return;
         }
-        try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ username, password : pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' }
-                }
-            );
-            console.log(response?.data);
-            console.log(response?.accessToken);
-            console.log(JSON.stringify(response))
-            setSuccess(true);
-            //clear state and controlled inputs
-            //need value attrib on inputs for this
-            setUsername("");
-            setEmail("")
-            setPwd("");
-            setMatchPwd("");
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed')
-            }
-            errRef.current.focus();
-        }
+
+        axios.post(REGISTER_URL, {
+            username,
+            email,
+            password,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        // try {
+        //     const response = await axios.post(REGISTER_URL,
+        //         JSON.stringify({ username, password }),
+        //         {
+        //             headers: { 'Content-Type': 'application/json' }
+        //         }
+        //     );
+        //     console.log(response?.data);
+        //     console.log(response?.accessToken);
+        //     console.log(JSON.stringify(response))
+        //     setSuccess(true);
+        //     //clear state and controlled inputs
+        //     //need value attrib on inputs for this
+        //     setUsername("");
+        //     setEmail("")
+        //     setPassword("");
+        //     setMatchPassword("");
+        // } catch (err) {
+        //     if (!err?.response) {
+        //         setErrMsg('No Server Response');
+        //     } else if (err.response?.status === 409) {
+        //         setErrMsg('Username Taken');
+        //     } else {
+        //         setErrMsg('Registration Failed')
+        //     }
+        //     errRef.current.focus();
+        // }
     }
 
 
@@ -155,16 +168,16 @@ export function SignUp () {
                         type={passwordVisible ? "text" : "password"} 
                         name="password" 
                         id="password" 
-                        onChange={(e) => setPwd(e.target.value)}
-                        value={pwd}
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
                         required
-                        aria-invalid={validPwd ? "false" : "true"}
+                        aria-invalid={validPassword ? "false" : "true"}
                         aria-describedby="pwdnote"
-                        onFocus={() => setPwdFocus(true)}
-                        onBlur={() => setPwdFocus(false)}
+                        onFocus={() => setPasswordFocus(true)}
+                        onBlur={() => setPasswordFocus(false)}
                         className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
                         placeholder=" "/>
-                        <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
+                        <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
                             {/* mettre icon */}
                             7 to 250 characters.<br />
                             {/* Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span> */}
@@ -204,7 +217,7 @@ export function SignUp () {
         {/* button sign up */}
                     <button 
                     type="submit"
-                    disabled={!validUsername || !validEmail ||!validPwd || !validMatch ? true : false} 
+                    disabled={!validUsername || !validEmail ||!validPassword || !validMatch ? true : false} 
                     className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Sign Up</button>
                 </form>
                 <p>
