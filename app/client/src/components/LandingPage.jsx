@@ -1,7 +1,8 @@
 export function LandingPage() {
+
   return (
-    <div>
-      <div className="flex flex-col">
+    <section className="flex flex-col ">
+      <div className="flex flex-col justify-center mb-24">
         <button>
           <a href="/signin">
             Login
@@ -13,12 +14,10 @@ export function LandingPage() {
           </a>
         </button>
       </div>
-      <p>
+      <p className="bg-Crayola/40 rounded-lg p-5 text-xs italic">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
-        architecto tempore cum quia aperiam, soluta tempora? Sint, ratione
-        autem! Magni sint molestias quam? Unde molestiae maxime facere!
-        Consequatur, numquam ipsum!
+        architecto tempore cum quia aperiam, soluta tempora?
       </p>
-    </div>
+    </section >
   );
 }
