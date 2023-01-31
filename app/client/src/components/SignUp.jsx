@@ -5,6 +5,7 @@ import { FaEye } from 'react-icons/fa';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,29}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,254}$/;
+const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const REGISTER_URL = "/api/user/signup";
 
 //icon eye
@@ -45,6 +46,10 @@ export function SignUp () {
     }, [username])
 
     useEffect(() => {
+        setValidEmail(EMAIL_REGEX.test(email));
+    }, [email])
+
+    useEffect(() => {
         setValidPassword(PWD_REGEX.test(password));
         setValidMatch(password === matchPwd);
     }, [password, matchPwd])
@@ -57,8 +62,9 @@ export function SignUp () {
         e.preventDefault();
         // if button enabled with JS hack
         const v1 = USER_REGEX.test(username);
-        const v2 = PWD_REGEX.test(password);
-        if (!v1 || !v2) {
+        const v2 = EMAIL_REGEX.test(email);
+        const v3 = PWD_REGEX.test(password);
+        if (!v1 || !v2 || !v3) {
             setErrMsg("Invalid Entry");
             return;
         }
@@ -152,7 +158,7 @@ export function SignUp () {
                         autoComplete="off" 
                         required
                         aria-invalid={validEmail ? "false" : "true"}
-                        // aria-describedby="uidnote"
+                        aria-describedby="emailnote"
                         onFocus={() => setEmailFocus(true)}
                         onBlur={() => setEmailFocus(false)}
                         onChange={(e) => setEmail(e.target.value)} 
@@ -161,6 +167,10 @@ export function SignUp () {
                         <label 
                         htmlFor="email" 
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                        <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
+                                {/* mettre icon */}
+                                invalid email address<br />
+                        </p>
                     </div>
         {/* password */}
                     <div className="signup__form-password relative z-0 w-full mb-6 group">
