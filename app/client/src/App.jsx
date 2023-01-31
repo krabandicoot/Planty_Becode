@@ -27,7 +27,7 @@ export default function App() {
 
         {/* protected routes */}
         <Route element={<RequireAuth />}>
-          <Route path="/" element={<><Header /><Map /><Navbar /><Footer /></>} />
+          <Route path="/map" element={<><Header /><Map /><Navbar /><Footer /></>} />
           <Route path="/account" element={<><Header /><User /><Navbar /><Footer /></>} />
           <Route path="/tree" element={<><Header /><Tree /><Navbar /><Footer /></>} />
         </Route>
