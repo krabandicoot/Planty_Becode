@@ -19,7 +19,3 @@ const playerSchema = new Schema({
 
 
 module.exports = mongoose.model('Player',playerSchema);
-
-
-    // .exec(function(err, players){
-    // });

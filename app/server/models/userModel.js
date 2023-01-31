@@ -32,19 +32,6 @@ const userSchema = new Schema({
     }
 });
 
-Player.aggregate([{
-    $lookup:{
-        from: "users",
-        localField: "color",
-        foreignField: "color",
-        as: "color"
-    }},
-    {
-        $match: {
-            joined: []
-        }
-}]);
-
 userSchema.statics.signup = async function(username, email, password, color){
 
     //validation 
@@ -68,6 +55,20 @@ userSchema.statics.signup = async function(username, email, password, color){
     }
     const emailExist = await this.findOne({email});
     const usernameExist = await this.findOne({username});
+    const createPlayer = await Player.aggregate([
+        {$project:
+            {
+                "username" : "$username"
+            }},
+        {$lookup:
+            {
+                from: "users",
+                localField: "username",
+                foreignField: "username",
+                as: "user_info"
+            }}
+    ]);    
+
     if(emailExist){
         throw Error('Email already used, please enter another adress');
     }
@@ -77,7 +78,7 @@ userSchema.statics.signup = async function(username, email, password, color){
     const salt = await bcrypt.genSalt(10);//a random string of character that get added to the user password to prevent getting hacked
     const hash = await bcrypt.hash(password, salt);
 
-    const user = await this.create({username, email, password: hash, color});
+    const user = await this.create({username, email, password: hash, color, createPlayer});
 
     return user;
 }

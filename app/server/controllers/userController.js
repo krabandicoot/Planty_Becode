@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const createPlayer = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 require ('dotenv').config();
 
@@ -28,10 +29,10 @@ const signUpUser = async(req, res) => {
     const {username,email, password,color} = req.body;
 
     try{
-        const user = await User.signup(username,email, password, color);
+        const user = await User.signup(username,email, password, color, createPlayer);
 
         //create token
-        const signInToken = createToken(user._id); 
+        const signInToken = createToken(user._id);
         res.status(200).json({email, signInToken});
     }catch(error){
         res.status(400).json({error: error.message});
