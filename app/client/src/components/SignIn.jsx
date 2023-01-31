@@ -128,7 +128,11 @@ export function SignIn() {
                     </div>
                     {/* button sign up */}
                     <button
-                        className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Login</button>
+                        className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">
+                        <Link to="/account" className="ml-2 text-DarkSpringGreen">
+                            Login
+                        </Link>
+                    </button>
                 </form>
 
                 {/* no account redirect */}
@@ -137,8 +141,6 @@ export function SignIn() {
                     <Link to="/signup" className="ml-2 text-DarkSpringGreen">
                         You don't have an account?
                     </Link>
-
-
                 </div>
             </div >
         </section>
