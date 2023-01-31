@@ -1,5 +1,4 @@
 const User = require('../models/userModel');
-const createPlayer = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 require ('dotenv').config();
 
@@ -29,7 +28,7 @@ const signUpUser = async(req, res) => {
     const {username,email, password,color} = req.body;
 
     try{
-        const user = await User.signup(username,email, password, color, createPlayer);
+        const user = await User.signup(username,email, password, color);
 
         //create token
         const signInToken = createToken(user._id);
