@@ -14,8 +14,10 @@ import { Footer } from "./components/Footer";
 
 import RequireAuth from "./components/RequireAuth";
 import { Routes, Route } from 'react-router-dom'
+import { useState } from "react";
 
 export default function App() {
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

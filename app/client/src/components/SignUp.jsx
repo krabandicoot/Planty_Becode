@@ -1,18 +1,22 @@
 import React, {useState, useRef, useEffect} from "react";
 import axios from "../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import setUrlBg from "./setUrlBg";
 
 import { FaEye } from 'react-icons/fa';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,29}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,254}$/;
-const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[a-z]{2,4}$/;
 const REGISTER_URL = "/api/user/signup";
 
 //icon eye
 const eyeIcon = <FaEye/>
 
 export function SignUp () {
+
+    setUrlBg({urlBg: url('../images/bg-planty-half-little-trees.png')})
+
     const userRef = useRef();
     const errRef = useRef();
 
@@ -28,13 +32,13 @@ export function SignUp () {
     const [validPassword, setValidPassword] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
 
-    const [matchPwd, setMatchPwd] = useState("");
+    const [matchPassword, setMatchPassword] = useState("");
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || "/pickColor";
+    // const from = location.state?.from?.pathname || "/pickColor";
 
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
@@ -56,12 +60,12 @@ export function SignUp () {
 
     useEffect(() => {
         setValidPassword(PWD_REGEX.test(password));
-        setValidMatch(password === matchPwd);
-    }, [password, matchPwd])
+        setValidMatch(password === matchPassword);
+    }, [password, matchPassword])
 
     useEffect(() => {
         setErrMsg("");
-    }, [username, email, password, matchPwd])
+    }, [username, email, password, matchPassword])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -74,35 +78,35 @@ export function SignUp () {
             return;
         }
 
-        try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ username, email, password, matchPwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' }
+        await axios.post(REGISTER_URL,
+            JSON.stringify({ username, email, password }),
+            {
+                headers: { 'Content-Type': 'application/json' }
+
+            })
+            .then(function (response) {
+                console.log(response?.data);
+                console.log(response?.accessToken);
+                console.log(JSON.stringify(response))
+                setSuccess(true);
+                //clear state and controlled inputs
+                //need value attrib on inputs for this
+                setUsername("");
+                setEmail("");
+                setPassword("");
+                setMatchPassword("");
+            })
+            .catch(function (err) {
+                console.log(err);
+                if (!err?.response) {
+                    setErrMsg('No Server Response');
+                } else if (err.response?.status === 409) {
+                    setErrMsg('Username Taken');
+                } else {
+                    setErrMsg('Registration Failed')
                 }
-            );
-            console.log(response?.data);
-            console.log(response?.accessToken);
-            console.log(JSON.stringify(response))
-            setSuccess(true);
-            //clear state and controlled inputs
-            //need value attrib on inputs for this
-            setUsername("");
-            setEmail("")
-            setPassword("");
-            setMatchPassword("");
-            navigate(from, { replace: true });
-        
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed')
-            }
-            errRef.current.focus();
-        }
+                errRef.current.focus();
+            });
     }
 
 
@@ -111,9 +115,6 @@ export function SignUp () {
             {success ? (
                 <section>
                     <h1>Success!</h1>
-                    <p>
-                        <a href="#">Sign In</a>
-                    </p>
                 </section>
             ) : (
             <section className="signup__container-form relative -z-11 bg-zinc-200/[0.2] p-[20px] rounded-xl">
@@ -201,8 +202,8 @@ export function SignUp () {
                         type="password" 
                         name="confirmPassword" 
                         id="confirmPassword"
-                        onChange={(e) => setMatchPwd(e.target.value)}
-                        value={matchPwd}
+                        onChange={(e) => setMatchPassword(e.target.value)}
+                        value={matchPassword}
                         required
                         aria-invalid={validMatch ? "false" : "true"}
                         aria-describedby="confirmnote"
