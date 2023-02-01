@@ -87,6 +87,7 @@ userSchema.statics.signin = async function (username, password) {
     }
 
     const user = await this.findOne({ username });
+    console.log(user);
     if (!user) {
         throw Error(`This username doesn't exist`);
     };
