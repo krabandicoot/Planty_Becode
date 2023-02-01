@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+
 const Schema = mongoose.Schema;
 
 const playerSchema = new Schema({
@@ -29,7 +30,7 @@ const playerSchema = new Schema({
         unique:true,
     },
     bio:{
-        type:String,
+        type:String, 
         default:'Leaf is a small, green leaf that lives in the forest. He has many friends, but he doesnt have any friends at school. One day Leaf goes to school and meets a new friend named Petal. They become best friends and Leaf learns so much from her.',
         maxLength: 500,
     },
@@ -39,9 +40,5 @@ const playerSchema = new Schema({
     },
     // trees:Trees (link to the schema, need to import the model
 }, {timestamps: true});
-
-
-
-
 
 module.exports = mongoose.model('Player',playerSchema);
