@@ -12,4 +12,4 @@ router.post('/signup', signUpUser);
 //Signout route
 // router.get('/signout', signOutUser);
 
-module.exports = router; 
+module.exports = router;

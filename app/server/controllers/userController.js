@@ -33,11 +33,9 @@ const signUpUser = async (req, res) => {
         const user = await User.signup(username, email, password, color);
         //create token
         const signInToken = createToken(user._id);
-        const createPlayer = await Player.create({username, email, password, color});
-
-        res.status(200).json({ email, signInToken, createPlayer});
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(200).json({email, signInToken});
+    }catch(error){
+        res.status(400).json({error: error.message});
     }
 }
 //Sign out user
