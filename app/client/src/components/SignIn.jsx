@@ -1,6 +1,6 @@
-import { useRef, useState, useEffect } from "react";
-import { FaEye } from "react-icons/fa";
+import { useRef, useState, useEffect, useContext } from "react";
 import useAuth from "../hooks/useAuth";
+import { FaEye } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import axios from '../api/axios';
@@ -9,12 +9,13 @@ const SIGNIN_URL = "/api/user/signin";
 const eyeIcon = <FaEye />
 
 export function SignIn() {
+
+    const { setAuth } = useAuth();
+
     const userRef = useRef(); // focus on user
     const errRef = useRef(); // focus on errors
 
     const [passwordVisible, setPasswordVisible] = useState(false);
-
-    const { setAuth } = useAuth;
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -47,12 +48,12 @@ export function SignIn() {
             .then((response) => {
                 console.log(JSON.stringify(response?.data));
 
-                const accessToken = response?.data.accessToken;
+                const accessToken = response?.data?.accessToken;
                 //const roles = response?.data?.roles;
                 setAuth({ username, password, accessToken });
                 setUsername("");
                 setPassword("");
-                navigate(to = '/map', from, { replace: true });
+                navigate('/map', from, { replace: true });
             })
             .catch(function (err) {
                 if (!err?.response) {
