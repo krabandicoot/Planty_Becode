@@ -2,6 +2,7 @@ const express = require('express');
 const { getPlayers} = require('../controllers/playerController');
 
 const router = express.Router();
+
 // GET an account
 // router.get('/user:username', getAccount);
 
