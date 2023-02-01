@@ -6,12 +6,12 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from '../api/axios';
 const SIGNIN_URL = "/api/user/signin";
 
+const eyeIcon = <FaEye />
 
 export function SignIn() {
     const userRef = useRef(); // focus on user
     const errRef = useRef(); // focus on errors
 
-    const eyeIcon = <FaEye />
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     const { setAuth } = useAuth;
@@ -35,39 +35,41 @@ export function SignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
+        await axios.post(
+            SIGNIN_URL,
+            JSON.stringify({
+                username,
+                password
+            }),
+            {
+                headers: { 'Content-type': 'application/json' }
+            })
+            .then((response) => {
+                console.log(JSON.stringify(response?.data));
 
-            const response = await axios.post(
-                SIGNIN_URL,
-                JSON.stringify({ username, password }),
-                {
-                    headers: { 'Content-type': 'application/json' },
-                    withCredentials: true
+                const accessToken = response?.data.accessToken;
+                //const roles = response?.data?.roles;
+                setAuth({ username, password, accessToken });
+                setUsername("");
+                setPassword("");
+                navigate(to = '/map', from, { replace: true });
+            })
+            .catch(function (err) {
+                if (!err?.response) {
+                    console.log(err)
+                    setErrMsg("No server Response");
+                } else if (err.response?.status === 400) {
+                    console.log(err)
+                    setErrMsg("Missing Username or Password");
+                } else if (err.response?.status === 401) {
+                    console.log(err)
+                    setErrMsg("Unauthorized");
+                } else {
+                    console.log(err)
+                    setErrMsg("Login Failed");
                 }
-            );
-
-            console.log(JSON.stringify(response?.data));
-
-            const accessToken = response?.data.accessToken;
-            //const roles = response?.data?.roles;
-            setAuth({ username, password, signInToken: accessToken });
-            setUsername("");
-            setPassword("");
-            navigate(from, { replace: true });
-
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg("No server Response");
-            } else if (err.response?.satus === 400) {
-                setErrMsg("Missing Username or Password");
-            } else if (err.response?.satus === 401) {
-                setErrMsg("Unauthorized");
-            } else {
-                setErrMsg("Login Failed");
-            }
-            errRef.current.focus();
-        }
-
+                errRef.current.focus();
+            });
     }
     // TODO Remember me Checkbox
 
@@ -129,20 +131,17 @@ export function SignIn() {
                     {/* button sign up */}
                     <button
                         className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">
-                        <Link to="/account" className="ml-2 text-DarkSpringGreen">
-                            Login
-                        </Link>
+                        Login
                     </button>
-                </form>
+                </form >
 
                 {/* no account redirect */}
-                <div className="flex items-center justify-center mt-6">
-                    {/* put router link here*/}
-                    <Link to="/signup" className="ml-2 text-DarkSpringGreen">
+                < div className="flex items-center justify-center mt-6" >
+                    <Link to="/signup" className="ml-2 text-DarkSpringGreen" >
                         You don't have an account?
                     </Link>
-                </div>
+                </div >
             </div >
-        </section>
+        </section >
     )
 }
