@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from "react";
 import axios from "../api/axios";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import { FaEye } from 'react-icons/fa';
 
@@ -30,6 +31,10 @@ export function SignUp () {
     const [matchPwd, setMatchPwd] = useState("");
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/pickColor";
 
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
@@ -69,45 +74,35 @@ export function SignUp () {
             return;
         }
 
-        axios.post(REGISTER_URL, {
-            username,
-            email,
-            password,
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-
-        // try {
-        //     const response = await axios.post(REGISTER_URL,
-        //         JSON.stringify({ username, password }),
-        //         {
-        //             headers: { 'Content-Type': 'application/json' }
-        //         }
-        //     );
-        //     console.log(response?.data);
-        //     console.log(response?.accessToken);
-        //     console.log(JSON.stringify(response))
-        //     setSuccess(true);
-        //     //clear state and controlled inputs
-        //     //need value attrib on inputs for this
-        //     setUsername("");
-        //     setEmail("")
-        //     setPassword("");
-        //     setMatchPassword("");
-        // } catch (err) {
-        //     if (!err?.response) {
-        //         setErrMsg('No Server Response');
-        //     } else if (err.response?.status === 409) {
-        //         setErrMsg('Username Taken');
-        //     } else {
-        //         setErrMsg('Registration Failed')
-        //     }
-        //     errRef.current.focus();
-        // }
+        try {
+            const response = await axios.post(REGISTER_URL,
+                JSON.stringify({ username, email, password, matchPwd }),
+                {
+                    headers: { 'Content-Type': 'application/json' }
+                }
+            );
+            console.log(response?.data);
+            console.log(response?.accessToken);
+            console.log(JSON.stringify(response))
+            setSuccess(true);
+            //clear state and controlled inputs
+            //need value attrib on inputs for this
+            setUsername("");
+            setEmail("")
+            setPassword("");
+            setMatchPassword("");
+            navigate(from, { replace: true });
+        
+        } catch (err) {
+            if (!err?.response) {
+                setErrMsg('No Server Response');
+            } else if (err.response?.status === 409) {
+                setErrMsg('Username Taken');
+            } else {
+                setErrMsg('Registration Failed')
+            }
+            errRef.current.focus();
+        }
     }
 
 
@@ -226,14 +221,14 @@ export function SignUp () {
                     </div>
         {/* button sign up */}
                     <button 
-                    type="submit"
                     disabled={!validUsername || !validEmail ||!validPassword || !validMatch ? true : false} 
                     className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Sign Up</button>
                 </form>
                 <p>
                     Already registered?<br />
-                    <span>
-                    {/* <a href="signin" onClick={navigateTo("/signin")}>Sign In</a> */}
+                    <span className="line">
+                        {/*put router link here*/}
+                        <a href="/signin">Sign In</a>
                     </span>
                 </p>
             </section>
