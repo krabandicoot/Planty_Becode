@@ -3,6 +3,7 @@ import { Layout } from "./components/Layout";
 import { Title } from "./components/Title";
 import { LandingPage } from "./components/LandingPage";
 import { SignIn } from "./components/SignIn";
+
 import { SignUp } from "./components/SignUp";
 
 import { Header } from "./components/Header";
@@ -25,6 +26,7 @@ export default function App() {
         {/* public routes */}
         <Route path="/" element={<><Title /><LandingPage /><Footer /></>} />
         <Route path="/signin" element={<><Title /><SignIn /><Footer /></>} />
+        {/* <Route path="/pickcolor" element={<><Title /><ChooseColor/><Footer /></>} /> */}
         <Route path="/signup" element={<><Title /><SignUp /><Footer /></>} />
 
         {/* protected routes */}

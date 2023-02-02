@@ -1,11 +1,9 @@
-import setUrlBg from "./setUrlBg";
+import React from "react";
 
 export function LandingPage() {
 
-  setUrlBg({urlBg:"images/bg-planty.png"})
-
   return (
-    <section className="flex flex-col ">
+    <section className="flex flex-col">
       <div className="flex flex-col justify-center mb-12">
         <button>
           <a href="/signin">

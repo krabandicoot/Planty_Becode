@@ -9,8 +9,6 @@
   font-weight: 400;
 
   color: 121212;
- 
-
 }
 
 a {
@@ -29,9 +27,7 @@ body {
   place-items: center;
   min-width: 320px;
   max-height: 100vh;
-  --urlBg : url('images/bg-planty.png') ;
-  background: var(--urlBg) no-repeat;
-
+  background: url(./images/bg-planty.png) no-repeat;
   background-size: auto 108%;
   background-position-x: 40%;
 }

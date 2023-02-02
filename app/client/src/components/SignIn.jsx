@@ -2,16 +2,12 @@ import { useRef, useState, useEffect } from "react";
 import { FaEye } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import setUrlBg from "./setUrlBg";
 
 import axios from '../api/axios';
 const SIGNIN_URL = "/api/user/signin";
 
 
 export function SignIn() {
-
-    setUrlBg({urlBg: "../images/bg-planty-half-tall-tree.png"})
-  
 
     const userRef = useRef(); // focus on user
     const errRef = useRef(); // focus on errors
