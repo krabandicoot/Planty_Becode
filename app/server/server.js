@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
+const corsOptions = require('./cors')
 
 const userRoutes = require('./routes/user');
 const playerRoutes = require('./routes/player');
@@ -23,7 +24,7 @@ database.once('connected', () => {
     console.log('Database Connected 📬');
 });
 
-app.use(cors());
+app.use(cors({origin: "http://localhost:5173", credentials: true}));
 app.use(express.json());
 
 app.use(morgan('common'));

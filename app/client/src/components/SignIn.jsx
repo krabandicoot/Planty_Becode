@@ -39,15 +39,17 @@ export function SignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await axios.post(
-            SIGNIN_URL,
-            JSON.stringify({
+        const configuration = {
+            method: 'post',
+            url: SIGNIN_URL,
+            data: {
                 username,
                 password
-            }),
-            {
-                headers: { 'Content-type': 'application/json' }
-            })
+            },
+            withCredentials: true,
+        }
+
+        await axios(configuration)
             .then((response) => {
                 console.log("You are logged");
                 console.log(JSON.stringify(response?.data));

@@ -19,14 +19,12 @@ const signInUser = async (req, res) => {
 
         //create token
         const signInToken = createToken(user._id);
-        res.status(200).json({ username, signInToken });
-        // res.cookie('planty', signInToken, {
-        //     httpOnly: true,
-        //     secure: true,
-        //     sameSite: 'None',
-        // })
+        res.cookie('plantyLogin', signInToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+        })
 
-        // res.json({message: "cookie ok"})
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
