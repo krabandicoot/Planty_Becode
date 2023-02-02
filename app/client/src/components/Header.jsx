@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 export function Header() {
   return (
-    <div>
+    <header className="flex">
       <img />
-      <p>Username</p>
+      <Link to="/account">Username</Link>
       <p>Score</p>
-    </div>
+    </header>
   );
 }

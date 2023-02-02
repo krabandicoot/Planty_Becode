@@ -54,14 +54,8 @@ export function SignIn() {
                 console.log("You are logged");
                 console.log(JSON.stringify(response?.data));
                 const signInToken = response?.data?.signInToken;
-
-                // if (response.data.signInToken) {
-                //     localStorage.setItem("user", JSON.stringify(response.data));
-                // } else {
-                //     console.log("no response");
-                // }
-
-                setAuth({ username, password, signInToken });
+                console.log(signInToken)
+                setAuth({ username, password });
                 setUsername("");
                 setPassword("");
                 // setSuccess(true);
