@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import { FaEye } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -11,6 +11,7 @@ const eyeIcon = <FaEye />
 export function SignIn() {
 
     const { setAuth } = useAuth();
+    // console.log(setAuth);
 
     const userRef = useRef(); // focus on user
     const errRef = useRef(); // focus on errors
@@ -19,11 +20,13 @@ export function SignIn() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
+    //    console.log(location);
+    const from = location.state?.from?.pathname || "/map";
 
     const [username, setUsername] = useState(""); // corresponds to user input
     const [password, setPassword] = useState(""); // corresponds to pwd input
     const [errMsg, setErrMsg] = useState(""); // corresponds to error msg we might display
+    // const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         userRef.current.focus()
@@ -46,14 +49,21 @@ export function SignIn() {
                 headers: { 'Content-type': 'application/json' }
             })
             .then((response) => {
+                console.log("You are logged");
                 console.log(JSON.stringify(response?.data));
+                const signInToken = response?.data?.signInToken;
 
-                const accessToken = response?.data?.accessToken;
-                //const roles = response?.data?.roles;
-                setAuth({ username, password, accessToken });
+                // if (response.data.signInToken) {
+                //     localStorage.setItem("user", JSON.stringify(response.data));
+                // } else {
+                //     console.log("no response");
+                // }
+
+                setAuth({ username, password, signInToken });
                 setUsername("");
                 setPassword("");
-                navigate('/map', from, { replace: true });
+                // setSuccess(true);
+                navigate(from, { replace: true });
             })
             .catch(function (err) {
                 if (!err?.response) {
@@ -75,6 +85,15 @@ export function SignIn() {
     // TODO Remember me Checkbox
 
     return (
+        // <>
+        //     {success ? (
+        //         <section>
+        //             <h1>Success!</h1>
+        //             <p>
+        //                 <a href="#">Sign In</a>
+        //             </p>
+        //         </section>
+        //     ) : (
         <section>
             <p ref={errRef} className={"errMsg" ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
 
@@ -144,5 +163,7 @@ export function SignIn() {
                 </div >
             </div >
         </section >
+        //     )}
+        // </>
     )
 }
