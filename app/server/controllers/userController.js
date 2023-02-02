@@ -19,13 +19,14 @@ const signInUser = async (req, res) => {
 
         //create token
         const signInToken = createToken(user._id);
-        res.cookie('planty', signInToken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'None',
-        })
+        res.status(200).json({ username, signInToken });
+        // res.cookie('planty', signInToken, {
+        //     httpOnly: true,
+        //     secure: true,
+        //     sameSite: 'None',
+        // })
 
-        res.json({message: "cookie ok"})
+        // res.json({message: "cookie ok"})
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -35,13 +36,13 @@ const signUpUser = async (req, res) => {
     const { username, email, password, color } = req.body;
 
     try {
-        
+
         const user = await User.signup(username, email, password, color);
         //create token
         const signInToken = createToken(user._id);
-        res.status(200).json({email, signInToken});
-    }catch(error){
-        res.status(400).json({error: error.message});
+        res.status(200).json({ email, signInToken });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 }
 //Sign out user
