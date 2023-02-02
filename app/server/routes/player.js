@@ -1,10 +1,10 @@
 const express = require('express');
-const { getPlayers} = require('../controllers/playerController');
+const { getPlayers, getAccount } = require('../controllers/playerController');
 
 const router = express.Router();
 
 // GET an account
-// router.get('/user:username', getAccount);
+router.get(`/username/:username`, getAccount);
 
 // GET all players
 router.get('/leaderboard', getPlayers);

@@ -2,14 +2,24 @@ const { default: mongoose } = require('mongoose');
 const Player = require('../models/playerModel')
 
 // Get all info of a player
-// const getAccount = async(req,res) => {
-//     const { username } = req.params;
+const getAccount = async(req,res) => {
+    const { username } = req.params;
+    const player = await Player.findOne({username: username}).select('-password');
+
+    try {
+    if(!player){
+        throw Error(`This username doesn't exist`);
+    }
     
-//     if(){
-//         return res.status.json({error: "This username doesn't exist"});
-//     }
-//     const player = await Player.findOne({username});
-//     }
+    res.status(200).json(player);
+
+    return player;
+    
+    } catch(error) {
+    res.status(400).json({error: error.message});
+}
+}
+
 //Failed attempt
     // const player = await Player.findOne({username: req.params.username}, function(err, username) {
     //     if(err){
@@ -38,6 +48,6 @@ const getPlayers = async(req,res) => {
 // Export all the function
 
 module.exports = { 
-    // getAccount,
+    getAccount,
     getPlayers
 };
