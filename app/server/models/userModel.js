@@ -24,17 +24,17 @@ const userSchema = new Schema({
     },
     color: {
         type: String,
-        required: true,
+        required: false,
         minLength: 4,
         maxLength: 7,
         unique: true,
     }
 });
 
-userSchema.statics.signup = async function (username, email, password, color) {
+userSchema.statics.signup = async function (username, email, password) {
 
     //validation 
-    if (!email || !username || !color || !password) {
+    if (!email || !username || !password) {
         throw Error('All fields need to be filled');
     }
     // if(username.charAt(0)!='K'){
@@ -43,9 +43,9 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (!validator.isAlphanumeric(username) && !validator.isAlpha(username)) {
         throw Error('The username must contain only letters and numbers');
     }
-    if ((color.charAt(0) != '#') || (!validator.isHexColor(color))) {
-        throw Error(`The color entered is not hexadecimal color, be sure you put '#' in front of the combination`);
-    }
+    // if ((color.charAt(0) != '#') || (!validator.isHexColor(color))) {
+    //     throw Error(`The color entered is not hexadecimal color, be sure you put '#' in front of the combination`);
+    // }
     if (!validator.isEmail(email)) { //check is the email is a valid structure
         throw Error('The email address entered is not valid');
     }
@@ -63,7 +63,7 @@ userSchema.statics.signup = async function (username, email, password, color) {
     const salt = await bcrypt.genSalt(10);//a random string of character that get added to the user password to prevent getting hacked
     const hash = await bcrypt.hash(password, salt);
 
-    const user = await this.create({ username, email, password: hash, color });
+    const user = await this.create({ username, email, password: hash });
 
     return user;
 }
