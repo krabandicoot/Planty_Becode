@@ -22,7 +22,6 @@ export function SignIn() {
     const location = useLocation();
     //    console.log(location);
     const from = location.state?.from?.pathname || "/map";
-
     const [username, setUsername] = useState(""); // corresponds to user input
     const [password, setPassword] = useState(""); // corresponds to pwd input
     const [errMsg, setErrMsg] = useState(""); // corresponds to error msg we might display
@@ -48,13 +47,18 @@ export function SignIn() {
             },
             withCredentials: true,
         }
+
         try {
             const response = await axios(configuration);
             console.log("You are logged");
+
             console.log(JSON.stringify(response?.data));
             const signInToken = response?.data?.signInToken;
 
-            setAuth({ username, password });
+            setAuth(response.data);
+
+            localStorage.setItem('user', JSON.stringify(response.data))
+            console.log(response.data)
 
             setUsername("");
             setPassword("");

@@ -1,5 +1,4 @@
-
-const ACCOUNT_URL = "/api/account/leaderboard._id";
+const ACCOUNT_URL = "/api/account/username";
 
 export function User() {
 
