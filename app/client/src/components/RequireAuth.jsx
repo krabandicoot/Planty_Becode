@@ -7,12 +7,13 @@ export default function RequireAuth() {
     const { auth, setAuth } = useAuth();
     const location = useLocation();
     useEffect(() => {
-        const signedInUser = localStorage.getItem('user');
+        const signedInUser = localStorage.getItem('username');
         if (signedInUser) {
             setAuth(JSON.parse(signedInUser));
+
         }
     }, []);
-
+    console.log("still logged");
     return (
         auth // checks to see if there is a user or not
             ? <Outlet /> // if yes, we return the outlet

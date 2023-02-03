@@ -53,12 +53,12 @@ export function SignIn() {
             console.log("You are logged");
 
             console.log(JSON.stringify(response?.data));
-            const signInToken = response?.data?.signInToken;
+            const user = response?.data?.username;
 
             setAuth(response.data);
 
-            localStorage.setItem('user', JSON.stringify(response.data))
-            console.log(response.data)
+            localStorage.setItem('user', JSON.stringify(user))
+            console.log(user);
 
             setUsername("");
             setPassword("");
