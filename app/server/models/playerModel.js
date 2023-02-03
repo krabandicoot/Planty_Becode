@@ -38,7 +38,10 @@ const playerSchema = new Schema({
         type: Number,
         default:90,
     },
-    // trees:Trees (link to the schema, need to import the model
+    trees:{
+        type:Map,
+    }
+    //Trees (link to the schema, need to import the model
 }, {timestamps: true});
 
 module.exports = mongoose.model('Player',playerSchema);

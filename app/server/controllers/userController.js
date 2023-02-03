@@ -46,5 +46,10 @@ const signUpUser = async (req, res) => {
         res.status(400).json({error: error.message});
     }
 }
+const signOutUser = async (req, res)=>{
+    res.cookie('jwt', 'expiredtoken');
+    res.redirect('/');
+    res.json("User successully log out"); 
+}
 
-module.exports = { signInUser, signUpUser };
+module.exports = { signInUser, signUpUser, signOutUser };
