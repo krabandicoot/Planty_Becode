@@ -25,17 +25,17 @@ const userSchema = new Schema({
     },
     color: {
         type: String,
-        required: true,
+        required: false,
         minLength: 4,
         maxLength: 7,
         unique: true,
     }
 });
 
-userSchema.statics.signup = async function (username, email, password, color) {
+userSchema.statics.signup = async function (username, email, password) {
 
     //validation 
-    if (!email || !username || !color || !password) {
+    if (!email || !username || !password) {
         throw Error('All fields need to be filled');
     }
     // if(username.charAt(0)!='K'){
@@ -44,17 +44,17 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (!validator.isAlphanumeric(username) && !validator.isAlpha(username)) {
         throw Error('The username must contain only letters and numbers');
     }
-    if ((color.charAt(0) != '#') || (!validator.isHexColor(color))) {
-        throw Error(`The color entered is not hexadecimal color, be sure you put '#' in front of the combination`);
-    }
+    // if ((color.charAt(0) != '#') || (!validator.isHexColor(color))) {
+    //     throw Error(`The color entered is not hexadecimal color, be sure you put '#' in front of the combination`);
+    // }
     if (!validator.isEmail(email)) { //check is the email is a valid structure
         throw Error('The email address entered is not valid');
     }
     if (!validator.isStrongPassword(password)) { //
         throw Error('The password must contain 8 character minimum, with an uppercase, a number and a symbol');
     }
-    const emailExist = await this.findOne({email});
-    const usernameExist = await this.findOne({username});
+    const emailExist = await this.findOne({ email });
+    const usernameExist = await this.findOne({ username });
     // const createPlayer = await Player.aggregate([
     //     {$lookup:
     //         {
@@ -65,7 +65,7 @@ userSchema.statics.signup = async function (username, email, password, color) {
     //     }}
     // ]);
 
-    if(emailExist){
+    if (emailExist) {
         throw Error('Email already used, please enter another adress');
     }
     if (usernameExist) {
@@ -75,8 +75,8 @@ userSchema.statics.signup = async function (username, email, password, color) {
     const hash = await bcrypt.hash(password, salt);
 
 
-    const user = await this.create({username, email, password: hash, color});
-    const player = await Player.create({username, email, password: hash, color});
+    const user = await this.create({ username, email, password: hash });
+    const player = await Player.create({ username, email, password: hash });
 
     return user, player;
 }
