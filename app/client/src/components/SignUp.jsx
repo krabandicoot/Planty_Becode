@@ -69,50 +69,39 @@ export function SignUp () {
             return;
         }
 
-        axios.post(REGISTER_URL, {
-            username,
-            email,
-            password,
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        await axios.post(REGISTER_URL,
+            JSON.stringify({ username, email, password }),
+            {
+                headers: { 'Content-Type': 'application/json' }
 
-        // try {
-        //     const response = await axios.post(REGISTER_URL,
-        //         JSON.stringify({ username, password }),
-        //         {
-        //             headers: { 'Content-Type': 'application/json' }
-        //         }
-        //     );
-        //     console.log(response?.data);
-        //     console.log(response?.accessToken);
-        //     console.log(JSON.stringify(response))
-        //     setSuccess(true);
-        //     //clear state and controlled inputs
-        //     //need value attrib on inputs for this
-        //     setUsername("");
-        //     setEmail("")
-        //     setPassword("");
-        //     setMatchPassword("");
-        // } catch (err) {
-        //     if (!err?.response) {
-        //         setErrMsg('No Server Response');
-        //     } else if (err.response?.status === 409) {
-        //         setErrMsg('Username Taken');
-        //     } else {
-        //         setErrMsg('Registration Failed')
-        //     }
-        //     errRef.current.focus();
-        // }
+            })
+            .then(function (response) {
+                console.log(response?.data);
+                console.log(response?.accessToken);
+                console.log(JSON.stringify(response))
+                setSuccess(true);
+                //clear state and controlled inputs
+                //need value attrib on inputs for this
+                setUsername("");
+                setEmail("");
+                setPassword("");
+                setMatchPwd("");
+            })
+            .catch(function (err) {
+                console.log(err);
+                if (!err?.response) {
+                    setErrMsg('No Server Response');
+                } else if (err.response?.status === 409) {
+                    setErrMsg('Username Taken');
+                } else {
+                    setErrMsg('Registration Failed')
+                }
+                errRef.current.focus();
+            });
     }
 
-
-        return ( 
-            <>
+    return (
+        <>
             {success ? (
                 <section>
                     <h1>Success!</h1>

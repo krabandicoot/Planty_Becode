@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
-import { FaEye } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
+import { FaEye } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import axios from '../api/axios';
@@ -9,20 +9,24 @@ const SIGNIN_URL = "/api/user/signin";
 const eyeIcon = <FaEye />
 
 export function SignIn() {
+
+    const { setAuth } = useAuth();
+    // console.log(setAuth);
+
     const userRef = useRef(); // focus on user
     const errRef = useRef(); // focus on errors
 
     const [passwordVisible, setPasswordVisible] = useState(false);
 
-    const { setAuth } = useAuth;
-
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
+    //    console.log(location);
+    const from = location.state?.from?.pathname || "/map";
 
     const [username, setUsername] = useState(""); // corresponds to user input
     const [password, setPassword] = useState(""); // corresponds to pwd input
     const [errMsg, setErrMsg] = useState(""); // corresponds to error msg we might display
+    // const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         userRef.current.focus()
@@ -35,24 +39,33 @@ export function SignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await axios.post(
-            SIGNIN_URL,
-            JSON.stringify({
+        const configuration = {
+            method: 'post',
+            url: SIGNIN_URL,
+            data: {
                 username,
                 password
-            }),
-            {
-                headers: { 'Content-type': 'application/json' }
-            })
-            .then((response) => {
-                console.log(JSON.stringify(response?.data));
+            },
+            withCredentials: true,
+        }
 
-                const accessToken = response?.data.accessToken;
-                //const roles = response?.data?.roles;
-                setAuth({ username, password, accessToken });
+        await axios(configuration)
+            .then((response) => {
+                console.log("You are logged");
+                console.log(JSON.stringify(response?.data));
+                const signInToken = response?.data?.signInToken;
+
+                // if (response.data.signInToken) {
+                //     localStorage.setItem("user", JSON.stringify(response.data));
+                // } else {
+                //     console.log("no response");
+                // }
+
+                setAuth({ username, password, signInToken });
                 setUsername("");
                 setPassword("");
-                navigate(to = '/map', from, { replace: true });
+                // setSuccess(true);
+                navigate(from, { replace: true });
             })
             .catch(function (err) {
                 if (!err?.response) {
@@ -74,6 +87,15 @@ export function SignIn() {
     // TODO Remember me Checkbox
 
     return (
+        // <>
+        //     {success ? (
+        //         <section>
+        //             <h1>Success!</h1>
+        //             <p>
+        //                 <a href="#">Sign In</a>
+        //             </p>
+        //         </section>
+        //     ) : (
         <section>
             <p ref={errRef} className={"errMsg" ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
 
