@@ -48,35 +48,34 @@ export function SignIn() {
             },
             withCredentials: true,
         }
+        try {
+            const response = await axios(configuration);
+            console.log("You are logged");
+            console.log(JSON.stringify(response?.data));
+            const signInToken = response?.data?.signInToken;
 
-        await axios(configuration)
-            .then((response) => {
-                console.log("You are logged");
-                console.log(JSON.stringify(response?.data));
-                const signInToken = response?.data?.signInToken;
-                console.log(signInToken)
-                setAuth({ username, password });
-                setUsername("");
-                setPassword("");
-                // setSuccess(true);
-                navigate(from, { replace: true });
-            })
-            .catch(function (err) {
-                if (!err?.response) {
-                    console.log(err)
-                    setErrMsg("No server Response");
-                } else if (err.response?.status === 400) {
-                    console.log(err)
-                    setErrMsg("Missing Username or Password");
-                } else if (err.response?.status === 401) {
-                    console.log(err)
-                    setErrMsg("Unauthorized");
-                } else {
-                    console.log(err)
-                    setErrMsg("Login Failed");
-                }
-                errRef.current.focus();
-            });
+            setAuth({ username, password });
+
+            setUsername("");
+            setPassword("");
+            // setSuccess(true);
+            navigate(from, { replace: true });
+        } catch (err) {
+            if (!err?.response) {
+                console.log(err)
+                setErrMsg("No server Response");
+            } else if (err.response?.status === 400) {
+                console.log(err)
+                setErrMsg("Missing Username or Password");
+            } else if (err.response?.status === 401) {
+                console.log(err)
+                setErrMsg("Unauthorized");
+            } else {
+                console.log(err)
+                setErrMsg("Login Failed");
+            }
+            errRef.current.focus();
+        };
     }
     // TODO Remember me Checkbox
 
