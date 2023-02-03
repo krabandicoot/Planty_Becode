@@ -55,10 +55,29 @@ const updatePlayer = async (req, res) => {
 }
 
 // Delete the player
+const deletePlayer = async (req, res) => {
+    const { username } = req.params;
+    const player = await Player.findOne({username: username});
+    const deletePlayer = await Player.deleteOne({username: username});
+
+    try {
+
+        if(!player) {
+                throw Error(`This username doesn't exist`);
+        }
+
+        res.status(200).json(deletePlayer);
+        console.log('The player has been deleted');
+    
+    } catch(error) {
+        res.status(400).json({error: error.message});
+    }
+}
 
 // Export all the function
 module.exports = { 
     getAccount,
     getPlayers,
-    updatePlayer
+    updatePlayer,
+    deletePlayer
 };
