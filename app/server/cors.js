@@ -1,4 +1,3 @@
-
 const allowedOrigins = [
     'http://locahost:8080',
     'http://locahost:5173/',
