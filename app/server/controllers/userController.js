@@ -46,7 +46,6 @@ const signUpUser = async (req, res) => {
     }
 }
 
-
 const signOutUser = async (req, res) => {
     res.cookie('jwt', 'expiredtoken');
     res.redirect('/');
