@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "../api/axios";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import { FaEye } from 'react-icons/fa';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,29}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,254}$/;
-const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[a-z]{2,4}$/;
 const REGISTER_URL = "/api/user/signup";
 
 //icon eye
@@ -27,9 +28,13 @@ export function SignUp() {
     const [validPassword, setValidPassword] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
 
-    const [matchPwd, setMatchPwd] = useState("");
+    const [matchPassword, setMatchPassword] = useState("");
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    // const from = location.state?.from?.pathname || "/pickColor";
 
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
@@ -51,12 +56,12 @@ export function SignUp() {
 
     useEffect(() => {
         setValidPassword(PWD_REGEX.test(password));
-        setValidMatch(password === matchPwd);
-    }, [password, matchPwd])
+        setValidMatch(password === matchPassword);
+    }, [password, matchPassword])
 
     useEffect(() => {
         setErrMsg("");
-    }, [username, email, password, matchPwd])
+    }, [username, email, password, matchPassword])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -85,7 +90,7 @@ export function SignUp() {
                 setUsername("");
                 setEmail("");
                 setPassword("");
-                setMatchPwd("");
+                setMatchPassword("");
             })
             .catch(function (err) {
                 console.log(err);
@@ -105,9 +110,6 @@ export function SignUp() {
             {success ? (
                 <section>
                     <h1>Success!</h1>
-                    <p>
-                        <a href="#">Sign In</a>
-                    </p>
                 </section>
             ) : (
                 <section className="signup__container-form relative -z-11 bg-zinc-200/[0.2] p-[20px] rounded-xl">
@@ -195,8 +197,8 @@ export function SignUp() {
                                 type="password"
                                 name="confirmPassword"
                                 id="confirmPassword"
-                                onChange={(e) => setMatchPwd(e.target.value)}
-                                value={matchPwd}
+                                onChange={(e) => setMatchPassword(e.target.value)}
+                                value={matchPassword}
                                 required
                                 aria-invalid={validMatch ? "false" : "true"}
                                 aria-describedby="confirmnote"
@@ -215,14 +217,14 @@ export function SignUp() {
                         </div>
                         {/* button sign up */}
                         <button
-                            type="submit"
                             disabled={!validUsername || !validEmail || !validPassword || !validMatch ? true : false}
                             className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Sign Up</button>
                     </form>
                     <p>
                         Already registered?<br />
-                        <span>
-                            {/* <a href="signin" onClick={navigateTo("/signin")}>Sign In</a> */}
+                        <span className="line">
+                            {/*put router link here*/}
+                            <a href="/signin">Sign In</a>
                         </span>
                     </p>
                 </section>

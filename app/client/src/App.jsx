@@ -3,6 +3,7 @@ import { Layout } from "./components/Layout";
 import { Title } from "./components/Title";
 import { LandingPage } from "./components/LandingPage";
 import { SignIn } from "./components/SignIn";
+import ColorPicker from "./components/PickColor";
 import { SignUp } from "./components/SignUp";
 
 import { Header } from "./components/Header";
@@ -17,6 +18,7 @@ import { Footer } from "./components/Footer";
 
 import RequireAuth from "./components/RequireAuth";
 import { Routes, Route } from 'react-router-dom'
+import { useState } from "react";
 
 export default function App() {
 
@@ -26,8 +28,9 @@ export default function App() {
         {/* <Route element={<RequireAuth />}> */}
 
         <Route path="/" element={<><Title /><LandingPage /><Footer /></>} />
-        <Route path="signin" element={<><Title /><SignIn /><Footer /></>} />
-        <Route path="signup" element={<><Title /><SignUp /><Footer /></>} />
+        <Route path="/signin" element={<><Title /><SignIn /><Footer /></>} />
+        <Route path="/pickcolor" element={<><Title /><ColorPicker /><Footer /></>} />
+        <Route path="/signup" element={<><Title /><SignUp /><Footer /></>} />
 
         <Route element={<RequireAuth />}>
           {/* prot<Route element={<RequireAuth />}></Route>ected routes */}
