@@ -52,8 +52,7 @@ const updatePlayer = async (req, res) => {
                 throw Error(`This username doesn't exist`);
         }
 
-        res.status(200).json(updatePlayer);
-        res.status(200).json(UpdateUser);
+        res.status(200).json(updatePlayer, UpdateUser);
     
     } catch(error) {
         res.status(400).json({error: error.message});
@@ -73,8 +72,7 @@ const deletePlayer = async (req, res) => {
                 throw Error(`This username doesn't exist`);
         }
 
-        res.status(200).json(deletePlayer);
-        res.status(200).json(deleteUser);
+        res.status(200).json(deletePlayer, deleteUser);
         console.log('The player has been deleted');
     
     } catch(error) {
