@@ -65,6 +65,7 @@ const deletePlayer = async (req, res) => {
     const { username } = req.params;
     const player = await Player.findOne({username: username});
     const deletePlayer = await Player.deleteOne({username: username});
+    const deleteUser = await getUser.deleteOne({username: username});
 
     try {
 
@@ -73,6 +74,7 @@ const deletePlayer = async (req, res) => {
         }
 
         res.status(200).json(deletePlayer);
+        res.status(200).json(deleteUser);
         console.log('The player has been deleted');
     
     } catch(error) {
