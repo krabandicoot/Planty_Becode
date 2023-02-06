@@ -191,6 +191,8 @@ const ColorPicker = ({
             onKeyUp={onKeyUp}
             onKeyDown={onKeyDown}
         >
+            {/* <div><h2> Choose your color profile</h2></div> */}
+            
             <div ref={paletteRef} className={`rcp__palette ${isPaletteIn ? 'in' : 'out'}`}>
                 <canvas />
             </div>
@@ -209,7 +211,7 @@ const ColorPicker = ({
             <div className={`rcp__ripple ${isRippling ? 'rippling' : ''}`.trim()} style={{ borderColor: color }} />
 
             <button
-                type="button"
+                type="submit"
                 className={`rcp__well ${isPressed ? 'pressed' : ''}`.trim()}
                 style={{ backgroundColor: color }}
                 aria-label={ariaLabelColorWell}
@@ -217,7 +219,7 @@ const ColorPicker = ({
                 tabIndex={disabled ? -1 : 0}
                 onAnimationEnd={togglePicker}
                 onClick={selectColor}
-            />
+            >OK</button>
         </div>
     );
 };
