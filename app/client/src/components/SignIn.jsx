@@ -2,7 +2,6 @@ import { useRef, useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import { FaEye } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useLocalStorage } from "../hooks/useLocalStorage";
 
 import axios from '../api/axios';
 const SIGNIN_URL = "/api/user/signin";
@@ -51,12 +50,15 @@ export function SignIn() {
 
         try {
             const response = await axios(configuration);
+            console.log(response.data);
+
             const user = response?.data?.username;
             setAuth(user);
             setUsername("");
             setPassword("");
-            // setSuccess(true);
+
             navigate(from, { replace: true });
+
         } catch (err) {
             if (!err?.response) {
                 setErrMsg("No server Response");

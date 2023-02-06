@@ -16,24 +16,23 @@ import { Tree } from "./components/Tree";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 
-import RequireAuth from "./components/RequireAuth";
 import { Routes, Route } from 'react-router-dom'
-import { useState } from "react";
+import RequireLayout from "./components/RequireLayout";
 
 export default function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        {/* <Route element={<RequireAuth />}> */}
 
+      <Route path="/" element={<Layout />}>
+        {/* Public Routes */}
         <Route path="/" element={<><Title /><LandingPage /><Footer /></>} />
         <Route path="/signin" element={<><Title /><SignIn /><Footer /></>} />
         <Route path="/pickcolor" element={<><Title /><ColorPicker /><Footer /></>} />
         <Route path="/signup" element={<><Title /><SignUp /><Footer /></>} />
 
-        <Route element={<RequireAuth />}>
-          {/* prot<Route element={<RequireAuth />}></Route>ected routes */}
+        {/* Private Routes */}
+        <Route element={<RequireLayout />}>
           <Route path="map" element={<><Header /><Map /><Navbar /><Footer /></>} />
           <Route path="leaderboard" element={<><Header /><Leaderboard /><Navbar /><Footer /></>} />
           <Route path="gamelog" element={<><Header /><Gamelog /><Navbar /><Footer /></>} />
@@ -42,6 +41,7 @@ export default function App() {
           <Route path="tree" element={<><Header /><Tree /><Navbar /><Footer /></>} />
         </Route>
       </Route>
+
     </Routes >
   );
 }
