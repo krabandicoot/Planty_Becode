@@ -1,55 +1,30 @@
+import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-const ACCOUNT_URL = "/api/account/username";
+
+import axios from '../api/axios';
+const ACCOUNT_URL = "/api/user/signout";
 
 export function User() {
-    // const { setAuth } = useAuth();
+    const { setAuth } = useAuth();
 
-    // const handleLogout = () => {
-    //     e.preventDefault();
+    const navigate = useNavigate();
+    const to = "/";
 
-    //     const configuration = {
-    //         method: 'get',
-    //         url: SIGNIN_URL,
-    //         data: {
-    //             username,
-    //             password
-    //         },
-    //         withCredentials: true,
-    //     }
-
-    //     try {
-    //         const response = await axios(configuration);
-    //         console.log("You are logged");
-
-    //         console.log(JSON.stringify(response?.data));
-    //         const user = response?.data?.username;
-
-    //         setAuth({});
-    //         localStorage.clear();
-    //         console.log("logged out");
-
-    //     } catch (err) {
-    //         if (!err?.response) {
-    //             console.log(err)
-    //             setErrMsg("No server Response");
-    //         } else if (err.response?.status === 400) {
-    //             console.log(err)
-    //             setErrMsg("Missing Username or Password");
-    //         } else if (err.response?.status === 401) {
-    //             console.log(err)
-    //             setErrMsg("Unauthorized");
-    //         } else {
-    //             console.log(err)
-    //             setErrMsg("Login Failed");
-    //         }
-    //         errRef.current.focus();
-    //     };
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        setAuth({});
+        localStorage.clear();
 
 
+        console.log("you are logged out");
+
+        navigate(to, { replace: true });
+
+    }
     return (
         <section>
             <h1>User</h1>
-            <button className="Sign Out" ></button>
+            <button className="Sign Out" onClick={handleLogout}></button>
         </section>
     )
 }

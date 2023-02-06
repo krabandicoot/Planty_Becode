@@ -2,6 +2,8 @@ import { useRef, useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import { FaEye } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useLocalStorage } from "../hooks/useLocalStorage";
+
 
 import axios from '../api/axios';
 const SIGNIN_URL = "/api/user/signin";
@@ -20,8 +22,8 @@ export function SignIn() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    //    console.log(location);
     const from = location.state?.from?.pathname || "/map";
+
     const [username, setUsername] = useState(""); // corresponds to user input
     const [password, setPassword] = useState(""); // corresponds to pwd input
     const [errMsg, setErrMsg] = useState(""); // corresponds to error msg we might display
@@ -50,32 +52,20 @@ export function SignIn() {
 
         try {
             const response = await axios(configuration);
-            console.log("You are logged");
-
-            console.log(JSON.stringify(response?.data));
             const user = response?.data?.username;
-
-            setAuth(response.data);
-
-            localStorage.setItem('user', JSON.stringify(user))
-            console.log(user);
-
+            setAuth(user);
             setUsername("");
             setPassword("");
             // setSuccess(true);
             navigate(from, { replace: true });
         } catch (err) {
             if (!err?.response) {
-                console.log(err)
                 setErrMsg("No server Response");
             } else if (err.response?.status === 400) {
-                console.log(err)
                 setErrMsg("Missing Username or Password");
             } else if (err.response?.status === 401) {
-                console.log(err)
                 setErrMsg("Unauthorized");
             } else {
-                console.log(err)
                 setErrMsg("Login Failed");
             }
             errRef.current.focus();
@@ -84,15 +74,6 @@ export function SignIn() {
     // TODO Remember me Checkbox
 
     return (
-        // <>
-        //     {success ? (
-        //         <section>
-        //             <h1>Success!</h1>
-        //             <p>
-        //                 <a href="#">Sign In</a>
-        //             </p>
-        //         </section>
-        //     ) : (
         <section>
             <p ref={errRef} className={"errMsg" ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
 
@@ -162,7 +143,5 @@ export function SignIn() {
                 </div >
             </div >
         </section >
-        //     )}
-        // </>
     )
 }

@@ -20,18 +20,17 @@ import { Routes, Route } from 'react-router-dom'
 
 export default function App() {
 
-
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+        {/* <Route element={<RequireAuth />}> */}
 
-        {/* public routes */}
         <Route path="/" element={<><Title /><LandingPage /><Footer /></>} />
         <Route path="signin" element={<><Title /><SignIn /><Footer /></>} />
         <Route path="signup" element={<><Title /><SignUp /><Footer /></>} />
 
-        {/* protected routes */}
         <Route element={<RequireAuth />}>
+          {/* prot<Route element={<RequireAuth />}></Route>ected routes */}
           <Route path="map" element={<><Header /><Map /><Navbar /><Footer /></>} />
           <Route path="leaderboard" element={<><Header /><Leaderboard /><Navbar /><Footer /></>} />
           <Route path="gamelog" element={<><Header /><Gamelog /><Navbar /><Footer /></>} />
