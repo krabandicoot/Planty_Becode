@@ -3,72 +3,71 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
+    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
 
-  color: 121212;
+    color: 121212;
 }
 
 a {
-  font-weight: 400;
-  color: #121212;
-  text-decoration: inherit;
+    font-weight: 400;
+    color: #121212;
+    text-decoration: inherit;
 }
 
 a:hover {
-  color: #54A543;
+    color: #54A543;
 
 }
 
 body {
-  padding: 2rem;
-  place-items: center;
-  min-width: 320px;
-  max-height: 100vh;
-  background: url(./images/bg-planty.png) no-repeat;
-  background-size: auto 108%;
-  background-position-x: 40%;
+    place-items: center;
+    min-width: 320px;
+    max-height: 100vh;
+    background: url(./images/bg-planty.png) no-repeat;
+    background-size: auto 108%;
+    background-position-x: 40%;
 }
 
 h1 {
-  font-size: 2.4em;
-  line-height: 1.1;
+    font-size: 2.4em;
+    line-height: 1.1;
 }
 
 button {
-  border-radius: 50px;
-  margin-bottom: 1em;
-  margin-left: 1em;
-  margin-right: 1em;
-  border: none;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  cursor: pointer;
-  background-color: #B2E186;
-  opacity: 0.4;
+    border-radius: 50px;
+    margin-bottom: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
+    border: none;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: #B2E186;
+    opacity: 0.4;
 
 }
 
 button:hover {
-  background-color: #54A543;
-  opacity: 100%;
+    background-color: #54A543;
+    opacity: 100%;
 }
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+    outline: 4px auto -webkit-focus-ring-color;
 }
 
 .offscreen {
-  position: absolute;
-  left: -9999px;
+    position: absolute;
+    left: -9999px;
 }
 
 .hide {
-  display: none;
+    display: none;
 }
 
 /* picker color */
@@ -256,9 +255,11 @@ button:focus-visible {
         transform: scale(1);
         opacity: 0.3;
     }
+
     50% {
         opacity: 0.1;
     }
+
     100% {
         opacity: 0;
         border-width: 0;
@@ -270,12 +271,15 @@ button:focus-visible {
     0% {
         transform: scale(1);
     }
+
     25% {
         transform: scale(0.8);
     }
+
     50% {
         transform: scale(1);
     }
+
     100% {
         transform: scale(1);
     }
