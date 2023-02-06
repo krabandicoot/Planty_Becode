@@ -3,7 +3,7 @@ import React from "react";
 export function LandingPage() {
 
   return (
-    <section className="flex flex-col">
+    <main className="flex flex-col">
       <div className="flex flex-col justify-center mb-12">
         <button>
           <a href="/signin">
@@ -20,6 +20,6 @@ export function LandingPage() {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
         architecto tempore cum quia aperiam, soluta tempora?
       </p>
-    </section >
+    </main >
   );
 }

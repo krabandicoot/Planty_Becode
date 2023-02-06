@@ -26,8 +26,6 @@ const signInUser = async (req, res) => {
         })
         res.status(200).json({ username, signInToken });
 
-        res.json({ message: "cookie ok" })
-
         res.redirect('localhost:5173/map')
     } catch (error) {
         res.status(400).json({ error: error.message });

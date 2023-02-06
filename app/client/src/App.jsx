@@ -14,8 +14,6 @@ import { GameRules } from "./components/GameRules";
 import { User } from "./components/User";
 import { Tree } from "./components/Tree";
 import { Navbar } from "./components/Navbar";
-import { Footer } from "./components/Footer";
-
 import { Routes, Route } from 'react-router-dom'
 import RequireLayout from "./components/RequireLayout";
 
@@ -24,24 +22,23 @@ export default function App() {
   return (
     <Routes>
 
+      {/* Public Routes */}
       <Route path="/" element={<Layout />}>
-        {/* Public Routes */}
-        <Route path="/" element={<><Title /><LandingPage /><Footer /></>} />
-        <Route path="/signin" element={<><Title /><SignIn /><Footer /></>} />
-        <Route path="/pickcolor" element={<><Title /><ColorPicker /><Footer /></>} />
-        <Route path="/signup" element={<><Title /><SignUp /><Footer /></>} />
+        <Route path="/" element={<><Title /><LandingPage /></>} />
+        <Route path="/signin" element={<><Title /><SignIn /></>} />
+        <Route path="/signup" element={<><Title /><SignUp /></>} />
+
 
         {/* Private Routes */}
         <Route element={<RequireLayout />}>
-          <Route path="map" element={<><Header /><Map /><Navbar /><Footer /></>} />
-          <Route path="leaderboard" element={<><Header /><Leaderboard /><Navbar /><Footer /></>} />
-          <Route path="gamelog" element={<><Header /><Gamelog /><Navbar /><Footer /></>} />
-          <Route path="gamerules" element={<><Header /><GameRules /><Navbar /><Footer /></>} />
-          <Route path="account" element={<><Header /><User /><Navbar /><Footer /></>} />
-          <Route path="tree" element={<><Header /><Tree /><Navbar /><Footer /></>} />
+          <Route path="map" element={<><Header /><Map /><Navbar /></>} />
+          <Route path="leaderboard" element={<><Header /><Leaderboard /><Navbar /></>} />
+          <Route path="gamelog" element={<><Header /><Gamelog /><Navbar /></>} />
+          <Route path="gamerules" element={<><Header /><GameRules /><Navbar /></>} />
+          <Route path="account" element={<><Header /><User /><Navbar /></>} />
+          <Route path="tree" element={<><Header /><Tree /><Navbar /></>} />
         </Route>
       </Route>
-
     </Routes >
   );
 }
