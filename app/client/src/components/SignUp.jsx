@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, {useState, useRef, useEffect} from "react";
 import axios from "../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
@@ -10,9 +10,9 @@ const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[a-z]{2,4}$/;
 const REGISTER_URL = "/api/user/signup";
 
 //icon eye
-const eyeIcon = <FaEye />
+const eyeIcon = <FaEye/>
 
-export function SignUp() {
+export function SignUp () {
     const userRef = useRef();
     const errRef = useRef();
 
@@ -21,8 +21,8 @@ export function SignUp() {
     const [usernameFocus, setUsernameFocus] = useState(false);
 
     const [email, setEmail] = useState("");
-    const [validEmail, setValidEmail] = useState(false);
-    const [emailFocus, setEmailFocus] = useState(false);
+    const [validEmail, setValidEmail] = useState (false);
+    const [emailFocus, setEmailFocus] = useState (false);
 
     const [password, setPassword] = useState("");
     const [validPassword, setValidPassword] = useState(false);
@@ -40,7 +40,7 @@ export function SignUp() {
     const [success, setSuccess] = useState(false);
 
     // visibility password
-    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [passwordVisible, setPasswordVisible] = useState (false);
 
     useEffect(() => {
         userRef.current.focus();
@@ -112,53 +112,53 @@ export function SignUp() {
                     <h1>Success!</h1>
                 </section>
             ) : (
-                <section className="signup__container-form relative -z-11 bg-zinc-200/[0.2] p-[20px] rounded-xl">
-                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <form method="POST" className="signup__form" onSubmit={handleSubmit}>
-                        {/* username */}
-                        < div className="signup__form-username relative z-0 w-full mb-6 group">
-                            <input
-                                type="text"
-                                name="username"
-                                id="username"
-                                ref={userRef}
-                                autoComplete="off"
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
-                                aria-invalid={validUsername ? "false" : "true"}
-                                aria-describedby="uidnote"
-                                onFocus={() => setUsernameFocus(true)}
-                                onBlur={() => setUsernameFocus(false)}
-                                className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
-                                placeholder=" " />
-                            <label
-                                htmlFor="username"
-                                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username
-                            </label>
-                        </div>
-                        <p id="uidnote" className={usernameFocus && username && !validUsername ? "instructions" : "offscreen"}>
-                            {/* mettre icon */}
-                            4 to 30 characters.<br />
+            <section className="signup__container-form relative -z-11 bg-zinc-200/[0.2] p-[20px] rounded-xl">
+                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                <form method="POST" className="signup__form" onSubmit={handleSubmit}>
+        {/* username */}
+                    < div className="signup__form-username relative z-0 w-full mb-6 group">
+                        <input 
+                        type="text" 
+                        name="username" 
+                        id="username" 
+                        ref={userRef}
+                        autoComplete="off"        
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                        aria-invalid={validUsername ? "false" : "true"}
+                        aria-describedby="uidnote"
+                        onFocus={() => setUsernameFocus(true)}
+                        onBlur={() => setUsernameFocus(false)}
+                        className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
+                        placeholder=" "/>
+                        <label
+                        htmlFor="username" 
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username
+                        </label>
+                    </div>
+                    <p id="uidnote" className={usernameFocus && username && !validUsername ? "instructions" : "offscreen"}>
+                                {/* mettre icon */}
+                                4 to 30 characters.<br />
                         </p>
-                        {/* email */}
-                        <div className="signup__form-email relative z-0 w-full mb-6 group">
-                            <input
-                                type="email"
-                                name="email"
-                                id="email"
-                                autoComplete="off"
-                                required
-                                aria-invalid={validEmail ? "false" : "true"}
-                                aria-describedby="emailnote"
-                                onFocus={() => setEmailFocus(true)}
-                                onBlur={() => setEmailFocus(false)}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
-                                placeholder=" " />
-                            <label
-                                htmlFor="email"
-                                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
-                            <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
+        {/* email */}
+                    <div className="signup__form-email relative z-0 w-full mb-6 group">
+                        <input 
+                        type="email" 
+                        name="email" 
+                        id="email"
+                        autoComplete="off" 
+                        required
+                        aria-invalid={validEmail ? "false" : "true"}
+                        aria-describedby="emailnote"
+                        onFocus={() => setEmailFocus(true)}
+                        onBlur={() => setEmailFocus(false)}
+                        onChange={(e) => setEmail(e.target.value)} 
+                        className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
+                        placeholder=" "/>
+                        <label 
+                        htmlFor="email" 
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                        <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
                                 {/* mettre icon */}
                                 invalid email address<br />
                             </p>
