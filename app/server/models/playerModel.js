@@ -25,7 +25,6 @@ const playerSchema = new Schema({
         // required: true,
         minLength: 4,
         maxLength: 7,
-        unique:true,
     },
     bio:{
         type:String, 

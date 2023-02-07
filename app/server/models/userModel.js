@@ -28,7 +28,6 @@ const userSchema = new Schema({
         required: true,
         minLength: 4,
         maxLength: 7,
-        unique: true,
     }
 });
 

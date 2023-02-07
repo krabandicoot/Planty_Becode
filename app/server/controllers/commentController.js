@@ -3,10 +3,16 @@ const jwt = require('jsonwebtoken');
 const Player = require('../models/playerModel');
 const Comment = require('../models/commentModel');
 
-// Read the token
-function parseJwt (token) {
-    return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
-}
+const getUserInfo = async (req, res) => {
+    let cookie = req.cookie;
+    console.log(cookie);
+
+    // if(!cookie){
+    // // Read the token
+    // function parseJwt (token) {
+    //     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+    // }}
+};
 
 // Create a comment
 const createComment = async (req, res) => {

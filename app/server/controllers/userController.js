@@ -22,12 +22,15 @@ const signInUser = async (req, res) => {
         res.cookie('planty', signInToken, {
             httpOnly: true,
             secure: true,
-            sameSite: 'None',
+            sameSite: 'None'
         });
+
+        res.status(200).json({username, signInToken});
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 }
+
 //signup user 
 const signUpUser = async (req, res) => {
     const { username, email, password, color } = req.body;
