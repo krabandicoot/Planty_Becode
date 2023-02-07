@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const randomWords = require('project-name-generator');
 const fs = require('fs');
 
 const treeSchema = new Schema({
@@ -15,7 +14,6 @@ const treeSchema = new Schema({
     },
     name: {
         type: String,
-        default: `${randomWords().spaced}`,
         required: true,
     },
     owner: {
