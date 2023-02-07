@@ -23,11 +23,7 @@ const signInUser = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: 'None',
-        })
-
-        res.json({message: "cookie ok"})
-
-        res.redirect('localhost:5173/map')
+        });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

@@ -12,7 +12,7 @@ const commentSchema = new Schema({
             type: String
             }
     },
-    tree_id: {
+    tree_id:{
         required: true,
         type: String,
     },
@@ -23,14 +23,4 @@ const commentSchema = new Schema({
     }
 }, {timestamps: true});
 
-// const addComment = await Tree.aggregate([
-//     {$lookup:
-//         {
-//             from: "comment",
-//             localField: "tree_id",
-//             foreignField: "_id",
-//             as: "comments"
-//     }}
-// ]);
-
-module.exports = mongoose.model('Comment',commentSchema);
+module.exports = mongoose.model('Comment', commentSchema);
