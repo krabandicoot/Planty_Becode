@@ -26,7 +26,7 @@ const signInUser = async (req, res) => {
         })
         res.status(200).json({ username, signInToken });
 
-        res.redirect('localhost:5173/map')
+
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -48,7 +48,7 @@ const signUpUser = async (req, res) => {
 }
 const signOutUser = async (req, res) => {
     res.cookie('jwt', 'expiredtoken');
-    res.redirect('/');
+    //res.redirect('/');
     res.json("User successully log out");
 }
 
