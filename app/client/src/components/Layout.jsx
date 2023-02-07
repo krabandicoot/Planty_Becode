@@ -2,9 +2,8 @@ import { Outlet } from "react-router-dom";
 
 export function Layout() {
     return (
-        <section className="App max-h-screen max-w-screen m-8">
+        <main className="ml-8 mr-8">
             <Outlet />
-        </section>
-
+        </main>
     )
-}
+} 

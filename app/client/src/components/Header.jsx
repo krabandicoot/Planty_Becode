@@ -7,7 +7,7 @@ import useAuth from "../hooks/useAuth";
 export function Header() {
   const { auth } = useAuth();
   return (
-    <header className="header text-xs flex justify-between mb-4">
+    <header className="header text-xs flex justify-between mb-4 ml-8 mr-8">
       {/* Logo + redirects*/}
       <div className="header__logo flex">
         <Link to="/map">

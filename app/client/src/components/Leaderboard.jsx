@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
 
 import axios from "../api/axios";
 const ACCOUNT_URL = "/api/account/leaderboard";
 
 export function Leaderboard() {
-    const [players, setPlayers] = useState();
+    const { players, setPlayers } = useAuth();
+
     useEffect(() => {
         let isMounted = true; // mounted true = the component is loaded to the site
         const controller = new AbortController();

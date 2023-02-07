@@ -1,5 +1,7 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { Header } from "./Header";
+import { Navbar } from "./Navbar";
 
 export default function RequireLayout() {
 
@@ -8,9 +10,10 @@ export default function RequireLayout() {
     console.log(auth)
 
     return (
-        auth// checks to see if there is a user or not
-            ? <Outlet />
-            : <Navigate to='/signin' state={{ from: location }} replace />   // if yes, we return the outlet
-        //we send the user to the login page and replaces the current location with the one we want ie signin
+        auth ?
+            <main className=" ml-8 mr-8">
+                <Outlet />
+            </main >
+            : <Navigate to='/signin' state={{ from: location }} replace />
     );
 }
