@@ -34,7 +34,7 @@ for(let i = -1; i < trees.length; i++){
 
 
   mongoose
-  .connect(("mongodb+srv://root:Stupide@leafappcluster.rjanuu6.mongodb.net/leafapp"), { useNewUrlParser: true })
+  .connect((mongoString), { useNewUrlParser: true })
   .catch(err => {
     console.log(err.stack);
     process.exit(1);
