@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import fillColorWheel from '@radial-color-picker/color-wheel';
 import Rotator from '@radial-color-picker/rotator';
 import { SignUp } from './SignUp';
+import { hslToHex } from '../hooks/convertHSLtoHex';
 
 const noop = () => {};
 const colors = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta', 'red'];
@@ -20,7 +21,7 @@ const ColorPicker = ({
     hue = 0,
     saturation = 100,
     luminosity = 50,
-    alpha = 1,
+    // alpha = 1,
     disabled = false,
     step = 1,
     variant = 'collapsible', // collapsible | persistent
@@ -140,16 +141,16 @@ const ColorPicker = ({
         rotator.current.setAngleFromEvent(ev);
     };
 
-    const selectColor = () => {
-        setIsPressed(true);
+    // const selectColor = () => {
+    //     setIsPressed(true);
 
-        if (isPaletteIn && isKnobIn) {
-            onSelect(angleRef.current);
-            setIsRippling(true);
-        } else {
-            setIsPaletteIn(true);
-        }
-    };
+    //     if (isPaletteIn && isKnobIn) {
+    //         onSelect(angleRef.current);
+    //         setIsRippling(true);
+    //     } else {
+    //         setIsPaletteIn(true);
+    //     }
+    // };
 
     const togglePicker = () => {
         if (variant !== 'persistent') {
@@ -171,8 +172,9 @@ const ColorPicker = ({
         }
     };
 
-    const color = `hsla(${angleRef.current}, ${saturation}%, ${luminosity}%, ${alpha})`;
+    const color = hslToHex(angleRef.current, saturation, luminosity);
     console.log(color);
+    
     const wrapperClassNames = ['rcp', className, isDragging && 'dragging', disabled && 'disabled']
         .filter(Boolean)
         .join(' ');
