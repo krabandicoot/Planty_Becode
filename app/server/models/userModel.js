@@ -98,8 +98,4 @@ userSchema.statics.signin = async function (username, password) {
     };
     return user;
 }
-
-// userSchema.statics.signout = async function(username, password){
-//     res.cookie('jwt', 'expiredtoken');
-// }
 module.exports = mongoose.model('User', userSchema);

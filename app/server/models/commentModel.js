@@ -6,7 +6,7 @@ const commentSchema = new Schema({
     username:{
         type: String
     },
-    id_tree: {
+    id_tree:{
         type: String,
         default: 'none'
     },
@@ -15,3 +15,5 @@ const commentSchema = new Schema({
         maxLength: 200
     }
 }, {timestamps: true});
+
+module.exports = mongoose.model('Comment', commentSchema);
