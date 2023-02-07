@@ -3,10 +3,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
-const corsOptions = require('./cors')
+const corsOptions = require('./cors');
 
 const userRoutes = require('./routes/user');
 const playerRoutes = require('./routes/player');
+const commentRoutes = require('./routes/comment');
 
 const app = express();
 const PORT = process.env.NODE_DOCKER_PORT;
@@ -18,7 +19,7 @@ mongoose.set('strictQuery', true);
 const database = mongoose.connection;
 
 database.on('error', (error) => {
-    console.log(`Database couldn't connect properly :\n ${error}`)
+    console.log(`Database couldn't connect properly :\n ${error}`);
 });
 database.once('connected', () => {
     console.log('Database Connected 📬');
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 });
 app.use('/api/user', userRoutes);
 app.use('/api/account', playerRoutes);
+app.use('/api/comment', commentRoutes)
 //server set on .env
 app.listen(PORT, () => {
     console.log(`Server Started at ${PORT} 🚀`)

@@ -55,15 +55,6 @@ userSchema.statics.signup = async function (username, email, password, color) {
     }
     const emailExist = await this.findOne({email});
     const usernameExist = await this.findOne({username});
-    // const createPlayer = await Player.aggregate([
-    //     {$lookup:
-    //         {
-    //             from: "users",
-    //             localField: "username",
-    //             foreignField: "username",
-    //             as: "user_info"
-    //     }}
-    // ]);
 
     if(emailExist){
         throw Error('Email already used, please enter another adress');
