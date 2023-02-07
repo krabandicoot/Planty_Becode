@@ -13,9 +13,14 @@ const REGISTER_URL = "/api/user/signup";
 //icon eye
 const eyeIcon = <FaEye/>
 
-
-
 export function SignUp () {
+
+    const [color, setColor] = useState();
+
+    const chooseColor = (color) => {
+        setColor(color);
+    }
+    console.log(color);
 
     const userRef = useRef();
     const errRef = useRef();
@@ -86,13 +91,14 @@ export function SignUp () {
         const v1 = USER_REGEX.test(username);
         const v2 = EMAIL_REGEX.test(email);
         const v3 = PWD_REGEX.test(password);
-        if (!v1 || !v2 || !v3) {
+        const v4 = color;
+        if (!v1 || !v2 || !v3 || !v4) {
             setErrMsg("Invalid Entry");
             return;
         }
 
         await axios.post(REGISTER_URL,
-            JSON.stringify({ username, email, password }),
+            JSON.stringify({ username, email, password, color }),
             {
                 headers: { 'Content-Type': 'application/json' }
 
@@ -106,6 +112,7 @@ export function SignUp () {
                 setEmail("");
                 setPassword("");
                 setMatchPassword("");
+                setColor("");
             })
             .catch(function (err) {
                 console.log(err);
@@ -130,9 +137,9 @@ export function SignUp () {
             ) : (
                 <section className="signup__container-form relative -z-11 bg-zinc-200/[0.2] p-[20px] rounded-xl">
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <div style={{display: isShownForm ? 'block' : 'none'}}>
-                        <form method="POST" className="signup_form"  onSubmit={handleSubmit} onKeyDown={(e) => checkKeyDown(e)}>
-                {/* username */}
+                    <form method="POST" className="signup_form"  onSubmit={handleSubmit} onKeyDown={(e) => checkKeyDown(e)}>
+    {/* username */}
+                        <div style={{display: isShownForm ? 'block' : 'none'}}>
                             < div className="signup__form-username relative z-0 w-full mb-6 group">
                                 <input 
                                 type="text" 
@@ -152,12 +159,12 @@ export function SignUp () {
                                 htmlFor="username" 
                                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username
                                 </label>
-                            </div>
-                            <p id="uidnote" className={usernameFocus && username && !validUsername ? "instructions" : "offscreen"}>
-                                        {/* mettre icon */}
-                                        4 to 30 characters.<br />
+                                <p id="uidnote" className={usernameFocus && username && !validUsername ? "instructions" : "offscreen"}>
+                                            {/* mettre icon */}
+                                            4 to 30 characters.<br />
                                 </p>
-                {/* email */}
+                            </div>
+    {/* email */}
                             <div className="signup__form-email relative z-0 w-full mb-6 group">
                                 <input 
                                 type="email" 
@@ -180,7 +187,7 @@ export function SignUp () {
                                         invalid email address<br />
                                 </p>
                             </div>
-                {/* password */}
+    {/* password */}
                             <div className="signup__form-password relative z-0 w-full mb-6 group">
                                 <input 
                                 type={passwordVisible ? "text" : "password"} 
@@ -204,11 +211,10 @@ export function SignUp () {
                                 htmlFor="password" 
                                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Choose password
                                 </label>
-                {/* button visibility password */}                    
-                                <button onClick={()=> setPasswordVisible(! passwordVisible)} className="absolute top-0 right-0">{eyeIcon}</button>
-                                
+    {/* button visibility password */}                    
+                                <button type="button" onClick={()=> setPasswordVisible(! passwordVisible)} className="absolute top-0 right-0">{eyeIcon}</button>   
                             </div>
-                {/* confirm password */}
+    {/* confirm password */}
                             <div className="signup__form-repeat_password relative z-0 w-full mb-6 group">
                                 <input 
                                 type="password" 
@@ -232,23 +238,24 @@ export function SignUp () {
                                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password
                                 </label>
                             </div>
-                {/* button sign up */}
+    {/* button choose color */}
                             <button
+                            type="button"
                             disabled={!validUsername || !validEmail ||!validPassword || !validMatch ? true : false} 
                             onClick={handleClickVisibility}
-                            className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Next</button>
-                        </form>
-                        <p>
+                            className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Color</button> 
+                        </div>
+    {/* picker Color */}
+                        <div style ={{display: isShownPicker ? 'block' : 'none'}}>
+                            <ColorPicker chooseColor={chooseColor}/>
+                        </div>
+                    </form>
+                    <p style={{display: isShownForm ? 'block' : 'none'}}>
                             Already registered?<br />
-                            <span className="line">
-                                {/*put router link here*/}
-                                <a href="/signin">Sign In</a>
-                            </span>
-                        </p>
-                    </div>
-                    <div style ={{display: isShownPicker ? 'block' : 'none'}}>
-                        <ColorPicker/>
-                    </div>
+                        <span className="line">
+                            <a href="/signin">Sign In</a>
+                        </span>
+                    </p>
                 </section>
             )}    
             </>   

@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import fillColorWheel from '@radial-color-picker/color-wheel';
 import Rotator from '@radial-color-picker/rotator';
+import { SignUp } from './SignUp';
 
 const noop = () => {};
 const colors = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta', 'red'];
@@ -30,6 +31,7 @@ const ColorPicker = ({
     onChange = noop,
     onSelect = noop,
     className,
+    chooseColor, 
     ...rest
 }) => {
     const paletteRef = useRef(null);
@@ -49,6 +51,7 @@ const ColorPicker = ({
     const [isPressed, setIsPressed] = useState(false);
     const [isRippling, setIsRippling] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
+    
 
     useEffect(() => {
         if (mouseScroll) {
@@ -169,6 +172,7 @@ const ColorPicker = ({
     };
 
     const color = `hsla(${angleRef.current}, ${saturation}%, ${luminosity}%, ${alpha})`;
+    console.log(color);
     const wrapperClassNames = ['rcp', className, isDragging && 'dragging', disabled && 'disabled']
         .filter(Boolean)
         .join(' ');
@@ -218,10 +222,11 @@ const ColorPicker = ({
                 disabled={disabled}
                 tabIndex={disabled ? -1 : 0}
                 onAnimationEnd={togglePicker}
-                onClick={selectColor}
+                //onClick= {selectColor}
+                onClick={() => chooseColor(color)}
             >OK</button>
-        </div>
-    );
+        </div> 
+    ); 
 };
 
 export default ColorPicker;
