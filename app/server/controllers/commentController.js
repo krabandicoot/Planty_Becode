@@ -4,9 +4,9 @@ const Player = require('../models/playerModel');
 const Comment = require('../models/commentModel');
 
 // Read the token
-// function parseJwt (token) {
-//     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
-// }
+function parseJwt (token) {
+    return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+}
 
 // Create a comment
 const createComment = async (req, res) => {
