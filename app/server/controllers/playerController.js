@@ -1,5 +1,6 @@
 const { default: mongoose } = require('mongoose');
-const Player = require('../models/playerModel')
+const Player = require('../models/playerModel');
+const getUser = require('../models/userModel');
 
 // Get all info of a player
 const getAccount = async(req,res) => {
@@ -36,8 +37,12 @@ const getPlayers = async(req,res) => {
 // Update the player
 const updatePlayer = async (req, res) => {
     const { username } = req.params;
+
     const player = await Player.findOne({username: username});
+    const User = await getUser.findOne({username: username});
+
     const updatePlayer = await Player.updateOne({username: username}, {$set: req.body});
+    const UpdateUser = await getUser.updateOne({username: username}, {$set: req.body});
 
     try {
 
@@ -47,7 +52,7 @@ const updatePlayer = async (req, res) => {
                 throw Error(`This username doesn't exist`);
         }
 
-        res.status(200).json(updatePlayer);
+        res.status(200).json(updatePlayer, UpdateUser);
     
     } catch(error) {
         res.status(400).json({error: error.message});
@@ -59,6 +64,7 @@ const deletePlayer = async (req, res) => {
     const { username } = req.params;
     const player = await Player.findOne({username: username});
     const deletePlayer = await Player.deleteOne({username: username});
+    const deleteUser = await getUser.deleteOne({username: username});
 
     try {
 
@@ -66,7 +72,7 @@ const deletePlayer = async (req, res) => {
                 throw Error(`This username doesn't exist`);
         }
 
-        res.status(200).json(deletePlayer);
+        res.status(200).json(deletePlayer, deleteUser);
         console.log('The player has been deleted');
     
     } catch(error) {

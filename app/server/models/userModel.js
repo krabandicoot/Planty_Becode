@@ -55,15 +55,6 @@ userSchema.statics.signup = async function (username, email, password) {
     }
     const emailExist = await this.findOne({ email });
     const usernameExist = await this.findOne({ username });
-    // const createPlayer = await Player.aggregate([
-    //     {$lookup:
-    //         {
-    //             from: "users",
-    //             localField: "username",
-    //             foreignField: "username",
-    //             as: "user_info"
-    //     }}
-    // ]);
 
     if (emailExist) {
         throw Error('Email already used, please enter another adress');
@@ -98,8 +89,4 @@ userSchema.statics.signin = async function (username, password) {
     };
     return user;
 }
-
-// userSchema.statics.signout = async function(username, password){
-//     res.cookie('jwt', 'expiredtoken');
-// }
 module.exports = mongoose.model('User', userSchema);

@@ -1,27 +1,30 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-var randomWords = require('project-name-generator');
-
+const fs = require('fs');
 
 const treeSchema = new Schema({
     value:{
         type: String,
-        default: 'available'
+        default: 'available',
+        required: true,
     },
     price:{
-        type: Number, 
+        type: Number,
+        required: true,
     },
     name: {
         type: String,
-        default: `${randomWords.spaced()}`,
+        required: true,
     },
     owner: {
         type: String,
-        default: 'none'
+        default: 'none',
+        required: true,
         //get from player's tree 
     },
     species: {
-        type: String
+        type: String,
+        required: true
         //get from arbustum 
     },
     wikilink: {
@@ -30,20 +33,37 @@ const treeSchema = new Schema({
     },
     diameter:{
         type:Number,
+        required: true
     },
     height:{
         type:Number,
+        required: true,
     },
     lon:{
-        type:Decimal128,
+        type:Number,
+        required: true,
     },
     lat:{
-        type:Decimal128,
+        type:Number,
+        required: true
     },
 });
 
+// treeSchema.statics.createDB = async function () {
+//     let rawdata = fs.readFileSync('../db/arbustum.json');
+//     let trees = JSON.parse(rawdata);
+
+//     for(i = 0; i<trees[i].length; i++){
+//         const diameter = trees[i].circumference;
+//         const createTree = await this.create({price : diameter});
+//         return createTree;
+//     }
+    
+// }
 
 // -> getTreeprice (calculate )
 // -> buyTree (change la valeur de l'arbre et update pour le owner) 
 // -> lockTree ()
 // -> get
+
+module.exports = mongoose.model('Tree',treeSchema);
