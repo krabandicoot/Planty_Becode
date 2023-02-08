@@ -1,6 +1,6 @@
 const express = require('express');
 //import controllers functions 
-const { signInUser, signUpUser, signOutUser} = require('../controllers/userController');
+const { signInUser, signUpUser, signOutUser } = require('../controllers/userController');
 
 //instance of the express router 
 const router = express.Router();
