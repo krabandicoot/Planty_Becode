@@ -112,7 +112,8 @@ export function SignUp() {
                 // console.log(response?.data);
                 // console.log(response?.accessToken);
                 // console.log(JSON.stringify(response))
-                // setAuth(response?.data?.username);
+
+                setAuth(response?.data?.username);
 
                 setUsername("");
                 setEmail("");
