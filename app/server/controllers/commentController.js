@@ -1,5 +1,6 @@
 const { default: mongoose } = require('mongoose');
 const jwt = require('jsonwebtoken');
+const jwt_decode = require("jwt-decode");
 const Player = require('../models/playerModel');
 const Comment = require('../models/commentModel');
 
@@ -21,7 +22,12 @@ const createComment = async (req, res) => {
     const comment = new Comment();
     const { username, text } = req.body;
     const { tree_id } = req.params;
-    getUserInfo();
+
+    let data = jwt_decode(signInToken)
+    res.json({ data })
+
+    // let cookie = req.cookie;
+    // console.log(cookie);
 
     if (!username || !text) {
         return res.json({
