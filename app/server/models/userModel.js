@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+const Player = require('./playerModel');
 
 const Schema = mongoose.Schema;
 
@@ -52,9 +53,10 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (!validator.isStrongPassword(password)) { //
         throw Error('The password must contain 8 character minimum, with an uppercase, a number and a symbol');
     }
-    const emailExist = await this.findOne({ email });
-    const usernameExist = await this.findOne({ username });
-    if (emailExist) {
+    const emailExist = await this.findOne({email});
+    const usernameExist = await this.findOne({username});
+
+    if(emailExist){
         throw Error('Email already used, please enter another adress');
     }
     if (usernameExist) {
@@ -63,9 +65,11 @@ userSchema.statics.signup = async function (username, email, password, color) {
     const salt = await bcrypt.genSalt(10);//a random string of character that get added to the user password to prevent getting hacked
     const hash = await bcrypt.hash(password, salt);
 
-    const user = await this.create({ username, email, password: hash, color});
 
-    return user;
+    const user = await this.create({username, email, password: hash, color});
+    const player = await Player.create({username, email, password: hash, color});
+
+    return user, player;
 }
 
 userSchema.statics.signin = async function (username, password) {
@@ -74,18 +78,15 @@ userSchema.statics.signin = async function (username, password) {
     }
 
     const user = await this.findOne({ username });
+    console.log(user);
     if (!user) {
         throw Error(`This username doesn't exist`);
-    }
+    };
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
         throw Error('Wrong password');
-    }
+    };
     return user;
 }
-
-// userSchema.statics.signout = async function(username, password){
-//     res.cookie('jwt', 'expiredtoken');
-// }
 module.exports = mongoose.model('User', userSchema);
