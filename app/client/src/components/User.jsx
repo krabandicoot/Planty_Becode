@@ -9,8 +9,7 @@ import axios from "../api/axios";
 
 export function User() {
     const { auth, setAuth } = useAuth();
-    const { player, setPlayer } = useState();
-    console.log(auth);
+    const { player, setPlayer } = useAuth();
 
     const navigate = useNavigate();
     const to = "/";
@@ -18,6 +17,7 @@ export function User() {
     useEffect(() => {
         let isMounted = true; // mounted true = the component is loaded to the site
         const controller = new AbortController();
+
         const getPlayer = async () => {
             let username = auth;
             const USER_URL = `/api/account/username/${username}`;
@@ -25,12 +25,13 @@ export function User() {
             try {
                 const response = await axios.get(USER_URL);
                 console.log(response.data);
-                setPlayer(response.data);
+                isMounted && setPlayer(response?.data);
             } catch (err) {
                 console.log(err);
             }
         }
         getPlayer();
+
         return () => { // we clean up function of the useEffect
             isMounted = false; // means we don't mount the component and 
             controller.abort();
@@ -60,7 +61,7 @@ export function User() {
     return (
         <section>
             <div className="tree__card--header flex justify-between">
-                <h2 className="text-3xl w-34 flex flex-col">Welcome, <span className="self-end leading-6">{auth} !</span> </h2>
+                <h2 className="text-3xl w-34 flex flex-col">Welcome, <span className="self-end leading-6">{player.username}!</span> </h2>
                 <div className="flex gap-1 items-end">
                     <div className="flex gap-1">
                         <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[18px]" />
@@ -71,13 +72,29 @@ export function User() {
                     </button>
                 </div>
             </div>
-            <div className="tree__card bg-Magnolia p-2 w-24 flex flex-col items-center rounded-md">
-                <p>Tree Title</p>
-                <img src="../src/images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
+            <div className="tree__card--container">
+                <div className="tree__card bg-Magnolia p-2 w-24 flex flex-col items-center rounded-md">
+                    <p>Tree Title</p>
+                    <img src="../src/images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
+                </div>
             </div>
-            <div className="flex">
-                <h4>Your data </h4>
-                <a><MdOutlineModeEditOutline /></a>
+            <div className="text-sm">
+                <div className="flex gap-2">
+                    <h4>Your data </h4>
+                    <a><MdOutlineModeEditOutline /></a>
+                </div>
+                <div className="flex gap-2">
+                    <p>Username</p>
+                    <p>{player.username}</p>
+                </div>
+                <div className="flex gap-2">
+                    <p>Email</p>
+                    <p>{player.email}</p>
+                </div>
+                <div className="flex gap-2">
+                    <p>Description</p>
+                    <p>{player.bio}</p>
+                </div>
             </div>
         </section>
     )
