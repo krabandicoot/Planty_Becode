@@ -44,7 +44,8 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (!validator.isAlphanumeric(username) && !validator.isAlpha(username)) {
         throw Error('The username must contain only letters and numbers');
     }
-    if (color.charAt(0) != "#" || !validator.isHexColor(color)) {
+    // (color.charAt(0) != "#" || 
+    if (!validator.isHexColor(color)) {
         throw Error(`The color entered is not hexadecimal color, be sure you put '#' in front of the combination`);
     }
     if (!validator.isEmail(email)) { //check is the email is a valid structure

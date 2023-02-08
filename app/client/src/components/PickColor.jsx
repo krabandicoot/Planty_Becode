@@ -4,7 +4,7 @@ import Rotator from '@radial-color-picker/rotator';
 import { SignUp } from './SignUp';
 import { hslToHex } from '../hooks/convertHSLtoHex';
 
-const noop = () => {};
+const noop = () => { };
 const colors = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta', 'red'];
 const keys = {
     ArrowUp: (oldAngle, step) => oldAngle + step,
@@ -32,7 +32,7 @@ const ColorPicker = ({
     onChange = noop,
     onSelect = noop,
     className,
-    chooseColor, 
+    chooseColor,
     ...rest
 }) => {
     const paletteRef = useRef(null);
@@ -52,7 +52,7 @@ const ColorPicker = ({
     const [isPressed, setIsPressed] = useState(false);
     const [isRippling, setIsRippling] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
-    
+
 
     useEffect(() => {
         if (mouseScroll) {
@@ -173,7 +173,8 @@ const ColorPicker = ({
     };
 
     const color = hslToHex(angleRef.current, saturation, luminosity);
-    
+    console.log(color);
+
     const wrapperClassNames = ['rcp', className, isDragging && 'dragging', disabled && 'disabled']
         .filter(Boolean)
         .join(' ');
@@ -197,7 +198,7 @@ const ColorPicker = ({
             onKeyDown={onKeyDown}
         >
             {/* <div><h2> Choose your color profile</h2></div> */}
-            
+
             <div ref={paletteRef} className={`rcp__palette ${isPaletteIn ? 'in' : 'out'}`}>
                 <canvas />
             </div>
@@ -226,8 +227,8 @@ const ColorPicker = ({
                 //onClick= {selectColor}
                 onClick={() => chooseColor(color)}
             >OK</button>
-        </div> 
-    ); 
+        </div>
+    );
 };
 
 export default ColorPicker;

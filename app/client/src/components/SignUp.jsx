@@ -16,6 +16,8 @@ const eyeIcon = <FaEye />
 
 export function SignUp() {
 
+    const { setAuth } = useAuth();
+
     const userRef = useRef();
     const errRef = useRef();
 
@@ -49,19 +51,14 @@ export function SignUp() {
     // visibility password
     const [passwordVisible, setPasswordVisible] = useState(false);
 
-    const [color, setColor] = useState("");
-
-    const chooseColor = (color) => {
-        setColor(color);
-    }
-    console.log(color);
-
     //color user -> PickColor
-    const [color, setColor] = useState("");
+    const [color, setColor] = useState();
 
     const chooseColor = (color) => {
         setColor(color);
     }
+
+    console.log(color);
 
     useEffect(() => {
         userRef.current.focus();
@@ -118,13 +115,14 @@ export function SignUp() {
                 // console.log(response?.accessToken);
                 // console.log(JSON.stringify(response))
 
-                setAuth(response?.data?.username);
+                const user = response?.data?.username;
+                setAuth(user);
 
                 setUsername("");
                 setEmail("");
                 setPassword("");
                 setMatchPassword("");
-                setColor("");
+                setColor();
 
                 navigate("/map", { replace: true });
             })
