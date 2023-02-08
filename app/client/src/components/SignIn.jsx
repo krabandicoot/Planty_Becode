@@ -11,7 +11,7 @@ const eyeIcon = <FaEye />
 export function SignIn() {
 
     const { setAuth } = useAuth();
-    // console.log(setAuth);
+    console.log(setAuth);
 
     const userRef = useRef(); // focus on user
     const errRef = useRef(); // focus on errors
@@ -136,7 +136,7 @@ export function SignIn() {
 
             {/* no account redirect */}
             < div className="flex items-center justify-center mt-6" >
-                <Link to="/signup" className="ml-2 text-DarkSpringGreen" >
+                <Link to="/signup" className="ml-2 text-DarkSpringGreen" replace>
                     You don't have an account?
                 </Link>
             </div >
