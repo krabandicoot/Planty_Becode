@@ -51,9 +51,18 @@ export function SignUp() {
     //color user -> PickColor
     const [color, setColor] = useState("");
 
+
     const chooseColor = (color) => {
         setColor(color);
     }
+    console.log(username);
+    console.log(typeof username);
+    console.log(email);
+    console.log(typeof email);
+    console.log(password);
+    console.log(typeof password);
+    console.log(color);
+    console.log(typeof color);
 
     useEffect(() => {
         userRef.current.focus();
@@ -98,37 +107,37 @@ export function SignUp() {
             setErrMsg("Invalid Entry");
             return;
         }
+        try {
+            const response = await axios.post(REGISTER_URL,
+                JSON.stringify({ username, email, password, color }),
+                {
+                    headers: { 'Content-Type': 'application/json' }
 
-        await axios.post(REGISTER_URL,
-            JSON.stringify({ username, email, password, color }),
-            {
-                headers: { 'Content-Type': 'application/json' }
+                })
 
-            })
-            .then(function (response) {
-                // console.log(response?.data);
-                // console.log(response?.accessToken);
-                // console.log(JSON.stringify(response))
-                setSuccess(true);
-                setUsername("");
-                setEmail("");
-                setPassword("");
-                setMatchPassword("");
-                setColor("");
+            console.log(response?.data);
+            // console.log(response?.accessToken);
+            // console.log(JSON.stringify(response))
+            setSuccess(true);
+            setUsername("");
+            setEmail("");
+            setPassword("");
+            setMatchPassword("");
+            setColor("");
 
-                navigate("/map", { replace: true });
-            })
-            .catch(function (err) {
-                console.log(err);
-                if (!err?.response) {
-                    setErrMsg('No Server Response');
-                } else if (err.response?.status === 409) {
-                    setErrMsg('Username Taken');
-                } else {
-                    setErrMsg('Registration Failed')
-                }
-                errRef.current.focus();
-            });
+            navigate("/map", { replace: true });
+
+        } catch (err) {
+            console.log(err);
+            if (!err?.response) {
+                setErrMsg('No Server Response');
+            } else if (err.response?.status === 409) {
+                setErrMsg('Username Taken');
+            } else {
+                setErrMsg('Registration Failed')
+            }
+            errRef.current.focus();
+        };
     }
 
 
