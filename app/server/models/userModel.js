@@ -63,7 +63,7 @@ userSchema.statics.signup = async function (username, email, password, color) {
     const salt = await bcrypt.genSalt(10);//a random string of character that get added to the user password to prevent getting hacked
     const hash = await bcrypt.hash(password, salt);
 
-    const user = await this.create({ username, email, password: hash, color});
+    const user = await this.create({ username, email, password: hash, color });
 
     return user;
 }
