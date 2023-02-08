@@ -44,7 +44,7 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (!validator.isAlphanumeric(username) && !validator.isAlpha(username)) {
         throw Error('The username must contain only letters and numbers');
     }
-    if ((color.charAt(0) != '#') || (!validator.isHexColor(color))) {
+    if (color.charAt(0) != "#" || !validator.isHexColor(color)) {
         throw Error(`The color entered is not hexadecimal color, be sure you put '#' in front of the combination`);
     }
     if (!validator.isEmail(email)) { //check is the email is a valid structure
@@ -66,8 +66,8 @@ userSchema.statics.signup = async function (username, email, password, color) {
     const hash = await bcrypt.hash(password, salt);
 
 
-    const user = await this.create({ username, email, password: hash });
-    const player = await Player.create({ username, email, password: hash });
+    const user = await this.create({ username, email, password: hash, color });
+    const player = await Player.create({ username, email, password: hash, color });
 
     return user, player;
 }
