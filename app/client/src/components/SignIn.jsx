@@ -11,7 +11,6 @@ const eyeIcon = <FaEye />
 export function SignIn() {
 
     const { setAuth } = useAuth();
-    console.log(setAuth);
 
     const userRef = useRef(); // focus on user
     const errRef = useRef(); // focus on errors
@@ -50,7 +49,6 @@ export function SignIn() {
 
         try {
             const response = await axios(configuration);
-            console.log(response.data);
 
             const user = response?.data?.username;
             setAuth(user);

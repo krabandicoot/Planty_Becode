@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import ColorPicker from "./PickColor";
-import useAuth from "../hooks/useAuth";
 
 import { FaEye } from 'react-icons/fa';
 
@@ -15,8 +14,6 @@ const REGISTER_URL = "/api/user/signup";
 const eyeIcon = <FaEye />
 
 export function SignUp() {
-
-    const { setAuth } = useAuth();
 
     const userRef = useRef();
     const errRef = useRef();
@@ -52,13 +49,11 @@ export function SignUp() {
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     //color user -> PickColor
-    const [color, setColor] = useState();
+    const [color, setColor] = useState("");
 
     const chooseColor = (color) => {
         setColor(color);
     }
-
-    console.log(color);
 
     useEffect(() => {
         userRef.current.focus();
@@ -114,15 +109,12 @@ export function SignUp() {
                 // console.log(response?.data);
                 // console.log(response?.accessToken);
                 // console.log(JSON.stringify(response))
-
-                const user = response?.data?.username;
-                setAuth(user);
-
+                setSuccess(true);
                 setUsername("");
                 setEmail("");
                 setPassword("");
                 setMatchPassword("");
-                setColor();
+                setColor("");
 
                 navigate("/map", { replace: true });
             })
