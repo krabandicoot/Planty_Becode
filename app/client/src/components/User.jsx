@@ -80,22 +80,22 @@ export function User() {
                 </div>
             </div>
             <form className="palyer__data text-sm">
-                <div className="palyer__info--header flex gap-2">
+                {/* <div className="palyer__info--header flex gap-2">
                     <h4>Your data </h4>
                     <a><MdOutlineModeEditOutline /></a>
                 </div>
                 <div className="palyer__info--container flex gap-3">
                     <div className="palyer__info--title flex flex-col">
                         <label forHtml="username">Username</label>
-                        <label forHtml="username">Email</label>
-                        <label>Description</label>
+                        <label forHtml="email">Email</label>
+                        <label forHtml="text">Description</label>
                     </div>
                     <div className="palyer__info--data flex flex-col">
-                        <input>{player.username}</input>
-                        <input>{player.email}</input>
-                        <input>{player.bio}</input>
+                        <input type="username">{player.username}</input>
+                        <input type="email">{player.email}</input>
+                        <input type="text">{player.bio}</input>
                     </div>
-                </div>
+                </div> */}
             </form >
         </section >
     )

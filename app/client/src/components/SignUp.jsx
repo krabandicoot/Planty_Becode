@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import ColorPicker from "./PickColor";
-
+import useAuth from "../hooks/useAuth";
 import { FaEye } from 'react-icons/fa';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,29}$/;
@@ -14,6 +14,8 @@ const REGISTER_URL = "/api/user/signup";
 const eyeIcon = <FaEye />
 
 export function SignUp() {
+
+    const { setAuth } = useAuth();
 
     const userRef = useRef();
     const errRef = useRef();
@@ -110,7 +112,8 @@ export function SignUp() {
             // console.log(response?.data);
             // console.log(response?.accessToken);
             // console.log(JSON.stringify(response))
-            setSuccess(true);
+            setAuth(response?.data?.username);
+            // setSuccess(true);
             setUsername("");
             setEmail("");
             setPassword("");
