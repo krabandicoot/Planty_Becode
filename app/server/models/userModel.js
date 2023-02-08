@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
-const Player = require('./playerModel');
 
 const Schema = mongoose.Schema;
 
@@ -28,7 +27,7 @@ const userSchema = new Schema({
         required: false,
         minLength: 4,
         maxLength: 7,
-        unique: false,
+        unique: true,
     }
 });
 
@@ -44,8 +43,7 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (!validator.isAlphanumeric(username) && !validator.isAlpha(username)) {
         throw Error('The username must contain only letters and numbers');
     }
-    // (color.charAt(0) != "#" || 
-    if (!validator.isHexColor(color)) {
+    if ((color.charAt(0) != '#') || (!validator.isHexColor(color))) {
         throw Error(`The color entered is not hexadecimal color, be sure you put '#' in front of the combination`);
     }
     if (!validator.isEmail(email)) { //check is the email is a valid structure
@@ -56,7 +54,6 @@ userSchema.statics.signup = async function (username, email, password, color) {
     }
     const emailExist = await this.findOne({ email });
     const usernameExist = await this.findOne({ username });
-
     if (emailExist) {
         throw Error('Email already used, please enter another adress');
     }
@@ -66,11 +63,9 @@ userSchema.statics.signup = async function (username, email, password, color) {
     const salt = await bcrypt.genSalt(10);//a random string of character that get added to the user password to prevent getting hacked
     const hash = await bcrypt.hash(password, salt);
 
-
     const user = await this.create({ username, email, password: hash, color });
-    const player = await Player.create({ username, email, password: hash, color });
 
-    return user, player;
+    return user;
 }
 
 userSchema.statics.signin = async function (username, password) {
@@ -79,15 +74,18 @@ userSchema.statics.signin = async function (username, password) {
     }
 
     const user = await this.findOne({ username });
-    console.log(user);
     if (!user) {
         throw Error(`This username doesn't exist`);
-    };
+    }
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
         throw Error('Wrong password');
-    };
+    }
     return user;
 }
+
+// userSchema.statics.signout = async function(username, password){
+//     res.cookie('jwt', 'expiredtoken');
+// }
 module.exports = mongoose.model('User', userSchema);
