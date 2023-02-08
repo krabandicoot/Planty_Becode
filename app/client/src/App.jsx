@@ -28,9 +28,8 @@ export default function App() {
       {/* Public Routes */}
       <Route element={<><Title /><Layout /><Footer /></>}>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/pickcolor" element={<ColorPicker />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="signin" element={<SignIn />} />
+        <Route path="signup" element={<SignUp />} />
       </Route>
 
       {/* Private Routes */}
