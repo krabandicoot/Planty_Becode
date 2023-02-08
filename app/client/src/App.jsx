@@ -41,7 +41,6 @@ export default function App() {
         <Route path="gamerules" element={<GameRules />} />
         <Route path="account" element={<User />} />
         <Route path="tree" element={<Tree />} />
-
       </Route>
     </Routes >
   );
