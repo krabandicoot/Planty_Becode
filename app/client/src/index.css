@@ -3,72 +3,77 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-
-  color: 121212;
+    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: 121212;
+    background: radial-gradient(circle, rgba(178, 225, 134, 0) 0%, rgba(178, 225, 134, 0.1) 40%, rgba(178, 225, 134, 0.15) 80%, rgba(178, 225, 134, 0.2) 100%), url(./images/bg-planty.png) no-repeat;
+    background-size: auto 115%;
+    background-position-x: 40%;
 }
 
 a {
-  font-weight: 400;
-  color: #121212;
-  text-decoration: inherit;
+    font-weight: 400;
+    color: #121212;
+    text-decoration: inherit;
 }
 
 a:hover {
-  color: #54A543;
-
+    color: #54A543;
 }
 
 body {
-  padding: 2rem;
-  place-items: center;
-  min-width: 320px;
-  max-height: 100vh;
-  background: url(./images/bg-planty.png) no-repeat;
-  background-size: auto 108%;
-  background-position-x: 40%;
+    place-items: center;
+    min-width: 320px;
+    max-height: 100vh;
+}
+
+footer {
+    width: 100%;
+    text-align: center;
+    background-color: #121212;
+    opacity: 90%;
+    font-size: small;
+    color: #727074;
 }
 
 h1 {
-  font-size: 2.4em;
-  line-height: 1.1;
+    font-size: 2.4em;
+    line-height: 1.1;
 }
 
 button {
-  border-radius: 50px;
-  margin-bottom: 1em;
-  margin-left: 1em;
-  margin-right: 1em;
-  border: none;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  cursor: pointer;
-  background-color: #B2E186;
-  opacity: 0.4;
+    width: 100%;
+    border-radius: 50px;
+    border: none;
+    padding: 0.5em 1.2em;
+    font-size: 0.8em;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: #B2E186;
+    opacity: 0.4;
+    box-shadow: 0px 2px 5px -3px;
 
 }
 
 button:hover {
-  background-color: #54A543;
-  opacity: 100%;
+    background-color: #54A543;
+    opacity: 50%;
 }
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+    outline: 4px auto #54A543;
 }
 
 .offscreen {
-  position: absolute;
-  left: -9999px;
+    position: absolute;
+    left: -9999px;
 }
 
 .hide {
-  display: none;
+    display: none;
 }
 
 /* picker color */
@@ -256,9 +261,11 @@ button:focus-visible {
         transform: scale(1);
         opacity: 0.3;
     }
+
     50% {
         opacity: 0.1;
     }
+
     100% {
         opacity: 0;
         border-width: 0;
@@ -270,19 +277,33 @@ button:focus-visible {
     0% {
         transform: scale(1);
     }
+
     25% {
         transform: scale(0.8);
     }
+
     50% {
         transform: scale(1);
     }
+
     100% {
         transform: scale(1);
     }
 }
 
+.landingText {
+    background: rgb(178, 225, 134);
+    background: linear-gradient(180deg, rgba(178, 225, 134, 0) 0%, rgba(178, 225, 134, 0.6989010989010989) 50%, rgba(178, 225, 134, 1) 100%);
+}
+
+.form__container {
+    background: linear-gradient(0deg, rgba(236, 232, 239, 0) 0%, rgba(236, 232, 239, 0.2) 40%, rgba(236, 232, 239, 0.5) 92%);
+    border-radius: 20px;
+    padding: 1em;
+}
+
 @media screen and (min-width: 768px) {
-    .rcp { 
+    .rcp {
         width: 280px;
         height: 280px;
     }

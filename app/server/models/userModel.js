@@ -25,17 +25,17 @@ const userSchema = new Schema({
     },
     color: {
         type: String,
-        required: false,
+        required: true,
         minLength: 4,
         maxLength: 7,
-        unique: true,
+        unique: false,
     }
 });
 
 userSchema.statics.signup = async function (username, email, password, color) {
 
     //validation 
-    if (!email || !username || !password) {
+    if (!email || !username || !color || !password) {
         throw Error('All fields need to be filled');
     }
     // if(username.charAt(0)!='K'){
@@ -53,10 +53,10 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (!validator.isStrongPassword(password)) { //
         throw Error('The password must contain 8 character minimum, with an uppercase, a number and a symbol');
     }
-    const emailExist = await this.findOne({email});
-    const usernameExist = await this.findOne({username});
+    const emailExist = await this.findOne({ email });
+    const usernameExist = await this.findOne({ username });
 
-    if(emailExist){
+    if (emailExist) {
         throw Error('Email already used, please enter another adress');
     }
     if (usernameExist) {
@@ -66,8 +66,8 @@ userSchema.statics.signup = async function (username, email, password, color) {
     const hash = await bcrypt.hash(password, salt);
 
 
-    const user = await this.create({username, email, password: hash, color});
-    const player = await Player.create({username, email, password: hash, color});
+    const user = await this.create({ username, email, password: hash, color });
+    const player = await Player.create({ username, email, password: hash, color });
 
     return user, player;
 }

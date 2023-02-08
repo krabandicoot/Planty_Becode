@@ -23,29 +23,31 @@ const signInUser = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: 'None',
-        });
+        })
+        res.status(200).json({ username, signInToken });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 }
+
 //signup user 
 const signUpUser = async (req, res) => {
     const { username, email, password, color } = req.body;
 
     try {
-        
+
         const user = await User.signup(username, email, password, color);
         //create token
         const signInToken = createToken(user._id);
-        res.status(200).json({email, signInToken});
-    }catch(error){
-        res.status(400).json({error: error.message});
+        res.status(200).json({ email, signInToken });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 }
-const signOutUser = async (req, res)=>{
+const signOutUser = async (req, res) => {
     res.cookie('jwt', 'expiredtoken');
-    res.redirect('/');
-    res.json("User successully log out"); 
+    //res.redirect('/');
+    res.json("User successully log out");
 }
 
 module.exports = { signInUser, signUpUser, signOutUser };
