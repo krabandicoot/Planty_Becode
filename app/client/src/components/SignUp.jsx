@@ -233,7 +233,6 @@ export function SignUp() {
                             aria-invalid={validMatch ? "false" : "true"}
                             aria-describedby="confirmnote"
                             onFocus={() => setMatchFocus(true)}
-<<<<<<< HEAD
                             onBlur={() => setMatchFocus(false)} 
                             className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
                             placeholder=" "/>
@@ -250,28 +249,9 @@ export function SignUp() {
                         </div>
     {/* button choose color */}
                         <button
-=======
-                            onBlur={() => setMatchFocus(false)}
-                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
-                            placeholder=" " />
-                        <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                            {/* mettre icon */}
-                            Must match the first password input field.
-                        </p>
-                        <label
-                            htmlFor="floating_repeat_password"
-                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password
-                        </label>
-                        {/* button visibility password */}
-                        <button type="button" onClick={() => setPasswordVisible(!passwordVisible)} className="absolute top-0 right-0">{eyeIcon}</button>
-                    </div>
-                    {/* button choose color */}
-                    <button
->>>>>>> lisa
                         type="button"
                         disabled={!validUsername || !validEmail || !validPassword || !validMatch ? true : false}
                         onClick={handleClickVisibility}
-<<<<<<< HEAD
                         className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Next</button> 
                     </div>
     {/* picker Color */}
@@ -288,22 +268,4 @@ export function SignUp() {
             </section>   
         )
     }
-=======
-                        className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Color</button>
-                </div>
-                {/* picker Color */}
-                <div style={{ display: isShownPicker ? 'block' : 'none' }}>
-                    <ColorPicker chooseColor={chooseColor} />
-                </div>
-            </form>
-            <p style={{ display: isShownForm ? 'block' : 'none' }}>
-                Already registered?<br />
-                <span className="line">
-                    <a href="/signin">Sign In</a>
-                </span>
-            </p>
-        </section>
-    )
-}
->>>>>>> lisa
 

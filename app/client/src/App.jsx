@@ -23,32 +23,11 @@ export default function App() {
 
   return (
     <Routes>
-<<<<<<< HEAD
-      <Route path="/" element={<Layout />}>
-
-        {/* public routes */}
-        <Route path="/" element={<><Title /><LandingPage /><Footer /></>} />
-        <Route path="signin" element={<><Title /><SignIn /><Footer /></>} />
-        <Route path="signup" element={<><Title /><SignUp /><Footer /></>} />
-
-        {/* protected routes */}
-        <Route element={<RequireAuth />}>
-          <Route path="map" element={<><Header /><Map /><Navbar /><Footer /></>} />
-          <Route path="leaderboard" element={<><Header /><Leaderboard /><Navbar /><Footer /></>} />
-          <Route path="gamelog" element={<><Header /><Gamelog /><Navbar /><Footer /></>} />
-          <Route path="gamerules" element={<><Header /><GameRules /><Navbar /><Footer /></>} />
-          <Route path="account" element={<><Header /><User /><Navbar /><Footer /></>} />
-          <Route path="/tree" element={<><Header /><Tree /><Navbar /><Footer /></>} />
-        </Route>
-=======
->>>>>>> lisa
-
       {/* Public Routes */}
       <Route element={<><Title /><Layout /><Footer /></>}>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/pickcolor" element={<ColorPicker />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="signin" element={<SignIn />} />
+        <Route path="signup" element={<SignUp />} />
       </Route>
 
       {/* Private Routes */}
