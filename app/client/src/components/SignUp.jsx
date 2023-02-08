@@ -3,7 +3,8 @@ import axios from "../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import ColorPicker from "./PickColor";
 
-import { FaEye } from 'react-icons/fa';
+import { FaEye } from "react-icons/fa";
+import {RiErrorWarningLine} from "react-icons/ri";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,29}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{7,254}$/;
@@ -11,7 +12,8 @@ const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[a-z]{2,4}$/;
 const REGISTER_URL = "/api/user/signup";
 
 //icon eye
-const eyeIcon = <FaEye/>
+const eyeIcon = <FaEye/>;
+const warningIcon = <RiErrorWarningLine/>;
 
 export function SignUp () {
 
@@ -47,6 +49,7 @@ export function SignUp () {
 
     // visibility password
     const [passwordVisible, setPasswordVisible] = useState (false);
+    const [matchPasswordVisible, setMatchPasswordVisible] = useState (false);
 
      //color user -> PickColor
     const [color, setColor] = useState("");
@@ -157,7 +160,7 @@ export function SignUp () {
                             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username
                             </label>
                             <p id="uidnote" className={usernameFocus && username && !validUsername ? "instructions" : "offscreen"}>
-                                {/* mettre icon */}
+                                {warningIcon} 
                                 4 to 30 characters, only letters and numbers<br />
                             </p>
                         </div>
@@ -180,8 +183,8 @@ export function SignUp () {
                             htmlFor="email" 
                             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
                             <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
-                                {/* mettre icon */}
-                                invalid email address<br />
+                                {warningIcon}
+                                Invalid email address<br />
                             </p>
                         </div>
     {/* password */}
@@ -200,8 +203,8 @@ export function SignUp () {
                             className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
                             placeholder=" "/>
                             <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
-                                {/* mettre icon */}
-                                8 characters minimum, with an uppercase, a number and a symbol: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span><span aria-label="percent">%</span>
+                                {warningIcon}
+                                8 characters minimum, with an uppercase, a number and a symbol <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
                             </p>
                             <label 
                             htmlFor="password" 
@@ -213,7 +216,7 @@ export function SignUp () {
     {/* confirm password */}
                         <div className="signup__form-repeat_password relative z-0 w-full mb-6 group">
                             <input 
-                            type={passwordVisible ? "text" : "password"}  
+                            type={matchPasswordVisible ? "text" : "password"}  
                             name="confirmPassword" 
                             id="confirmPassword"
                             onChange={(e) => setMatchPassword(e.target.value)}
@@ -226,7 +229,7 @@ export function SignUp () {
                             className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
                             placeholder=" "/>
                             <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                                {/* mettre icon */}
+                                {warningIcon}
                                 Must match the first password input field.
                             </p>
                             <label 
@@ -234,14 +237,14 @@ export function SignUp () {
                             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password
                             </label>
     {/* button visibility password */}                    
-                            <button type="button" onClick={()=> setPasswordVisible(! passwordVisible)} className="absolute top-0 right-0">{eyeIcon}</button>
+                            <button type="button" onClick={()=> setMatchPasswordVisible(! matchPasswordVisible)} className="absolute top-0 right-0">{eyeIcon}</button>
                         </div>
     {/* button choose color */}
                         <button
                         type="button"
                         disabled={!validUsername || !validEmail ||!validPassword || !validMatch ? true : false} 
                         onClick={handleClickVisibility}
-                        className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Color</button> 
+                        className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Next</button> 
                     </div>
     {/* picker Color */}
                     <div style ={{display: isShownPicker ? 'block' : 'none'}}>

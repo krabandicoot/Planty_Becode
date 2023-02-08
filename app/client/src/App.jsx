@@ -3,7 +3,6 @@ import { Layout } from "./components/Layout";
 import { Title } from "./components/Title";
 import { LandingPage } from "./components/LandingPage";
 import { SignIn } from "./components/SignIn";
-import ColorPicker from "./components/PickColor";
 import { SignUp } from "./components/SignUp";
 
 import { Header } from "./components/Header";
