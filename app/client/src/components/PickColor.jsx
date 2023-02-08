@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 import fillColorWheel from '@radial-color-picker/color-wheel';
 import Rotator from '@radial-color-picker/rotator';
+import { SignUp } from './SignUp';
+import { hslToHex } from '../hooks/convertHSLtoHex';
 
 const noop = () => {};
 const colors = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta', 'red'];
@@ -19,7 +21,7 @@ const ColorPicker = ({
     hue = 0,
     saturation = 100,
     luminosity = 50,
-    alpha = 1,
+    // alpha = 1,
     disabled = false,
     step = 1,
     variant = 'collapsible', // collapsible | persistent
@@ -30,6 +32,7 @@ const ColorPicker = ({
     onChange = noop,
     onSelect = noop,
     className,
+    chooseColor, 
     ...rest
 }) => {
     const paletteRef = useRef(null);
@@ -49,6 +52,7 @@ const ColorPicker = ({
     const [isPressed, setIsPressed] = useState(false);
     const [isRippling, setIsRippling] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
+    
 
     useEffect(() => {
         if (mouseScroll) {
@@ -137,16 +141,16 @@ const ColorPicker = ({
         rotator.current.setAngleFromEvent(ev);
     };
 
-    const selectColor = () => {
-        setIsPressed(true);
+    // const selectColor = () => {
+    //     setIsPressed(true);
 
-        if (isPaletteIn && isKnobIn) {
-            onSelect(angleRef.current);
-            setIsRippling(true);
-        } else {
-            setIsPaletteIn(true);
-        }
-    };
+    //     if (isPaletteIn && isKnobIn) {
+    //         onSelect(angleRef.current);
+    //         setIsRippling(true);
+    //     } else {
+    //         setIsPaletteIn(true);
+    //     }
+    // };
 
     const togglePicker = () => {
         if (variant !== 'persistent') {
@@ -168,7 +172,9 @@ const ColorPicker = ({
         }
     };
 
-    const color = `hsla(${angleRef.current}, ${saturation}%, ${luminosity}%, ${alpha})`;
+    const color = hslToHex(angleRef.current, saturation, luminosity);
+    console.log(color);
+    
     const wrapperClassNames = ['rcp', className, isDragging && 'dragging', disabled && 'disabled']
         .filter(Boolean)
         .join(' ');
@@ -191,6 +197,8 @@ const ColorPicker = ({
             onKeyUp={onKeyUp}
             onKeyDown={onKeyDown}
         >
+            {/* <div><h2> Choose your color profile</h2></div> */}
+            
             <div ref={paletteRef} className={`rcp__palette ${isPaletteIn ? 'in' : 'out'}`}>
                 <canvas />
             </div>
@@ -209,17 +217,18 @@ const ColorPicker = ({
             <div className={`rcp__ripple ${isRippling ? 'rippling' : ''}`.trim()} style={{ borderColor: color }} />
 
             <button
-                type="button"
+                type="submit"
                 className={`rcp__well ${isPressed ? 'pressed' : ''}`.trim()}
                 style={{ backgroundColor: color }}
                 aria-label={ariaLabelColorWell}
                 disabled={disabled}
                 tabIndex={disabled ? -1 : 0}
                 onAnimationEnd={togglePicker}
-                onClick={selectColor}
-            />
-        </div>
-    );
+                //onClick= {selectColor}
+                onClick={() => chooseColor(color)}
+            >OK</button>
+        </div> 
+    ); 
 };
 
 export default ColorPicker;
