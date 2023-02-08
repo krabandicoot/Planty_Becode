@@ -10,9 +10,6 @@ const eyeIcon = <FaEye />
 
 export function SignIn() {
 
-    const { setAuth } = useAuth();
-    // console.log(setAuth);
-
     const userRef = useRef(); // focus on user
     const errRef = useRef(); // focus on errors
 

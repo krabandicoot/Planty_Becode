@@ -25,7 +25,7 @@ const userSchema = new Schema({
     },
     color: {
         type: String,
-        required: true,
+        required: false,
         minLength: 4,
         maxLength: 7,
     }
@@ -34,7 +34,7 @@ const userSchema = new Schema({
 userSchema.statics.signup = async function (username, email, password, color) {
 
     //validation 
-    if (!email || !username || !color || !password) {
+    if (!email || !username || !password) {
         throw Error('All fields need to be filled');
     }
     // if(username.charAt(0)!='K'){
