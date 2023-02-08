@@ -173,7 +173,7 @@ const ColorPicker = ({
     };
 
     const color = hslToHex(angleRef.current, saturation, luminosity);
-    console.log(color);
+
 
     const wrapperClassNames = ['rcp', className, isDragging && 'dragging', disabled && 'disabled']
         .filter(Boolean)

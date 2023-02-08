@@ -55,14 +55,6 @@ export function SignUp() {
     const chooseColor = (color) => {
         setColor(color);
     }
-    console.log(username);
-    console.log(typeof username);
-    console.log(email);
-    console.log(typeof email);
-    console.log(password);
-    console.log(typeof password);
-    console.log(color);
-    console.log(typeof color);
 
     useEffect(() => {
         userRef.current.focus();
@@ -115,7 +107,7 @@ export function SignUp() {
 
                 })
 
-            console.log(response?.data);
+            // console.log(response?.data);
             // console.log(response?.accessToken);
             // console.log(JSON.stringify(response))
             setSuccess(true);
@@ -128,7 +120,7 @@ export function SignUp() {
             navigate("/map", { replace: true });
 
         } catch (err) {
-            console.log(err);
+            // console.log(err);
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } else if (err.response?.status === 409) {

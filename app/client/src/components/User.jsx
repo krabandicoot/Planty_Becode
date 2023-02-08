@@ -60,7 +60,7 @@ export function User() {
 
     return (
         <section>
-            <div className="tree__card--header flex justify-between">
+            <div className="player__header flex justify-between">
                 <h2 className="text-3xl w-34 flex flex-col">Welcome, <span className="self-end leading-6">{player.username}!</span> </h2>
                 <div className="flex gap-1 items-end">
                     <div className="flex gap-1">
@@ -72,31 +72,32 @@ export function User() {
                     </button>
                 </div>
             </div>
-            <div className="tree__card--container">
-                <div className="tree__card bg-Magnolia p-2 w-24 flex flex-col items-center rounded-md">
+            <div className="player__tree">
+                {/* add loop to display 5 tree cards */}
+                <div className="player__tree--card bg-Magnolia p-2 w-24 flex flex-col items-center rounded-md">
                     <p>Tree Title</p>
                     <img src="../src/images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
                 </div>
             </div>
-            <div className="text-sm">
-                <div className="flex gap-2">
+            <form className="palyer__data text-sm">
+                <div className="palyer__info--header flex gap-2">
                     <h4>Your data </h4>
                     <a><MdOutlineModeEditOutline /></a>
                 </div>
-                <div className="flex gap-2">
-                    <p>Username</p>
-                    <p>{player.username}</p>
+                <div className="palyer__info--container flex gap-3">
+                    <div className="palyer__info--title flex flex-col">
+                        <label forHtml="username">Username</label>
+                        <label forHtml="username">Email</label>
+                        <label>Description</label>
+                    </div>
+                    <div className="palyer__info--data flex flex-col">
+                        <input>{player.username}</input>
+                        <input>{player.email}</input>
+                        <input>{player.bio}</input>
+                    </div>
                 </div>
-                <div className="flex gap-2">
-                    <p>Email</p>
-                    <p>{player.email}</p>
-                </div>
-                <div className="flex gap-2">
-                    <p>Description</p>
-                    <p>{player.bio}</p>
-                </div>
-            </div>
-        </section>
+            </form >
+        </section >
     )
 }
 
