@@ -4,14 +4,20 @@ const jwt_decode = require("jwt-decode");
 const Player = require('../models/playerModel');
 const Comment = require('../models/commentModel');
 
+// Test to get the username from the cookie (unconclusive)
 // const getUserInfo = async (req, res) => {
 //     let cookie = req.cookie["planty"];
 //     console.log(cookie);
 
+//      let data = jwt_decode(signInToken)
+//      res.json({ data })
+//      let cookie = req.cookie;
+//      console.log(cookie);
+
 //     let cookiePostman = req.headers
 
     // if(!cookie){
-    // // Read the token
+    // Read the token
     // function parseJwt (token) {
     //     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
     // }}
@@ -23,12 +29,6 @@ const createComment = async (req, res) => {
     const { username, text } = req.body;
     const { tree_id } = req.params;
 
-    let data = jwt_decode(signInToken)
-    res.json({ data })
-
-    // let cookie = req.cookie;
-    // console.log(cookie);
-
     if (!username || !text) {
         return res.json({
         success: false,
@@ -36,9 +36,10 @@ const createComment = async (req, res) => {
         });
     }
 
-    comment.username = username;
+    comment.author.username = username;
     comment.text = text;
     comment.tree_id = tree_id;
+    comment.author.id = await Player.findOne({username: username}).select('_id');
 
     comment.save(err => {
         if (err) return res.json({ success: false, error: err });
