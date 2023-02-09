@@ -109,8 +109,6 @@ export function SignUp() {
 
                 })
 
-            console.log(response?.data);
-            console.log(response?.data?.usernam);
             // console.log(response?.accessToken);
             // console.log(JSON.stringify(response))
             setAuth(response?.data?.username);
