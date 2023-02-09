@@ -9,7 +9,7 @@ import { LandingPage } from "./components/LandingPage";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
 
-import { Map } from "./components/Map";
+import Map from "./components/Map";
 import { Leaderboard } from "./components/Leaderboard";
 import { Gamelog } from "./components/Gamelog";
 import { GameRules } from "./components/GameRules";
