@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.get(`/createdb`, createTree);
 
-router.get(`/comments`, displayComments);
+router.post(`/:id`, displayComments);
 
 module.exports = router;

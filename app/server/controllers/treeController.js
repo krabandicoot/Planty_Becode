@@ -10,32 +10,47 @@ const createTree = async (req, res) => {
 }
 
 const displayComments = async (req, res) => {
+
+    const { tree_id } = req.params;
+    const selectedTree = await Tree.findById(tree_id).exec();
+    console.log(tree_id);
+
+    const selectedName = selectedTree.name;
     
-    let options = {
-        allowDiskUse: false
+
+    console.log(selectedName);
+
+    const options = {
+        allowDiskUse: true
     };
     
-    let pipeline = [
+    const pipeline = [
         {
-            "$lookup": {
+            $lookup: {
                 "from": "comments",
-                "localField": "treeName",
-                "foreignField": "name",
+                "localField": "name",
+                "foreignField": "treeInfo.treeName",
                 "as": "comments"
+            }, 
+            $match: {
+                    "name": selectedName 
             }
         }
     ];
     
-    let cursor = Tree.aggregate(pipeline, options);
+    const cursor = await Tree.aggregate(pipeline, options).exec();
+
+    // cursor.save();
+    res.status(200).json(cursor);
+    console.log(cursor);
     
-    cursor.forEach(
-        function(doc) {
-            console.log(doc);
-        }, 
-        function(err) {
-            client.close();
-        }
-    );
+    // cursor.forEach(
+    //     function(doc) {
+    //         console.log(doc);
+    //     },
+    //     function(err) {
+    //         throw error;        }
+    // );
 }
 
 module.exports = { 

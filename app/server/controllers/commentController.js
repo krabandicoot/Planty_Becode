@@ -26,34 +26,6 @@ const createComment = async (req, res) => {
     comment.treeInfo.treeName = foundTree.name;
     // comment.author.id = await Player.findOne({username: username}).select('_id').exec();
 
-    // Add the comment to the tree :
-//    async function postTreeAndComment() {
-
-
-    //     try{
-    //         const treeAndComment = await Tree.aggregate(
-    //             [
-    //                 {
-    //                     "$lookup" : {
-    //                         "from" : "comments",
-    //                         "localField" : "treeName",
-    //                         "foreignField" : "name",
-    //                         "as" : "comments"
-    //                     }
-    //                 }
-    //             ]
-    //         );
-
-    //     return treeAndComment;
-    //     }catch(err){
-    //         console.log(err);
-    //     }        
-//    }
-
-    // res.status(200).json(treeAndComment);
-    // res.send(treeAndComment);
-    // postTreeAndComment();
-
     // Save the comment
     comment.save(err => {
         if (err) return res.json({ success: false, error: err });
