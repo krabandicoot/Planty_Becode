@@ -38,7 +38,7 @@ const updatePlayer = async (req, res) => {
     const { username } = req.params;
     const player = await Player.findOne({username: username});
     const updatePlayer = await Player.updateOne({username: username}, {$set: req.body});
-
+    
     try {
 
         if (!req.body) {

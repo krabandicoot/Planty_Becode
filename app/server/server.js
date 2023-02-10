@@ -7,6 +7,11 @@ const corsOptions = require('./cors')
 
 const userRoutes = require('./routes/user');
 const playerRoutes = require('./routes/player');
+const treeRoutes = require('./routes/tree');
+
+
+const Tree = require('./models/treeModel');
+const { $where } = require('./models/playerModel');
 
 const app = express();
 const PORT = process.env.NODE_DOCKER_PORT;
@@ -33,7 +38,13 @@ app.get("/", (req, res) => {
 });
 app.use('/api/user', userRoutes);
 app.use('/api/account', playerRoutes);
-//server set on .env
+app.use('/api/tree', treeRoutes);
+
 app.listen(PORT, () => {
     console.log(`Server Started at ${PORT} 🚀`)
 });
+
+const getThree = async (req, res) => {
+   
+    
+}

@@ -32,7 +32,6 @@ for(let i = -1; i < trees.length; i++){
     )
 }
 
-
   mongoose
   .connect((mongoString), { useNewUrlParser: true })
   .catch(err => {

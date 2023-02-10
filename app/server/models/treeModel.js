@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const fs = require('fs');
 
 const treeSchema = new Schema({
     value:{
@@ -49,21 +48,21 @@ const treeSchema = new Schema({
     },
 });
 
-// treeSchema.statics.createDB = async function () {
-//     let rawdata = fs.readFileSync('../db/arbustum.json');
-//     let trees = JSON.parse(rawdata);
-
-//     for(i = 0; i<trees[i].length; i++){
-//         const diameter = trees[i].circumference;
-//         const createTree = await this.create({price : diameter});
-//         return createTree;
-//     }
-    
-// }
-
-// -> getTreeprice (calculate )
-// -> buyTree (change la valeur de l'arbre et update pour le owner) 
-// -> lockTree ()
-// -> get
+treeSchema.statics.getThree = async function(name){
+    try{
+        const treeCount = await this.count();
+        for(i = 0; i < 3; i++){
+            this.findOne({owner: 'none'}).skip(Math.floor(Math.random() * treeCount)).exec(
+                function (err, result) {
+                    result.owner = `${name}`;
+                    result.value = 'unavailable';
+                    result.save();
+                    console.log(result);
+                });
+        }
+        }catch(err){
+            console.log(err)
+        }
+};
 
 module.exports = mongoose.model('Tree',treeSchema);
