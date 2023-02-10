@@ -11,6 +11,10 @@ const playerRoutes = require('./routes/player');
 const treeRoutes = require('./routes/tree');
 const commentRoutes = require('./routes/comment');
 
+
+const Tree = require('./models/treeModel');
+// const { $where } = require('./models/playerModel');
+
 const app = express();
 const PORT = process.env.NODE_DOCKER_PORT;
 const mongoString = process.env.DB_URL;
@@ -47,31 +51,4 @@ app.listen(PORT, () => {
     console.log(`Server Started at ${PORT} 🚀`)
 });
 
-// const Tree = require('./models/treeModel.js');
 
-// const createDB = async(req,res) => {
-//     try{
-//         let rawdata = fs.readFileSync('../db/arbustum.json');
-//         let trees = JSON.parse(rawdata);
-
-//         for(i = 0; i<trees[i].length; i++){
-//             const diameter = trees[i].circumference;
-//             const createTree = await Tree.insertMany({price : diameter});
-//             return createTree;
-//         }
-//     }
-//     catch(error){
-//         res.status(400).json({ error: error.message });
-//     }
-// }
-// createDB();
-// const createTree = async (req, res) => {
-//     try {
-//         const tree = await Tree.createDB();
-//         res.status(200).json(tree);
-//     } catch (error) {
-        
-//     }
-// };
-
-// createTree();

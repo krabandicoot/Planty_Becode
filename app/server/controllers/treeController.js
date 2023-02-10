@@ -1,12 +1,15 @@
-const Tree = require('../models/treeModel');
+const Tree = require('../models/treeModel')
 
-const createTree = async (req, res) => {
+// Get Tree
+const getTree = async(req,res) => {
     try {
-        const tree = await Tree.createDB();
-        res.status(200).json("sucessfully created")
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+    const trees = await Tree.find({}).sort({value: -1});
+
+    res.status(200).json(trees);
+
+    } catch(error) {
+        res.status(400).json({error: error.message});
     }
 }
 
-module.exports = { createTree };
+module.exports = { getTree };

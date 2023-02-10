@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 const Player = require('./playerModel');
+const Tree = require('./treeModel');
 
 const Schema = mongoose.Schema;
 
@@ -34,13 +35,9 @@ const userSchema = new Schema({
 
 userSchema.statics.signup = async function (username, email, password, color) {
 
-    //validation 
-    if (!email || !username || !color || !password) {
+    if (!email || !username || !color || !password){
         throw Error('All fields need to be filled');
     }
-    // if(username.charAt(0)!='K'){
-    //     throw Error('Unfortunately your user is not part of the Khadja Dynasty');
-    // }
     if (!validator.isAlphanumeric(username) && !validator.isAlpha(username)) {
         throw Error('The username must contain only letters and numbers');
     }
@@ -53,22 +50,21 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (!validator.isStrongPassword(password)) { //
         throw Error('The password must contain 8 character minimum, with an uppercase, a number and a symbol');
     }
-    const emailExist = await this.findOne({ email });
-    const usernameExist = await this.findOne({ username });
-
-    if (emailExist) {
+    const emailExist = await this.findOne({email});
+    const usernameExist = await this.findOne({username});
+    if(emailExist){
         throw Error('Email already used, please enter another adress');
     }
     if (usernameExist) {
         throw Error('Username already used, please enter another name');
     }
-    const salt = await bcrypt.genSalt(10);//a random string of character that get added to the user password to prevent getting hacked
+    const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-
-    const user = await this.create({ username, email, password: hash, color });
-    const player = await Player.create({ username, email, password: hash, color });
-
+    const user = await this.create({username, email, password: hash, color});
+    const player = await Player.create({username, email, password: hash, color});
+    const attributeTree = await Tree.getThree({username});
+    
     return user, player;
 }
 
