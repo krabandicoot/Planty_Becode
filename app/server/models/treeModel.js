@@ -46,7 +46,7 @@ const treeSchema = new Schema({
     lat:{
         type:Number,
         required: true
-    },
+    }
 });
 
 // treeSchema.statics.createDB = async function () {
@@ -58,7 +58,6 @@ const treeSchema = new Schema({
 //         const createTree = await this.create({price : diameter});
 //         return createTree;
 //     }
-    
 // }
 
 // -> getTreeprice (calculate )

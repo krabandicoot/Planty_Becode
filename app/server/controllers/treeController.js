@@ -9,4 +9,36 @@ const createTree = async (req, res) => {
     }
 }
 
-module.exports = { createTree };
+const displayComments = async (req, res) => {
+    
+    let options = {
+        allowDiskUse: false
+    };
+    
+    let pipeline = [
+        {
+            "$lookup": {
+                "from": "comments",
+                "localField": "treeName",
+                "foreignField": "name",
+                "as": "comments"
+            }
+        }
+    ];
+    
+    let cursor = Tree.aggregate(pipeline, options);
+    
+    cursor.forEach(
+        function(doc) {
+            console.log(doc);
+        }, 
+        function(err) {
+            client.close();
+        }
+    );
+}
+
+module.exports = { 
+    createTree, 
+    displayComments
+};
