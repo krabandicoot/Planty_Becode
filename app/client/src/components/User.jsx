@@ -1,15 +1,21 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { AiOutlineLogout } from "react-icons/ai";
 import { MdOutlineModeEditOutline } from "react-icons/md"
-import { useState, useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import axios from "../api/axios";
-
+const PLAYER_URL = "/api/account/username/";
+const SIGNOUT_URL = "/api/user/signout";
 
 export function User() {
     const { auth, setAuth } = useAuth();
     const { player, setPlayer } = useAuth();
+    const errRef = useRef();
+
+    const [errMsg, setErrMsg] = useState(false);
+    const [edit, setEdit] = useState(false);
+    const [dataPlayer, setDataPlayer] = useState({});
 
     const navigate = useNavigate();
     const to = "/";
@@ -19,11 +25,8 @@ export function User() {
         const controller = new AbortController();
 
         const getPlayer = async () => {
-            let username = auth;
-            const USER_URL = `/api/account/username/${username}`;
-
             try {
-                const response = await axios.get(USER_URL);
+                const response = await axios.get(PLAYER_URL + auth);
                 console.log(response.data);
                 isMounted && setPlayer(response?.data);
             } catch (err) {
@@ -38,10 +41,9 @@ export function User() {
         }
     }, []);
 
-    const handleLogout = async (e) => {
-        e.preventDefault();
+    console.log(player)
 
-        const SIGNOUT_URL = "/api/user/signout";
+    const handleLogout = async () => {
         try {
             const response = await axios.get(SIGNOUT_URL);
             console.log(response.data);
@@ -57,19 +59,67 @@ export function User() {
         navigate(to, { replace: true });
     };
 
+    const editPlayer = async () => {
+        e.preventDefault();
+
+        const configuration = {
+            method: 'put',
+            url: PLAYER_URL + auth,
+            data: {
+                username,
+                email,
+                bio
+            },
+            withCredentials: true,
+        }
+        try {
+            const response = await axios(configuration);
+
+            console.log(response?.data);
+
+            setPlayer(response?.data);
+            setEdit(false);
+
+        } catch (err) {
+            if (!err?.response) {
+                setErrMsg("No server Response");
+            } else if (err.response?.status === 400) {
+                setErrMsg("Missing Username or Password");
+            } else if (err.response?.status === 401) {
+                setErrMsg("Unauthorized");
+            } else {
+                setErrMsg("Login Failed");
+            }
+            errRef.current.focus();
+        };
+    }
+    const handleDelete = async () => {
+
+        try {
+            const response = await axios.delete(PLAYER_URL + auth);
+            console.log(response);
+            setPlayer(response);
+
+            navigate(to, { replace: true });
+
+        } catch (err) {
+            console.log("something went wrong");
+        }
+    }
 
     return (
-        <section>
-            <div className="player__header flex justify-between">
-                <h2 className="text-3xl w-34 flex flex-col">Welcome, <span className="self-end leading-6">{player.username}!</span> </h2>
-                <div className="flex gap-1 items-end">
-                    <div className="flex gap-1">
-                        <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[18px]" />
-                        <p>Score</p>
+        <section className="ml-8 mr-8">
+            <div className="player__header flex justify-between mb-10">
+                <h2 className="player__header--title text-3xl w-1/2 flex flex-col">Welcome, <span className="self-end leading-6">{player.username}!</span>
+                </h2>
+                <div className="flex items-end gap-4">
+                    <div className="bg-Magnolia player__header--score flex gap-1 p-1 rounded-md text-xs items-center">
+                        <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="rotate-90 h-[20px]" />
+                        <p className="border-l border-solid border-SmokyBlack pl-2 pr-2">{player.leafs}</p>
                     </div>
-                    <button className="signout flex w-min h-min" onClick={handleLogout}>
-                        <AiOutlineLogout className=" w-4 h-4" />
-                    </button>
+                    <a className="bg-Red/80 w-min rounded-full p-1 player__header--signout flex h-min" onClick={handleLogout}>
+                        <AiOutlineLogout className="text-white" />
+                    </a>
                 </div>
             </div>
             <div className="player__tree">
@@ -79,23 +129,94 @@ export function User() {
                     <img src="../src/images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
                 </div>
             </div>
-            <form className="palyer__data text-sm">
-                {/* <div className="palyer__info--header flex gap-2">
+            <form className="form__container palyer__data text-sm mt-10 mb-28">
+                <div className="palyer__info--header flex items-center gap-2 text-lg">
                     <h4>Your data </h4>
-                    <a><MdOutlineModeEditOutline /></a>
+                    <a onClick={() => { edit === false ? setEdit(true) : setEdit(false) }}>
+                        <MdOutlineModeEditOutline />
+                    </a>
                 </div>
-                <div className="palyer__info--container flex gap-3">
-                    <div className="palyer__info--title flex flex-col">
-                        <label forHtml="username">Username</label>
-                        <label forHtml="email">Email</label>
-                        <label forHtml="text">Description</label>
-                    </div>
-                    <div className="palyer__info--data flex flex-col">
-                        <input type="username">{player.username}</input>
-                        <input type="email">{player.email}</input>
-                        <input type="text">{player.bio}</input>
-                    </div>
-                </div> */}
+                <>
+                    {edit === false ?
+                        <div className="palyer__info--container flex gap-3 text-xs">
+                            <div className="palyer__info--title flex flex-col gap-y-2">
+                                <p>Username</p>
+                                <p>Email</p>
+                                <p>Description</p>
+                            </div>
+                            <div className="text-SmokyBlack/50 palyer__info--data flex flex-col gap-y-2">
+                                <p>{player.username}</p>
+                                <p>{player.email}</p>
+                                <p>{player.bio}</p>
+
+                            </div>
+                        </div>
+                        :
+                        <div>
+                            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                            <div className="palyer__info--container flex gap-3 text-xs mb-4">
+                                <div className="palyer__info--title flex gap-y-2 flex-col">
+                                    <label htmlFor="username">Username</label>
+                                    <label htmlFor="email">Email</label>
+                                    <label htmlFor="text">Description</label>
+                                </div>
+                                <div className="text-SmokyBlack/50 palyer__info--data flex flex-col gap-y-2">
+                                    <input
+                                        type="username"
+                                        value={player.username || ''}
+                                        onChange={(e) => {
+                                            setEdit(true)
+                                            setPlayer({
+                                                ...player,
+                                                username: e.target.value
+                                            })
+                                        }}
+                                        required
+                                    />
+                                    <input
+                                        type="email"
+                                        value={player.email || ''}
+                                        onChange={(e) => {
+                                            setEdit(true)
+                                            setPlayer({
+                                                ...player,
+                                                email: e.target.value
+                                            })
+                                        }}
+                                        required
+                                    />
+                                    <textarea
+                                        className="min-h-[100px] min-w-[150px]"
+                                        value={player.bio || ''}
+                                        onChange={(e) => {
+                                            setEdit(true)
+                                            setPlayer({
+                                                ...player,
+                                                bio: e.target.value
+                                            })
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex gap-2">
+                                <button onClick={(e) => {
+                                    setEdit(false)
+                                    setPlayer({ ...player })
+                                }
+                                }>
+                                    Cancel
+                                </button>
+                                <button onClick={editPlayer}>
+                                    Save
+                                </button>
+
+                            </div>
+
+                        </div>
+                    }
+                </>
+                <a onClick={handleDelete} className="text-Red/80 mt-2">Delete Account</a>
+
             </form >
         </section >
     )

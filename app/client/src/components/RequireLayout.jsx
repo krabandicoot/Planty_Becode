@@ -10,7 +10,7 @@ export default function RequireLayout() {
 
     return (
         auth ?
-            <main className=" ml-8 mr-8">
+            <main>
                 <Outlet />
             </main >
             : <Navigate to='/signin' state={{ from: location }} replace />

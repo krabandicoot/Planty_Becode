@@ -5,7 +5,8 @@ import { AiOutlineUser } from "react-icons/ai";
 import useAuth from "../hooks/useAuth";
 
 export function Header() {
-  const { auth } = useAuth();
+  const { player } = useAuth();
+
   return (
     <header className="header text-xs flex justify-between mb-4 ml-8 mr-8">
       {/* Logo + redirects*/}
@@ -22,13 +23,13 @@ export function Header() {
         <div className="header__user--name">
           <Link to="/account" className="items-center flex gap-1">
             <p><AiOutlineUser /></p>
-            <p>{auth}</p>
+            <p>{player.username || ''}</p>
           </Link>
         </div>
         {/* Score */}
         <div className="header__user--score flex gap-1">
-          <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="w-[10px]" />
-          <p>Score</p>
+          <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[15px]" />
+          <p>{player.leafs}</p>
         </div>
       </div>
 

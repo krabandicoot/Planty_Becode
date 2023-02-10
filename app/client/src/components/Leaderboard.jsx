@@ -33,7 +33,8 @@ export function Leaderboard() {
             {players?.length
                 ? (
                     <ul>
-                        {players.map((player, id) => <li key={id}>{player?.username}</li>)}
+                        {players.map((player, id) =>
+                            <li key={id}>{player?.username} - {player?.leafs}</li>)}
                     </ul>
                 ) : <p>No players to display</p>
             }

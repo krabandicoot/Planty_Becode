@@ -38,7 +38,7 @@ export function SignIn() {
         e.preventDefault();
 
         const configuration = {
-            method: 'post',
+            method: 'POST',
             url: SIGNIN_URL,
             data: {
                 username,
