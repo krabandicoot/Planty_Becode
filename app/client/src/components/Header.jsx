@@ -5,6 +5,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import useAuth from "../hooks/useAuth";
 
 export function Header() {
+  const { auth } = useAuth();
   const { player } = useAuth();
 
   return (
@@ -23,7 +24,7 @@ export function Header() {
         <div className="header__user--name">
           <Link to="/account" className="items-center flex gap-1">
             <p><AiOutlineUser /></p>
-            <p>{player.username || ''}</p>
+            <p>{auth || ''}</p>
           </Link>
         </div>
         {/* Score */}

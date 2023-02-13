@@ -1,8 +1,10 @@
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { AiOutlineLogout } from "react-icons/ai";
 import { MdOutlineModeEditOutline } from "react-icons/md"
 import { useEffect, useState, useRef } from "react";
+
+import { EditUser } from "./editUser";
 
 import axios from "../api/axios";
 const PLAYER_URL = "/api/account/username/";
@@ -10,10 +12,11 @@ const SIGNOUT_URL = "/api/user/signout";
 
 export function User() {
     const { auth, setAuth } = useAuth();
+    console.log(auth)
     const { player, setPlayer } = useAuth();
-    const errRef = useRef();
+    // const errRef = useRef();
 
-    const [errMsg, setErrMsg] = useState(false);
+    // const [errMsg, setErrMsg] = useState(false);
     const [edit, setEdit] = useState(false);
     const [dataPlayer, setDataPlayer] = useState({});
 
@@ -26,9 +29,10 @@ export function User() {
 
         const getPlayer = async () => {
             try {
-                const response = await axios.get(PLAYER_URL + auth);
-                console.log(response.data);
-                isMounted && setPlayer(response?.data);
+                const { data: response } = await axios.get(PLAYER_URL + auth);
+                isMounted && setPlayer(response);
+                setDataPlayer(response);
+
             } catch (err) {
                 console.log(err);
             }
@@ -39,9 +43,12 @@ export function User() {
             isMounted = false; // means we don't mount the component and 
             controller.abort();
         }
-    }, []);
+    }, [])
 
-    console.log(player)
+    console.log("player : ");
+    console.log(player);
+    console.log("dataPlayer : ");
+    console.log(dataPlayer);
 
     const handleLogout = async () => {
         try {
@@ -59,50 +66,14 @@ export function User() {
         navigate(to, { replace: true });
     };
 
-    const editPlayer = async () => {
-        e.preventDefault();
-
-        const configuration = {
-            method: 'put',
-            url: PLAYER_URL + auth,
-            data: {
-                username,
-                email,
-                bio
-            },
-            withCredentials: true,
-        }
-        try {
-            const response = await axios(configuration);
-
-            console.log(response?.data);
-
-            setPlayer(response?.data);
-            setEdit(false);
-
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg("No server Response");
-            } else if (err.response?.status === 400) {
-                setErrMsg("Missing Username or Password");
-            } else if (err.response?.status === 401) {
-                setErrMsg("Unauthorized");
-            } else {
-                setErrMsg("Login Failed");
-            }
-            errRef.current.focus();
-        };
-    }
     const handleDelete = async () => {
 
         try {
-            const response = await axios.delete(PLAYER_URL + auth);
-            console.log(response);
-            setPlayer(response);
-
+            await axios.delete(PLAYER_URL + auth);
             navigate(to, { replace: true });
 
         } catch (err) {
+            console.log(err)
             console.log("something went wrong");
         }
     }
@@ -129,7 +100,7 @@ export function User() {
                     <img src="../src/images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
                 </div>
             </div>
-            <form className="form__container palyer__data text-sm mt-10 mb-28">
+            <div className="form__container palyer__data text-sm mt-10 mb-28">
                 <div className="palyer__info--header flex items-center gap-2 text-lg">
                     <h4>Your data </h4>
                     <a onClick={() => { edit === false ? setEdit(true) : setEdit(false) }}>
@@ -152,72 +123,12 @@ export function User() {
                             </div>
                         </div>
                         :
-                        <div>
-                            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                            <div className="palyer__info--container flex gap-3 text-xs mb-4">
-                                <div className="palyer__info--title flex gap-y-2 flex-col">
-                                    <label htmlFor="username">Username</label>
-                                    <label htmlFor="email">Email</label>
-                                    <label htmlFor="text">Description</label>
-                                </div>
-                                <div className="text-SmokyBlack/50 palyer__info--data flex flex-col gap-y-2">
-                                    <input
-                                        type="username"
-                                        value={player.username || ''}
-                                        onChange={(e) => {
-                                            setEdit(true)
-                                            setPlayer({
-                                                ...player,
-                                                username: e.target.value
-                                            })
-                                        }}
-                                        required
-                                    />
-                                    <input
-                                        type="email"
-                                        value={player.email || ''}
-                                        onChange={(e) => {
-                                            setEdit(true)
-                                            setPlayer({
-                                                ...player,
-                                                email: e.target.value
-                                            })
-                                        }}
-                                        required
-                                    />
-                                    <textarea
-                                        className="min-h-[100px] min-w-[150px]"
-                                        value={player.bio || ''}
-                                        onChange={(e) => {
-                                            setEdit(true)
-                                            setPlayer({
-                                                ...player,
-                                                bio: e.target.value
-                                            })
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                            <div className="flex gap-2">
-                                <button onClick={(e) => {
-                                    setEdit(false)
-                                    setPlayer({ ...player })
-                                }
-                                }>
-                                    Cancel
-                                </button>
-                                <button onClick={editPlayer}>
-                                    Save
-                                </button>
-
-                            </div>
-
-                        </div>
+                        <EditUser dataPlayer={dataPlayer} setDataPlayer={setDataPlayer} setEdit={setEdit} />
                     }
                 </>
                 <a onClick={handleDelete} className="text-Red/80 mt-2">Delete Account</a>
 
-            </form >
+            </div >
         </section >
     )
 }
