@@ -1,10 +1,10 @@
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "../api/axios";
 import "leaflet/dist/leaflet.css";
-//import icon from "../Images/icon.png";
-//import L from "leaflet";
+import L from "leaflet";
+
 
 const TREES_URL = "/api/tree/all";
 
@@ -25,41 +25,56 @@ export default function Map() {
     return null;
   }
 
-  const [trees, setTrees] = useState("");
+  const [trees, setTrees] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getTrees= async () => {
+    try {
+        const response = await axios.get(TREES_URL);
+        //console.log(response.data[10].lat);
+        setTrees(response.data); 
+    } catch (err) {
+        console.log(err);
+    }
+  };
+
 
   useEffect(() => {
-
-      const getTrees= async () => {
-          try {
-              const response = await axios.get(TREES_URL);
-              //console.log(response.data);
-              setTrees(response.data); 
-          } catch (err) {
-              console.log(err);
-          }
-      }
-      getTrees();
-
-      return () => {}
+    getTrees()
+    //console.log(trees)
+    setIsLoading(false)
   }, []);
 
   return (
-    <MapContainer
-      classsName="map"
-      center={[latitude, longitude]}
-      zoom={14}
-      scrollWheelZoom={true}
-      style = {{height: 80 + "vh"}}
-    >
-      <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> 
-        contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={[latitude, longitude]}>
-        <Popup></Popup>
-      </Marker>
-      <MapView />
-    </MapContainer>
-  );
-}
+
+      <MapContainer
+        className="map"
+        center={[latitude, longitude]}
+        zoom={20}
+        scrollWheelZoom={true}
+        preferCanvas
+        style={{height: 80 + "vh"}}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> 
+          contributors'
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {trees.map((tree, index) => {
+          return (
+        <CircleMarker center={{lat: tree.lat, lon: tree.lon}} key={index}>
+          <Popup>
+  
+          </Popup>  
+        </CircleMarker>)
+          })}
+        <MapView />
+      </MapContainer>
+    )};
+
+
+
+
+
+
+

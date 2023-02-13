@@ -9,7 +9,7 @@ import { LandingPage } from "./components/LandingPage";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
 
-import Map from "./components/Map";
+import  Map  from "./components/Map";
 import { Leaderboard } from "./components/Leaderboard";
 import { Gamelog } from "./components/Gamelog";
 import { GameRules } from "./components/GameRules";
@@ -22,7 +22,7 @@ import RequireLayout from "./components/RequireLayout";
 export default function App() {
 
   return (
-    <Routes>
+    <Routes> 
       {/* Public Routes */}
       <Route element={<><Title /><Layout /><Footer /></>}>
         <Route path="/" element={<LandingPage />} />
