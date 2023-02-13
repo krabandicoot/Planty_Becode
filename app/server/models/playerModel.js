@@ -22,7 +22,7 @@ const playerSchema = new Schema({
     },
     color: {
         type: String,
-        required: false,
+        required: true,
         minLength: 4,
         maxLength: 7,
         unique: false,
