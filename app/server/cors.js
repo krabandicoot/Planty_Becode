@@ -1,4 +1,3 @@
-
 const allowedOrigins = [
     'http://locahost:8080',
     'http://locahost:5173/',
@@ -16,4 +15,4 @@ const corsOptions = {
     optionsSuccessStatus: 200
 };
 
-module.exports = { CORSOPTIONS: corsOptions };
+module.exports = corsOptions

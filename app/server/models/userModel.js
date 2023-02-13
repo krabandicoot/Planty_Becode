@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+const Player = require('./playerModel');
+const Tree = require('./treeModel');
 
 const Schema = mongoose.Schema;
 
@@ -24,22 +26,18 @@ const userSchema = new Schema({
     },
     color: {
         type: String,
-        required: false,
+        required: true,
         minLength: 4,
         maxLength: 7,
-        unique: true,
+        unique: false,
     }
 });
 
 userSchema.statics.signup = async function (username, email, password, color) {
 
-    //validation 
-    if (!email || !username || !password) {
+    if (!email || !username || !color || !password) {
         throw Error('All fields need to be filled');
     }
-    // if(username.charAt(0)!='K'){
-    //     throw Error('Unfortunately your user is not part of the Khadja Dynasty');
-    // }
     if (!validator.isAlphanumeric(username) && !validator.isAlpha(username)) {
         throw Error('The username must contain only letters and numbers');
     }
@@ -60,12 +58,14 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (usernameExist) {
         throw Error('Username already used, please enter another name');
     }
-    const salt = await bcrypt.genSalt(10);//a random string of character that get added to the user password to prevent getting hacked
+    const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
     const user = await this.create({ username, email, password: hash, color });
+    const player = await Player.create({ username, email, password: hash, color });
+    const attributeTree = await Tree.getThree({ username });
 
-    return user;
+    return user, player;
 }
 
 userSchema.statics.signin = async function (username, password) {
@@ -74,18 +74,15 @@ userSchema.statics.signin = async function (username, password) {
     }
 
     const user = await this.findOne({ username });
+    console.log(user);
     if (!user) {
         throw Error(`This username doesn't exist`);
-    }
+    };
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
         throw Error('Wrong password');
-    }
+    };
     return user;
 }
-
-// userSchema.statics.signout = async function(username, password){
-//     res.cookie('jwt', 'expiredtoken');
-// }
 module.exports = mongoose.model('User', userSchema);
