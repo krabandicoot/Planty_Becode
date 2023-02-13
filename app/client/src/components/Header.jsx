@@ -4,6 +4,7 @@ import animationData from '../lotties/logo-Planty.json';
 import { AiOutlineUser } from "react-icons/ai";
 import useAuth from "../hooks/useAuth";
 
+
 export function Header() {
   const { auth } = useAuth();
   const { player } = useAuth();

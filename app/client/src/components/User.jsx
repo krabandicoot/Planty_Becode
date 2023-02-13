@@ -20,27 +20,6 @@ export function User() {
     const navigate = useNavigate();
     const to = "/";
 
-    useEffect(() => {
-        let isMounted = true; // mounted true = the component is loaded to the site
-        const controller = new AbortController();
-
-        const getPlayer = async () => {
-            try {
-                const { data: response } = await axios.get(PLAYER_URL + auth);
-                isMounted && setPlayer(response);
-
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        getPlayer();
-
-        return () => { // we clean up function of the useEffect
-            isMounted = false; // means we don't mount the component and 
-            controller.abort();
-        }
-    }, [])
-
     console.log(player);
 
     const handleLogout = async () => {
@@ -92,7 +71,7 @@ export function User() {
             errRef.current.focus();
         };
     }
-
+    console.log(player.color)
     const handleDelete = async () => {
 
         try {
@@ -128,8 +107,8 @@ export function User() {
                 </div>
             </div>
             <div className="form__container player__data text-sm mt-10 mb-28 relative">
-                <div className={`player__color absolute w-8 h-8 rounded-full top-[-10px] right-[-10px] bg-[${player.color}]`}>
-
+                <div className="player__color absolute w-10 h-10 rounded-full top-[-10px] right-[-10px]"
+                    style={{ backgroundColor: player.color }}>
                 </div>
                 <div className="player__info--header flex items-center gap-2 text-lg">
                     <h4>Your data </h4>
