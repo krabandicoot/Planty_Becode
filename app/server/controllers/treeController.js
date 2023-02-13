@@ -29,11 +29,11 @@ const displayComments = async (req, res) => {
                 "as": "comments"
             }}, 
             {$match: {
-                    "name": nameCleaned 
+                    "name": nameCleaned
             }
         }
     ];
-    
+
     const cursor = await Tree.aggregate(pipeline, options).exec();
 
     // cursor.save();
