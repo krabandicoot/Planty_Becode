@@ -4,19 +4,16 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { MdOutlineModeEditOutline } from "react-icons/md"
 import { useEffect, useState, useRef } from "react";
 
-import { EditUser } from "./editUser";
-
 import axios from "../api/axios";
 const PLAYER_URL = "/api/account/username/";
 const SIGNOUT_URL = "/api/user/signout";
 
 export function User() {
     const { auth, setAuth } = useAuth();
-    console.log(auth)
     const { player, setPlayer } = useAuth();
-    // const errRef = useRef();
+    const errRef = useRef();
 
-    // const [errMsg, setErrMsg] = useState(false);
+    const [errMsg, setErrMsg] = useState(false);
     const [edit, setEdit] = useState(false);
     const [dataPlayer, setDataPlayer] = useState({});
 
@@ -31,7 +28,6 @@ export function User() {
             try {
                 const { data: response } = await axios.get(PLAYER_URL + auth);
                 isMounted && setPlayer(response);
-                setDataPlayer(response);
 
             } catch (err) {
                 console.log(err);
@@ -45,10 +41,7 @@ export function User() {
         }
     }, [])
 
-    console.log("player : ");
     console.log(player);
-    console.log("dataPlayer : ");
-    console.log(dataPlayer);
 
     const handleLogout = async () => {
         try {
@@ -65,6 +58,40 @@ export function User() {
 
         navigate(to, { replace: true });
     };
+
+    const editPlayer = async () => {
+        e.preventDefault();
+
+        const configuration = {
+            method: 'put',
+            url: PLAYER_URL + player.username,
+            data: {
+                username,
+                email,
+                bio
+            }
+        }
+
+        try {
+            const response = await axios(configuration);
+            setPlayer(response?.data);
+            setAuth(response?.data.username)
+            setEdit(false);
+
+        } catch (err) {
+            console.log(err)
+            if (!err?.response) {
+                setErrMsg("No server Response");
+            } else if (err.response?.status === 400) {
+                setErrMsg("Missing Username or Password");
+            } else if (err.response?.status === 401) {
+                setErrMsg("Unauthorized");
+            } else {
+                setErrMsg("Login Failed");
+            }
+            errRef.current.focus();
+        };
+    }
 
     const handleDelete = async () => {
 
@@ -100,8 +127,11 @@ export function User() {
                     <img src="../src/images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
                 </div>
             </div>
-            <div className="form__container palyer__data text-sm mt-10 mb-28">
-                <div className="palyer__info--header flex items-center gap-2 text-lg">
+            <div className="form__container player__data text-sm mt-10 mb-28 relative">
+                <div className={`player__color absolute w-8 h-8 rounded-full top-[-10px] right-[-10px] bg-[${player.color}]`}>
+
+                </div>
+                <div className="player__info--header flex items-center gap-2 text-lg">
                     <h4>Your data </h4>
                     <a onClick={() => { edit === false ? setEdit(true) : setEdit(false) }}>
                         <MdOutlineModeEditOutline />
@@ -109,13 +139,13 @@ export function User() {
                 </div>
                 <>
                     {edit === false ?
-                        <div className="palyer__info--container flex gap-3 text-xs">
-                            <div className="palyer__info--title flex flex-col gap-y-2">
+                        <div className="player__info--container flex gap-3 text-xs">
+                            <div className="player__info--title flex flex-col gap-y-2">
                                 <p>Username</p>
                                 <p>Email</p>
                                 <p>Description</p>
                             </div>
-                            <div className="text-SmokyBlack/50 palyer__info--data flex flex-col gap-y-2">
+                            <div className="text-SmokyBlack/50 player__info--data flex flex-col gap-y-2">
                                 <p>{player.username}</p>
                                 <p>{player.email}</p>
                                 <p>{player.bio}</p>
@@ -123,7 +153,63 @@ export function User() {
                             </div>
                         </div>
                         :
-                        <EditUser dataPlayer={dataPlayer} setDataPlayer={setDataPlayer} setEdit={setEdit} />
+                        <form method="post" onSubmit={editPlayer}>
+                            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                            <div className="player__info--container flex gap-3 text-xs mb-4">
+                                <div className="player__info--title flex gap-y-2 flex-col">
+                                    <label htmlFor="username">Username</label>
+                                    <label htmlFor="email">Email</label>
+                                    <label htmlFor="text">Description</label>
+                                </div>
+                                <div className="text-SmokyBlack/50 player__info--data flex flex-col gap-y-2">
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        id="username"
+                                        value={player.username || ''}
+                                        onChange={(e) => {
+                                            setPlayer({ ...player, username: e.target.value })
+                                        }}
+                                        required
+                                    />
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        id="email"
+                                        value={player.email || ''}
+                                        onChange={(e) => {
+                                            setPlayer({ ...player, email: e.target.value })
+                                        }}
+                                        required
+                                    />
+                                    <textarea
+                                        type="text"
+                                        name="bio"
+                                        id="bio"
+                                        className="min-h-[100px] min-w-[150px]"
+                                        value={player.bio || ''}
+                                        onChange={(e) => {
+                                            setPlayer({ ...player, bio: e.target.value })
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setPlayer(...player)
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit">
+                                    Save
+                                </button>
+
+                            </div>
+                        </form>
                     }
                 </>
                 <a onClick={handleDelete} className="text-Red/80 mt-2">Delete Account</a>

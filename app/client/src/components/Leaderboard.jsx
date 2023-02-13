@@ -27,14 +27,18 @@ export function Leaderboard() {
             controller.abort();
         }
     }, []);
+
+    console.log(players?.length)
     return (
-        <section>
+        <section className="ml-8 mr-8">
             <h1> Leaderboard</h1>
-            {players?.length
+            {players
                 ? (
                     <ul>
-                        {players.map((player, id) =>
-                            <li key={id}>{player?.username} - {player?.leafs}</li>)}
+                        {players
+                            .filter((player, id) => id < 10)
+                            .map((player, id) =>
+                                <li key={id}>{player?.username} - {player?.leafs}</li>)}
                     </ul>
                 ) : <p>No players to display</p>
             }
