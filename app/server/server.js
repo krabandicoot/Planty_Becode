@@ -9,7 +9,8 @@ const fs = require('fs');
 const userRoutes = require('./routes/user');
 const playerRoutes = require('./routes/player');
 const treeRoutes = require('./routes/tree');
-// const commentRoutes = require('./routes/comment');
+const commentRoutes = require('./routes/comment');
+
 
 const app = express();
 const PORT = process.env.NODE_DOCKER_PORT;
@@ -27,7 +28,7 @@ database.once('connected', () => {
     console.log('Database Connected 📬');
 });
 
-app.use(cors({origin: "http://localhost:5173", credentials: true}));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 
 app.use(morgan('common'));
@@ -38,16 +39,14 @@ app.get("/", (req, res) => {
 let rawdata = fs.readFileSync('./db/arbustum.json');
 let trees = JSON.parse(rawdata);
 
-// const Tree = require('./models/treeModel');
 app.use('/api/user', userRoutes);
 app.use('/api/account', playerRoutes);
-app.use('/api/tree', playerRoutes);
-// app.use('/api/comment', commentRoutes)
-//server set on .env
+app.use('/api/tree', treeRoutes);
+app.use('/api/comment', commentRoutes);
+
+
 app.listen(PORT, () => {
     console.log(`Server Started at ${PORT} 🚀`)
 });
 
 
-
-// console.log(getThree())

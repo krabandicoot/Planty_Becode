@@ -29,7 +29,6 @@ const userSchema = new Schema({
         required: true,
         minLength: 4,
         maxLength: 7,
-        unique: true,
     }
 });
 
@@ -53,9 +52,10 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (!validator.isStrongPassword(password)) { //
         throw Error('The password must contain 8 character minimum, with an uppercase, a number and a symbol');
     }
-    const emailExist = await this.findOne({email});
-    const usernameExist = await this.findOne({username});
-    if(emailExist){
+    const emailExist = await this.findOne({ email });
+    const usernameExist = await this.findOne({ username });
+
+    if (emailExist) {
         throw Error('Email already used, please enter another adress');
     }
     if (usernameExist) {
@@ -88,5 +88,4 @@ userSchema.statics.signin = async function (username, password) {
     };
     return user;
 }
-
 module.exports = mongoose.model('User', userSchema);

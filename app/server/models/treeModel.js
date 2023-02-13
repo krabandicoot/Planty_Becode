@@ -46,7 +46,7 @@ const treeSchema = new Schema({
     lat:{
         type:Number,
         required: true
-    },
+    }
 });
 
 treeSchema.statics.getThree = async function(username){
