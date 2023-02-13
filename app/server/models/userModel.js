@@ -35,7 +35,7 @@ const userSchema = new Schema({
 
 userSchema.statics.signup = async function (username, email, password, color) {
 
-    if (!email || !username || !color || !password){
+    if (!email || !username || !color || !password) {
         throw Error('All fields need to be filled');
     }
     if (!validator.isAlphanumeric(username) && !validator.isAlpha(username)) {
@@ -50,9 +50,9 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (!validator.isStrongPassword(password)) { //
         throw Error('The password must contain 8 character minimum, with an uppercase, a number and a symbol');
     }
-    const emailExist = await this.findOne({email});
-    const usernameExist = await this.findOne({username});
-    if(emailExist){
+    const emailExist = await this.findOne({ email });
+    const usernameExist = await this.findOne({ username });
+    if (emailExist) {
         throw Error('Email already used, please enter another adress');
     }
     if (usernameExist) {
@@ -61,10 +61,10 @@ userSchema.statics.signup = async function (username, email, password, color) {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    const user = await this.create({username, email, password: hash, color});
-    const player = await Player.create({username, email, password: hash, color});
-    const attributeTree = await Tree.getThree({username});
-    
+    const user = await this.create({ username, email, password: hash, color });
+    const player = await Player.create({ username, email, password: hash, color });
+    const attributeTree = await Tree.getThree({ username });
+
     return user, player;
 }
 
