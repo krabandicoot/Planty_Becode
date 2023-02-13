@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const User = require('./userModel');
 
 const treeSchema = new Schema({
     value:{
@@ -48,21 +49,22 @@ const treeSchema = new Schema({
     },
 });
 
-treeSchema.statics.getThree = async function(name){
+treeSchema.statics.getThree = async function(username){
     try{
         const treeCount = await this.count();
         for(i = 0; i < 3; i++){
             this.findOne({owner: 'none'}).skip(Math.floor(Math.random() * treeCount)).exec(
-                function (err, result) {
-                    result.owner = `${name}`;
+                function (err, result){
+                    result.owner = `${username}`;
                     result.value = 'unavailable';
                     result.save();
                     console.log(result);
+                    return result;
                 });
         }
-        }catch(err){
-            console.log(err)
-        }
+    }catch(err){
+        console.log(err)
+    }
 };
 
 module.exports = mongoose.model('Tree',treeSchema);

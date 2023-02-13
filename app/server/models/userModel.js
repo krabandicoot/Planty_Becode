@@ -33,9 +33,12 @@ const userSchema = new Schema({
     }
 });
 
+
+
+
 userSchema.statics.signup = async function (username, email, password, color) {
 
-    if (!email || !username || !color || !password){
+    if (!email || !username || !password || !color){
         throw Error('All fields need to be filled');
     }
     if (!validator.isAlphanumeric(username) && !validator.isAlpha(username)) {
@@ -63,7 +66,7 @@ userSchema.statics.signup = async function (username, email, password, color) {
 
     const user = await this.create({username, email, password: hash, color});
     const player = await Player.create({username, email, password: hash, color});
-    const attributeTree = await Tree.getThree({username});
+    const attributeTree = await Tree.getThree(username);
     
     return user, player;
 }
