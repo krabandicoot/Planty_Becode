@@ -31,7 +31,7 @@ database.once('connected', () => {
     console.log('Database Connected 📬');
 });
 
-app.use(cors({origin: "http://localhost:5173", credentials: true}));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 
 app.use(morgan('common'));
@@ -44,8 +44,8 @@ let trees = JSON.parse(rawdata);
 
 app.use('/api/user', userRoutes);
 app.use('/api/account', playerRoutes);
-app.use('/api/tree', playerRoutes);
-app.use('/api/comment', commentRoutes)
+app.use('/api/tree', treeRoutes);
+app.use('/api/comment', commentRoutes);
 //server set on .env
 app.listen(PORT, () => {
     console.log(`Server Started at ${PORT} 🚀`)
