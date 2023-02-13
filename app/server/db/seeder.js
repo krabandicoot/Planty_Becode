@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Tree = require('../models/treeModel');
 require('dotenv').config();
 const randomWords = require('project-name-generator');
+const { deleteMany } = require('../models/playerModel');
 const mongoString = process.env.DB_URL;
 
 function replaceAll(string, search, replace) {
@@ -41,8 +42,8 @@ for(let i = -1; i < trees.length; i++){
   .then(() => {
     console.log("connected to db in development environment");
   });
-  treeEntry.map(async (p, index) => {
-    await p.save((err, result) => {
+  treeEntry.map(async (t, index) => {
+    await t.save((err, result) => {
       console.log(index);
       if (index === treeEntry.length - 1) {
         console.log("DONE!");
