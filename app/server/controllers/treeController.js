@@ -11,14 +11,10 @@ const createTree = async (req, res) => {
 
 const displayComments = async (req, res) => {
 
-    const { tree_id } = req.params;
-    const selectedTree = await Tree.findById(tree_id).exec();
-    console.log(tree_id);
-
-    const selectedName = selectedTree.name;
-    
-
-    console.log(selectedName);
+    const treename = req.params;
+    const name = treename.name;
+    const nameCleaned = name.replaceAll('-',' ');
+    const foundTree = await Tree.findOne({ name : nameCleaned }).exec()
 
     const options = {
         allowDiskUse: true
@@ -31,9 +27,9 @@ const displayComments = async (req, res) => {
                 "localField": "name",
                 "foreignField": "treeInfo.treeName",
                 "as": "comments"
-            }, 
-            $match: {
-                    "name": selectedName 
+            }}, 
+            {$match: {
+                    "name": nameCleaned 
             }
         }
     ];
@@ -43,14 +39,6 @@ const displayComments = async (req, res) => {
     // cursor.save();
     res.status(200).json(cursor);
     console.log(cursor);
-    
-    // cursor.forEach(
-    //     function(doc) {
-    //         console.log(doc);
-    //     },
-    //     function(err) {
-    //         throw error;        }
-    // );
 }
 
 module.exports = { 
