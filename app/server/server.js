@@ -44,7 +44,7 @@ let trees = JSON.parse(rawdata);
 
 app.use('/api/user', userRoutes);
 app.use('/api/account', playerRoutes);
-app.use('/api/tree', playerRoutes);
+app.use('/api/tree', treeRoutes);
 app.use('/api/comment', commentRoutes)
 //server set on .env
 app.listen(PORT, () => {
