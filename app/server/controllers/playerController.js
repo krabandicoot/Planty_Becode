@@ -63,9 +63,11 @@ const updatePlayer = async (req, res) => {
 // Delete the player
 const deletePlayer = async (req, res) => {
     const { username } = req.params;
+
     const player = await Player.findOne({username: username});
     const deletePlayer = await Player.deleteOne({username: username});
-    const deleteUser = await getUser.deleteOne({username: username});
+    const deleteUser = await getUser.deleteOne({username: username});22
+    const updateTree = await Tree.updateMany({owner: username}, {$set: {owner:"none",value:"available"}});
 
     try {
 
@@ -73,7 +75,7 @@ const deletePlayer = async (req, res) => {
                 throw Error(`This username doesn't exist`);
         }
 
-        res.status(200).json(deletePlayer, deleteUser);
+        res.status(200).json(deletePlayer, deleteUser, updateTree);
         console.log('The player has been deleted');
     
     } catch(error) {

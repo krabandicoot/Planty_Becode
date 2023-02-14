@@ -32,9 +32,6 @@ const userSchema = new Schema({
     }
 });
 
-
-
-
 userSchema.statics.signup = async function (username, email, password, color) {
 
     if (!email || !username || !password || !color){
@@ -86,6 +83,7 @@ userSchema.statics.signin = async function (username, password) {
     if (!match) {
         throw Error('Wrong password');
     };
+    
     return user;
 }
 module.exports = mongoose.model('User', userSchema);
