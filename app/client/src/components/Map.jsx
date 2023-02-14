@@ -2,6 +2,8 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import React from "react";
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
+import { AiOutlineInfoCircle } from "react-icons/ai";
 import axios from "../api/axios";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -51,7 +53,7 @@ export default function Map() {
     <MapContainer
       className="map"
       center={[latitude, longitude]}
-      zoom={20}
+      zoom={15}
       scrollWheelZoom={true}
       preferCanvas
       style={{ height: 80 + "vh"}}
@@ -66,7 +68,18 @@ export default function Map() {
           return (
           <Marker position={{lat: tree.lat, lon: tree.lon}} key={index} icon={iconTree}>
             <Popup>
-    
+              <div className="speciesTree flex flex-row">
+                <h4>{tree.species.toUpperCase()}</h4>
+                <Link to="/tree"><AiOutlineInfoCircle /></Link>
+              </div>
+              
+                <button>Buy tree
+                  <div className="priceTree flex flex-row"> 
+                    {tree.price}
+                    <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
+                  </div>
+                </button>
+            
             </Popup>  
           </Marker>)
             })}
@@ -74,7 +87,6 @@ export default function Map() {
         <MapView />
       </MapContainer>
     )};
-
 
 
 
