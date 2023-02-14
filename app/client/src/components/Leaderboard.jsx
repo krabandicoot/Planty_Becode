@@ -15,7 +15,7 @@ export function Leaderboard() {
         const getPlayers = async () => {
             try {
                 const response = await axios.get(ACCOUNT_URL);
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setPlayers(response.data); // if the component is mounted then set the player data with the data we fetch
             } catch (err) {
                 console.log(err);
@@ -29,7 +29,7 @@ export function Leaderboard() {
         }
     }, []);
 
-    console.log(players?.length)
+    ///console.log(players?.length)
     return (
         <section className="ml-8 mr-8">
             <div className="card__container mb-10">

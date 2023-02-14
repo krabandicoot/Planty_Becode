@@ -51,7 +51,7 @@ export function SignIn() {
             const response = await axios(configuration);
 
             const user = response?.data.username
-            console.log(user);
+            //console.log(user);
             setAuth(user);
             setUsername("");
             setPassword("");

@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
         }
     }, [])
 
-    console.log(player);
+    //console.log(player);
 
     return (
         <AuthContext.Provider value={{ auth, setAuth, players, setPlayers, player, setPlayer }}>

@@ -1,10 +1,10 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-cluster";
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "../api/axios";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-
 
 const TREES_URL = "/api/tree/all";
 
@@ -12,16 +12,18 @@ export default function Map() {
   const latitude = 50.6327565;
   const longitude = 5.5686243;
 
-  const customIcon = new L.Icon({//creating a custom icon to use in Marker
-    iconUrl: import('../images/icon-tree.png'),
-    iconSize: [25, 35],
+  //const urlIcon = ("./images/icon-tree.png");
+  const iconTree = new L.Icon({
+    iconUrl: ("http://localhost:5173/src/images/icon-tree.png"),
+    iconSize: [20, 30],
     iconAnchor: [5, 30]
-  });
+});
+
 
   function MapView() {
     let map = useMap();
     map.setView([latitude, longitude], map.getZoom());
-    //Sets geographical center and zoom for the view of the map
+    //Sets geographical center and zoom for the view of the map  
     return null;
   }
 
@@ -38,7 +40,6 @@ export default function Map() {
     }
   };
 
-
   useEffect(() => {
     getTrees()
     //console.log(trees)
@@ -53,41 +54,26 @@ export default function Map() {
       zoom={20}
       scrollWheelZoom={true}
       preferCanvas
-      style={{ height: 80 + "vh" }}
+      style={{ height: 80 + "vh"}}
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> 
           contributors'
-<<<<<<< HEAD
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <MarkerClusterGroup>
         {trees.map((tree, index) => {
           return (
-        <Marker center={{lat: tree.lat, lon: tree.lon}} key={index}>
-          <Popup>
-  
-          </Popup>  
-        </Marker>)
-          })}
+          <Marker position={{lat: tree.lat, lon: tree.lon}} key={index} icon={iconTree}>
+            <Popup>
+    
+            </Popup>  
+          </Marker>)
+            })}
+        </MarkerClusterGroup>
         <MapView />
       </MapContainer>
     )};
-=======
-        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {trees.map((tree, index) => {
-        return (
-          <CircleMarker center={{ lat: tree.lat, lon: tree.lon }} key={index}>
-            <Popup>
-
-            </Popup>
-          </CircleMarker>)
-      })}
-      <MapView />
-    </MapContainer>
-  )
-};
->>>>>>> lisa
 
 
 
