@@ -1,6 +1,7 @@
 const { default: mongoose } = require('mongoose');
 const Player = require('../models/playerModel');
 const getUser = require('../models/userModel');
+const Tree = require('../models/treeModel');
 
 // Get all info of a player
 const getAccount = async(req,res) => {
