@@ -80,10 +80,40 @@ const deletePlayer = async (req, res) => {
     }
 }
 
+//Display the player tree's collection
+
+const displayTrees = async (req, res)=>{
+    const player = req.params;
+    
+    const options = {
+        allowDiskUse: true
+    };
+    
+    const pipeline = [
+        {
+            $lookup:{
+                "from": "trees",
+                "localField": "username",
+                "foreignField": "owner",
+                "as": "trees"
+            }}, 
+            {$match: {
+                "username": player.username
+            }
+        },
+    ];
+
+    const cursor = await Player.aggregate(pipeline, options).exec();
+
+    res.status(200).json(cursor);
+}
+
+
 // Export all the function
 module.exports = { 
     getAccount,
     getPlayers,
     updatePlayer,
-    deletePlayer
+    deletePlayer,
+    displayTrees
 };
