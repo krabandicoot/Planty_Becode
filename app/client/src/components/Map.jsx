@@ -12,29 +12,29 @@ export default function Map() {
   const latitude = 50.6327565;
   const longitude = 5.5686243;
 
-  // const customIcon = new L.Icon({//creating a custom icon to use in Marker
-  //   iconUrl: icon,
-  //   iconSize: [25, 35],
-  //   iconAnchor: [5, 30]
-  // });
+  const customIcon = new L.Icon({//creating a custom icon to use in Marker
+    iconUrl: import('../images/icon-tree.png'),
+    iconSize: [25, 35],
+    iconAnchor: [5, 30]
+  });
 
   function MapView() {
     let map = useMap();
     map.setView([latitude, longitude], map.getZoom());
-     //Sets geographical center and zoom for the view of the map
+    //Sets geographical center and zoom for the view of the map
     return null;
   }
 
   const [trees, setTrees] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getTrees= async () => {
+  const getTrees = async () => {
     try {
-        const response = await axios.get(TREES_URL);
-        //console.log(response.data[10].lat);
-        setTrees(response.data); 
+      const response = await axios.get(TREES_URL);
+      //console.log(response.data[10].lat);
+      setTrees(response.data);
     } catch (err) {
-        console.log(err);
+      console.log(err);
     }
   };
 
@@ -47,17 +47,18 @@ export default function Map() {
 
   return (
 
-      <MapContainer
-        className="map"
-        center={[latitude, longitude]}
-        zoom={20}
-        scrollWheelZoom={true}
-        preferCanvas
-        style={{height: 80 + "vh"}}
-      >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> 
+    <MapContainer
+      className="map"
+      center={[latitude, longitude]}
+      zoom={20}
+      scrollWheelZoom={true}
+      preferCanvas
+      style={{ height: 80 + "vh" }}
+    >
+      <TileLayer
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> 
           contributors'
+<<<<<<< HEAD
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {trees.map((tree, index) => {
@@ -71,6 +72,22 @@ export default function Map() {
         <MapView />
       </MapContainer>
     )};
+=======
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {trees.map((tree, index) => {
+        return (
+          <CircleMarker center={{ lat: tree.lat, lon: tree.lon }} key={index}>
+            <Popup>
+
+            </Popup>
+          </CircleMarker>)
+      })}
+      <MapView />
+    </MapContainer>
+  )
+};
+>>>>>>> lisa
 
 
 

@@ -23,7 +23,7 @@ const signInUser = async (req, res) => {
             secure: true,
             sameSite: 'None',
         })
-        res.status(200).json({username, signInToken});
+        res.status(200).json({ username, signInToken });
 
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -39,7 +39,7 @@ const signUpUser = async (req, res) => {
         const user = await User.signup(username, email, password, color);
         //create token
         const signInToken = createToken(user._id);
-        res.status(200).json({ email, signInToken });
+        res.status(200).json({ username, email, signInToken });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

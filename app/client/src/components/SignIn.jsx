@@ -50,7 +50,8 @@ export function SignIn() {
         try {
             const response = await axios(configuration);
 
-            const user = response?.data?.username;
+            const user = response?.data.username
+            console.log(user);
             setAuth(user);
             setUsername("");
             setPassword("");
@@ -70,6 +71,8 @@ export function SignIn() {
             errRef.current.focus();
         };
     }
+
+
     // TODO Remember me Checkbox
 
     return (

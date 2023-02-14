@@ -5,12 +5,11 @@ export default function RequireLayout() {
 
     const { auth } = useAuth();
     const location = useLocation();
-
-    // console.log(auth);
+    console.log(auth);
 
     return (
         auth ?
-            <main className="">
+            <main>
                 <Outlet />
             </main >
             : <Navigate to='/signin' state={{ from: location }} replace />

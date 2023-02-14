@@ -13,6 +13,7 @@ module.exports = {
         SmokyBlack: "#121212",
         Magnolia: "#ECE8EF",
         TuscanRed: "#814A4A",
+        Red: "#FF0404"
       },
       backgroundImage: {
         body: "url(' ')",
