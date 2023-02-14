@@ -23,7 +23,7 @@ export function Header() {
       <div className="header__user flex gap-3">
         {/* Username + redirect */}
         <div className="header__user--name">
-          <Link to="/account" className="items-center flex gap-1">
+          <Link to={`/account/${player.username}`} className="items-center flex gap-1">
             <p><AiOutlineUser /></p>
             <p>{auth || ''}</p>
           </Link>

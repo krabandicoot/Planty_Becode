@@ -8,7 +8,7 @@
     line-height: 24px;
     font-weight: 400;
     color: 121212;
-    background: radial-gradient(circle, rgba(178, 225, 134, 0) 0%, rgba(178, 225, 134, 0.1) 40%, rgba(178, 225, 134, 0.15) 80%, rgba(178, 225, 134, 0.2) 100%), url(./images/bg-planty.png) no-repeat;
+    background: radial-gradient(circle, rgba(178, 225, 134, 0) 0%, rgba(178, 225, 134, 0.1) 40%, rgba(178, 225, 134, 0.15) 80%, rgba(178, 225, 134, 0.2) 100%), url(../src/images/bg-planty.png) no-repeat;
     background-size: auto 115%;
     background-position-x: 40%;
 }
@@ -306,6 +306,20 @@ button:focus-visible {
     background: linear-gradient(180deg, rgba(178, 225, 134, 0.70) 0%, rgba(178, 225, 134, 0.35) 43%, rgba(178, 225, 134, 0.1) 100%);
     border-radius: 20px;
     padding: 2em;
+}
+
+.tree__comments {
+    grid-template-rows: repeat(3, minmax(100px, 150px))
+}
+
+.cropped-image {
+    width: auto;
+    height: 450px;
+}
+
+.fill-image {
+    object-fit: cover;
+    object-position: left;
 }
 
 @media screen and (min-width: 768px) {

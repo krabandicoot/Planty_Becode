@@ -5,7 +5,6 @@ import axios from "../api/axios";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-
 const TREES_URL = "/api/tree/all";
 
 export default function Map() {
@@ -13,7 +12,7 @@ export default function Map() {
   const longitude = 5.5686243;
 
   const customIcon = new L.Icon({//creating a custom icon to use in Marker
-    iconUrl: import('../images/icon-tree.png'),
+    iconUrl: "../se",
     iconSize: [25, 35],
     iconAnchor: [5, 30]
   });
