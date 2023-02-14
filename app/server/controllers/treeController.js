@@ -1,4 +1,5 @@
-const Tree = require('../models/treeModel')
+const Tree = require('../models/treeModel');
+const Player = require('../models/playerModel');
 
 // Get Tree
 const getTree = async(req,res) => {
@@ -12,7 +13,7 @@ const getTree = async(req,res) => {
     }
 }
 
-// Display a tree and the comments attached to it
+//Show the tree's comment
 const displayComments = async (req, res) => {
 
     const treename = req.params;
@@ -47,5 +48,7 @@ const displayComments = async (req, res) => {
 
 module.exports = { 
     getTree, 
+    getTree, 
     displayComments
 };
+
