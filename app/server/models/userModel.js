@@ -76,9 +76,15 @@ const takeLeafs = async (username) => {
 
     const newLeafAmount = Math.floor(leafAmount/2);
 
-// inject in player as new amount
+    // inject new amount in player
+    const updateLeafPlayer = await Player.updateOne(        
+        {_id: player._id},
+        {$set :
+            {leafs: newLeafAmount}
+        });
 
-    return newLeafAmount;
+    console.log(updateLeafPlayer);
+    return updateLeafPlayer;
 }
 
 setTimeout(takeLeafs, 3600000);
@@ -115,6 +121,7 @@ userSchema.statics.signup = async function (username, email, password, color) {
     const user = await this.create({username, email, password: hash, color});
     const player = await Player.create({username, email, password: hash, color});
     const attributeTree = await Tree.getThree(username);
+    
     // leaf count start :
     addLeafs(username);
     takeLeafs(username);
