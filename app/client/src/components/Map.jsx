@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "../api/axios";
@@ -62,11 +62,11 @@ export default function Map() {
         />
         {trees.map((tree, index) => {
           return (
-        <CircleMarker center={{lat: tree.lat, lon: tree.lon}} key={index}>
+        <Marker center={{lat: tree.lat, lon: tree.lon}} key={index}>
           <Popup>
   
           </Popup>  
-        </CircleMarker>)
+        </Marker>)
           })}
         <MapView />
       </MapContainer>
