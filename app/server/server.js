@@ -44,7 +44,6 @@ app.use('/api/account', playerRoutes);
 app.use('/api/tree', treeRoutes);
 app.use('/api/comment', commentRoutes);
 
-
 app.listen(PORT, () => {
     console.log(`Server Started at ${PORT} 🚀`)
 });
