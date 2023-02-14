@@ -12,6 +12,7 @@ const getTree = async(req,res) => {
     }
 }
 
+// Display a tree and the comments attached to it
 const displayComments = async (req, res) => {
 
     const treename = req.params;
@@ -45,6 +46,6 @@ const displayComments = async (req, res) => {
 }
 
 module.exports = { 
-    createTree, 
+    getTree, 
     displayComments
 };
