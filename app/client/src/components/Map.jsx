@@ -44,9 +44,15 @@ export default function Map() {
 
   useEffect(() => {
     getTrees()
-    //console.log(trees)
+    console.log(trees)
     setIsLoading(false)
   }, []);
+
+  // const valueStatus = () =>{
+  //   if (tree.value != "available"){
+      
+  //   }
+  // }
 
   return (
 
@@ -72,14 +78,41 @@ export default function Map() {
                 <h4>{tree.species.toUpperCase()}</h4>
                 <Link to="/tree"><AiOutlineInfoCircle /></Link>
               </div>
-              
-                <button>Buy tree
-                  <div className="priceTree flex flex-row"> 
-                    {tree.price}
-                    <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
-                  </div>
-                </button>
-            
+              <div>
+                {(() => {
+                  if (tree.value === "locked") {
+                    return (
+                      <div>
+                        <p>Owner : {tree.owner}</p>
+                        {/* icon lock */}
+                      </div>
+                    )
+                  } else if (tree.value === "unavailable") {
+                    return (
+                      <div>
+                        <p>Owner : {tree.owner}</p>
+                        <button>Buy tree
+                          <div className="priceTree flex flex-row"> 
+                            {tree.price}
+                            <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
+                          </div>
+                        </button>
+                      </div>
+                    )
+                  } else {
+                    return (
+                      <div>
+                        <button>Buy tree
+                          <div className="priceTree flex flex-row"> 
+                            {tree.price}
+                            <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
+                          </div>
+                        </button>
+                      </div>
+                    )
+                  }
+                })()}
+              </div>
             </Popup>  
           </Marker>)
             })}
