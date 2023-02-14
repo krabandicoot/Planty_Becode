@@ -13,16 +13,6 @@ const createToken = (_id) => {//id =  is part of the payload of the token
 
 
 // Take back half of leafs every hour
-const takeLeafs = async (username) => {
-    const player = await Player.findOne({username: username});
-
-    const leafAmout = player.leafs;
-    const newLeafAmout = Math.floor(leafAmout/2);
-
-    return newLeafAmout;
-}
-
-setTimeout(takeLeafs, 3600000);
 
 //login user 
 const signInUser = async (req, res) => {

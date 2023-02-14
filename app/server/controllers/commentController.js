@@ -1,6 +1,3 @@
-const { default: mongoose } = require('mongoose');
-// const jwt = require('jsonwebtoken');
-// const jwt_decode = require("jwt-decode");
 const Player = require('../models/playerModel');
 const Comment = require('../models/commentModel');
 const Tree = require('../models/treeModel');

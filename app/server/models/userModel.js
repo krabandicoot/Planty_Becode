@@ -32,6 +32,57 @@ const userSchema = new Schema({
     }
 });
 
+// functions to regulate the leaf amout
+// Add player trees x Leafs every 15 min
+const addLeafs = async (username, res) => {
+    const player = await Player.findOne({username: username});
+    const leafAmount = player.leafs;
+
+    const options = {
+        allowDiskUse: false
+    };
+
+    const pipeline = [
+        {
+            "$match": {
+                "owner": username
+            }
+        }, 
+        {
+            "$count": "treeCount"
+        }
+    ];
+
+    const cursor = await Tree.aggregate(pipeline, options).exec();
+    const treeCount = cursor[0].treeCount;
+    const newLeafAmount = Math.floor(leafAmount + treeCount);
+
+    // inject new amount in player
+    const updateLeafPlayer = await Player.updateOne(        
+        {_id: player._id},
+        {$set :
+            {leafs: newLeafAmount}
+        });
+
+    return updateLeafPlayer;
+}
+setTimeout(addLeafs, 900000);
+
+// Take back half of leafs every hour
+const takeLeafs = async (username) => {
+    const player = await Player.findOne({username: username});
+
+    const leafAmount = player.leafs;
+
+    const newLeafAmount = Math.floor(leafAmount/2);
+
+// inject in player as new amount
+
+    return newLeafAmount;
+}
+
+setTimeout(takeLeafs, 3600000);
+
 userSchema.statics.signup = async function (username, email, password, color) {
 
     if (!email || !username || !password || !color){
@@ -64,7 +115,10 @@ userSchema.statics.signup = async function (username, email, password, color) {
     const user = await this.create({username, email, password: hash, color});
     const player = await Player.create({username, email, password: hash, color});
     const attributeTree = await Tree.getThree(username);
-    
+    // leaf count start :
+    addLeafs(username);
+    takeLeafs(username);
+
     return user, player;
 }
 

@@ -48,6 +48,7 @@ const displayComments = async (req, res) => {
 
 module.exports = { 
     getTree, 
+    getTree, 
     displayComments
 };
 
