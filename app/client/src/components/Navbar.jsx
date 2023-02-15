@@ -4,7 +4,7 @@ import { CgTrees } from "react-icons/cg";
 import useAuth from "../hooks/useAuth";
 
 export function Navbar() {
-    const { player } = useAuth();
+    const { auth } = useAuth();
 
     return (
         <nav className="nav flex w-full h-8 justify-around items-center text-xl bg-Magnolia/80 rounded-tl-md rounded-tr-md">
@@ -12,7 +12,7 @@ export function Navbar() {
             <Link to="/leaderboard"><AiOutlineTrophy /></Link>
             <Link to="/gamelog"><AiOutlineHistory /></Link>
             <Link to="/gamerules"><AiOutlineInfoCircle /></Link>
-            <Link to={`/account/${player.username}`}><AiOutlineUser /></Link>
+            <Link to={`/account/${auth}`}><AiOutlineUser /></Link>
         </nav >
     )
 }

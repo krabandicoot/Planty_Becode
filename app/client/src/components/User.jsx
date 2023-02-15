@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { AiOutlineLogout } from "react-icons/ai";
 import { MdOutlineModeEditOutline } from "react-icons/md"
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -19,6 +19,7 @@ const SIGNOUT_URL = "/api/user/signout";
 export function User() {
     const { auth, setAuth } = useAuth();
     const { player, setPlayer } = useAuth();
+    console.log(player);
     const { userTrees } = useAuth();
 
     const errRef = useRef();
@@ -30,6 +31,27 @@ export function User() {
 
     const navigate = useNavigate();
     const to = "/";
+
+
+    useEffect(() => {
+        let isMounted = true; // mounted true = the component is loaded to the site
+        const controller = new AbortController();
+
+        const getPlayer = async () => {
+            try {
+                const { data: response } = await axios.get(PLAYER_URL + auth);
+                isMounted && setPlayer(response);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getPlayer();
+
+        return () => { // we clean up function of the useEffect
+            isMounted = false; // means we don't mount the component and 
+            controller.abort();
+        }
+    }, [])
 
     const handleLogout = async () => {
         try {
@@ -109,12 +131,14 @@ export function User() {
             </div>
             <Swiper
                 // install Swiper modules
-                modules={[Navigation, A11y]}
-                spaceBetween={50}
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                spaceBetween={20}
                 slidesPerView={3}
                 navigation
-            // onSwiper={(swiper) => console.log(swiper)}
-            // onSlideChange={() => console.log('slide change')}
+                pagination={{ clickable: true }}
+                scrollbar={{ draggable: true }}
+                onSwiper={(swiper) => console.log(swiper)}
+                onSlideChange={() => console.log('slide change')}
             >
 
                 {userTrees?.length ?

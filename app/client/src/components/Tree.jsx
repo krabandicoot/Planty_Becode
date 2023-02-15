@@ -9,6 +9,7 @@ const SINGLE_TREE_URL = "api/tree/"; // + insert tree name
 
 export function Tree() {
     const { tree } = useAuth();
+    const { auth } = useAuth();
     const { name } = useParams();
 
 
@@ -38,17 +39,20 @@ export function Tree() {
     }, [])
 
     console.log(singleTree);
+    console.log(singleTree.value);
+    console.log(singleTree.owner);
+    console.log(auth)
 
     return (
         <section className="tree__comments relative ml-8 grid grid-rows-3 grid-cols-2 bg-Magnolia">
 
             <div className="row-start-2 col-start-1 self-end capitalize">
                 <h1 className="text-2xl">{singleTree.name}</h1>
-                <div className="text-xs">
+                <div className="text-xs text-DarkSpringGreen leading-6">
                     <p>Owner : {singleTree.owner}</p>
                     <p>Species : {singleTree.species}</p>
                     <Link
-                        className="underline text-"
+                        className="underline text-DarkSpringGreen font-bold italic"
                         to={{
                             pathname: singleTree.wikilink
                         }}
@@ -62,7 +66,6 @@ export function Tree() {
                 className="absolute col-start-2 z-10 cropped-image fill-image" />
             {/* Condition to display the button according to tree status */}
 
-
             <div className="flex flex-col col-start-1 row-start-3 row-end-4 self-center">
                 {singleTree.value === "available" ?
                     <div className="button__buy">
@@ -74,18 +77,22 @@ export function Tree() {
                     </div>
                     :
                     (
-                        singleTree.value === "unvailable" ?
-                            <div className="button__purchased">
+                        singleTree.value === "unvailable" && singleTree.owner === auth ?
+                            <div className="button__purchased flex gap-2">
                                 <button className="absolute h-10 w-[150px] bg-Grey/40 text-SmokyBlack">Your Tree</button>
                                 <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey/50 flex flex-col justify-center items-center">
                                     <IoLockClosed />
                                 </span>
+                                <p className="text-xs text-DarkSpringGreen relative top-0 left-[110px] flex items-center">Unlock</p>
                             </div>
                             :
-                            <div className="button-locked">
+                            <div className="button-locked flex gap-2">
                                 <button className="absolute h-10 w-[150px] text-SmokyBlack">Your Tree</button>
                                 <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-green-800">
                                     <MdOutlineDone />
+                                </span>
+                                <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey/50 flex flex-col justify-center items-center">
+                                    <IoLockClosed />
                                 </span>
                             </div>
                     )

@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import axios from "../api/axios";
 import "leaflet/dist/leaflet.css";
@@ -14,6 +14,7 @@ export default function Map() {
   const latitude = 50.6327565;
   const longitude = 5.5686243;
 
+  const navigate = useNavigate();
   //const urlIcon = ("./images/icon-tree.png");
   const iconTree = new L.Icon({
     iconUrl: ("http://localhost:5173/src/images/icon-tree.png"),
@@ -76,7 +77,7 @@ export default function Map() {
               <Popup>
                 <div className="speciesTree flex flex-row m-2">
                   <h4 className="text-SmokyBlack">{tree.species.toUpperCase()}</h4>
-                  <Link to="/tree" className="ml-2"><AiOutlineInfoCircle /></Link>
+                  <Link to={`/tree/${tree.name}`} className="ml-2" replace><AiOutlineInfoCircle /></Link>
                 </div>
                 <div>
                   {(() => {
@@ -120,7 +121,7 @@ export default function Map() {
         })}
       </MarkerClusterGroup>
       <MapView />
-    </MapContainer>
+    </MapContainer >
   )
 };
 

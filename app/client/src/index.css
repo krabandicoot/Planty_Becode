@@ -330,9 +330,11 @@ button:focus-visible {
 .swiper-slide {
     background: #ECE8EF;
     padding: 10px;
-    width: 110px !important;
+    width: 120px !important;
+    height: 150px !important;
     display: flex !important;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     border-radius: 10px;
 }
