@@ -44,7 +44,7 @@ export default function Map() {
 
   useEffect(() => {
     getTrees()
-    console.log(trees)
+    //console.log(trees)
     setIsLoading(false)
   }, []);
 
@@ -74,39 +74,41 @@ export default function Map() {
           return (
           <Marker position={{lat: tree.lat, lon: tree.lon}} key={index} icon={iconTree}>
             <Popup>
-              <div className="speciesTree flex flex-row">
-                <h4>{tree.species.toUpperCase()}</h4>
-                <Link to="/tree"><AiOutlineInfoCircle /></Link>
+              <div className="speciesTree flex flex-row m-2">
+                <h4 className="text-SmokyBlack">{tree.species.toUpperCase()}</h4>
+                <Link to="/tree" className="ml-2"><AiOutlineInfoCircle /></Link>
               </div>
               <div>
                 {(() => {
                   if (tree.value === "locked") {
                     return (
-                      <div>
-                        <p>Owner : {tree.owner}</p>
+                      <div className="cardInfoTree">
+                        <p className="text-SmokyBlack">Owner : {tree.owner}</p>
                         {/* icon lock */}
                       </div>
                     )
                   } else if (tree.value === "unavailable") {
                     return (
-                      <div>
-                        <p>Owner : {tree.owner}</p>
-                        <button>Buy tree
-                          <div className="priceTree flex flex-row"> 
+                      <div className="cardInfoTree">
+                        <p className="text-SmokyBlack">Owner : {tree.owner}</p>
+                        <div className="priceTree flex justify-center m-2">
+                          <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack">Buy tree
+                            <div className="buttonBuy_price flex items-center">
                             {tree.price}
                             <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
-                          </div>
-                        </button>
+                            </div>
+                          </button>
+                        </div>
                       </div>
                     )
                   } else {
                     return (
-                      <div>
-                        <button>Buy tree
-                          <div className="priceTree flex flex-row"> 
+                      <div className="priceTree flex justify-center m-2">
+                        <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack">Buy tree
+                            <div className="buttonBuy_price flex items-center">
                             {tree.price}
                             <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
-                          </div>
+                            </div>
                         </button>
                       </div>
                     )
