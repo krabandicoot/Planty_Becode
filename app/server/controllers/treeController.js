@@ -48,18 +48,84 @@ const displayComments = async (req, res) => {
 
 // Get price of a tree
 const getPrice = async(req,res) => {
+
+    // Get tree infos : 
     const treename = req.params;
     const name = treename.name;
     const nameCleaned = name.replaceAll('-',' ');
     const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
-
     const price = foundTree.price;
+
+    // Ger player info :
+    const username = req.body.username;
+    const player = await Player.findOne({ username : username}).exec();
+
+    // Get owner info :
+    const treeOwner = foundTree.owner; 
+    const owner = await Player.findOne({name: treeOwner}).exec();
 
     if (foundTree.value == "unavailable"){
 
-        // [value of the targetted tree] + ([value of all the targetted player's trees in 100m radius] × ([amount of trees in 100m radius] / [amount of tree of targetted player in 100m radius])) + [value of all the other players trees in 100m radius] - [value of all your tree in 100m radius]
+        const rayon = 0.1/6371;
+        const latT = Math.asin(Math.sin(foundTree.lat)/Math.cos(rayon))
+        const dLon = Math.acos((Math.cos(r) - Math.sin(latT) * Math.sin(foundTree.lat)) / (Math.cos(latT)*Math.cos(foundTree.lat)))
+
+        // Maximum and minimun lon for the 100m radius
+        let maxLat = foundTree.lat + rayon;
+        let minLat = foundTree.lat - rayon;
+        let maxLon = foundTree.lon + dLon;
+        let minLon = foundTree.lon - dLon;
+
+        // Get trees in radius : 
+        const ownerAroundValue = await Tree.find(
+            {lat:{$gte: minLat, $lte: maxLat }, 
+            lon: {$gte: minLon, $lte: maxLon }, 
+            owner: owner.username})
+            .exec();
+
+        const aroundValue = await Tree.find(
+            {lat:{$gte: minLat, $lte: maxLat }, 
+            lon: {$gte: minLon, $lte: maxLon } }).exec();
+
+        const playerAroundValue = await Tree.find(
+            {lat:{$gte: minLat, $lte: maxLat }, 
+            lon: {$gte: minLon, $lte: maxLon }, 
+            owner: player.username}).exec()
+        ;
+
+        // Put them in a array :
+        for(let i = 0; i < aroundValue.length; i++) {
+            aroundValueArr.push(aroundValue[i].price)
+        }
+
+        for(let i = 0; i < playerAroundValue.length; i++) {
+            playerAroundValueArr.push(playerAroundValue[i].price);
+        }
+
+        for(let i = 0; i < ownerAroundValue.length; i++){
+            ownerAroundValueArr.push(ownerAroundValue[i].price);
+        }
+
+        // Calculate the sum of all :
+        const totalAroundValue = aroundValueArr.reduce(function(a, b){
+            return a + b;
+        });
+
+        const totalPlayerAroundValue = playerAroundValueArr.reduce(function(a, b){
+            return a + b;
+        });
+
+        const totalOwnerAroundValue = ownerAroundValueArr.reduce(function(a, b){
+            return a + b;
+        });
+
+        const newPrice = price + ((totalOwnerAroundValue) * (totalAroundValue) / (totalOwnerAroundValue)) + (totalAroundValue) - (totalPlayerAroundValue);
+
+        return price = newPrice;
 
     } else if (foundTree.value == "locked") {
+
+        res.status(200).send("Sorry, this tree is locked !");
 
     } else {
         return price;
