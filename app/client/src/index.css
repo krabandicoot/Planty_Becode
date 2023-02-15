@@ -322,6 +322,22 @@ button:focus-visible {
     object-position: left;
 }
 
+.swiper-slide {
+    background: #ECE8EF;
+    padding: 10px;
+    width: 110px !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #121212 !important;
+}
+
+
 @media screen and (min-width: 768px) {
     .rcp {
         width: 280px;

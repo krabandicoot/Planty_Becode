@@ -38,7 +38,7 @@ export default function App() {
         <Route path="gamelog" element={<Gamelog />} />
         <Route path="gamerules" element={<GameRules />} />
         <Route path="account/:username" element={<User />} />
-        <Route path="tree" element={<><Tree /><Comments /></>} />
+        <Route path="tree/:name" element={<><Tree /><Comments /></>} />
       </Route>
     </Routes >
   );

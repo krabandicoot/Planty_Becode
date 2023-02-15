@@ -1,8 +1,14 @@
 import { createContext, useState, useEffect } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import axios from "../api/axios";
+
+//user routes
 const PLAYER_URL = "/api/account/username/";
-const TREES_URL = "/api/tree/all/";
+const USER_TREES_URL = "api/account/username/tree/"; // + insert player name
+//tree routes 
+const TREES_URL = "/api/tree/all";
+const SINGLE_TREE_URL = "api/tree/"; // + insert tree name
+const BUY_TREE_URL = "api/tree/buy/"; // + insert tree name
 
 const AuthContext = createContext({});
 
@@ -12,6 +18,7 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
     const [player, setPlayer] = useState({});
 
     const [trees, setTrees] = useState([]);
+    const [userTrees, setUserTrees] = useState([]);
 
     useEffect(() => {
         let isMounted = true; // mounted true = the component is loaded to the site
@@ -21,24 +28,31 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
             try {
                 const { data: response } = await axios.get(PLAYER_URL + auth);
                 isMounted && setPlayer(response);
-
             } catch (err) {
                 console.log(err);
             }
         }
         getPlayer();
 
+        const getTrees = async () => {
+            try {
+                const response = await axios.get(TREES_URL);
+                isMounted && setTrees(response.data);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getTrees();
+
         const getTreesByOwner = async () => {
             try {
-                const { data: response } = await axios.get(TREES_URL);
-                isMounted && setTrees(response);
-                console.log(response);
+                const response = await axios.get(USER_TREES_URL + auth);
+                isMounted && setUserTrees(response.data[0].trees);
 
             } catch (err) {
                 console.log(err);
             }
         }
-
         getTreesByOwner();
 
         return () => { // we clean up function of the useEffect
@@ -48,7 +62,7 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
     }, [])
 
     return (
-        <AuthContext.Provider value={{ auth, setAuth, players, setPlayers, player, setPlayer, trees, setTrees }}>
+        <AuthContext.Provider value={{ auth, setAuth, players, setPlayers, player, setPlayer, userTrees, setUserTrees }}>
             {children}
         </AuthContext.Provider>
     )

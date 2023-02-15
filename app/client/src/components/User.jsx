@@ -4,6 +4,14 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { MdOutlineModeEditOutline } from "react-icons/md"
 import { useState, useRef } from "react";
 
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+
+
 import axios from "../api/axios";
 const PLAYER_URL = "/api/account/username/";
 const SIGNOUT_URL = "/api/user/signout";
@@ -11,9 +19,10 @@ const SIGNOUT_URL = "/api/user/signout";
 export function User() {
     const { auth, setAuth } = useAuth();
     const { player, setPlayer } = useAuth();
-    const { trees, setTrees } = useAuth();
+    const { userTrees } = useAuth();
 
     const errRef = useRef();
+
 
     const [errMsg, setErrMsg] = useState(false);
     const [edit, setEdit] = useState(false);
@@ -73,7 +82,6 @@ export function User() {
     }
 
     const handleDelete = async () => {
-
         try {
             await axios.delete(PLAYER_URL + auth);
             navigate(to, { replace: true });
@@ -99,15 +107,30 @@ export function User() {
                     </a>
                 </div>
             </div>
-            <div className="player__tree">
-                <ul>
-                    {/* add loop to display 5 tree cards */}
-                    <li className="player__tree--card bg-Magnolia p-2 w-24 flex flex-col items-center rounded-md">
-                        <p>Tree Name</p>
-                        <img src="../src/images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
-                    </li>
-                </ul>
-            </div>
+            <Swiper
+                // install Swiper modules
+                modules={[Navigation, A11y]}
+                spaceBetween={50}
+                slidesPerView={3}
+                navigation
+            // onSwiper={(swiper) => console.log(swiper)}
+            // onSlideChange={() => console.log('slide change')}
+            >
+
+                {userTrees?.length ?
+                    userTrees
+                        .map((userTree, id) =>
+                            <SwiperSlide
+                                key={id}
+                                onClick={() => navigate(`/tree/${userTree.name}`, { replace: true })}>
+                                <p>{userTree.name}</p>
+                                <img src="../src/images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
+                            </SwiperSlide>
+                        )
+                    : <p>No Trees yet</p>
+                }
+            </Swiper>
+
             <div className="form__container player__data text-sm mt-10 mb-28 relative">
                 <div className="player__color absolute w-10 h-10 rounded-full top-[-10px] right-[-10px]"
                     style={{ backgroundColor: player.color }}>
