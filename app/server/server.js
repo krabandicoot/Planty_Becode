@@ -11,7 +11,6 @@ const playerRoutes = require('./routes/player');
 const treeRoutes = require('./routes/tree');
 const commentRoutes = require('./routes/comment');
 
-
 const app = express();
 const PORT = process.env.NODE_DOCKER_PORT;
 const mongoString = process.env.DB_URL;

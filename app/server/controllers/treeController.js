@@ -191,10 +191,102 @@ const buyTree = async(req,res) => {
     }
 }
 
+// Lock a tree
+const lockTree = async(req,res) => {
+
+    const treename = req.params;
+    const username = req.body.username;
+    const name = treename.name;
+    const nameCleaned = name.replaceAll('-',' ');
+    const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
+    const player = await Player.findOne({ username : username}).exec();
+    const money = player.leafs;
+
+    if(foundTree.value == "locked"){
+        console.log("This tree is already locked !");
+    }
+
+    // Get radius : 
+    const rayon = 0.1/6371;
+    const latT = Math.asin(Math.sin(foundTree.lat)/Math.cos(rayon))
+    const dLon = Math.acos((Math.cos(rayon) - Math.sin(latT) * Math.sin(foundTree.lat)) / (Math.cos(latT) * Math.cos(foundTree.lat)));
+
+    // Maximum and minimun lon for the 100m radius
+    let maxLat = foundTree.lat + rayon;
+    let minLat = foundTree.lat - rayon;
+    let maxLon = foundTree.lon + dLon;
+    let minLon = foundTree.lon - dLon;
+
+    // Get trees in radius : 
+    const aroundValue = await Tree.find(
+        {lat:{$gte: minLat, $lte: maxLat }, 
+        lon: {$gte: minLon, $lte: maxLon } }).exec();
+
+    const playerAroundValue = await Tree.find(
+        {lat:{$gte: minLat, $lte: maxLat }, 
+        lon: {$gte: minLon, $lte: maxLon }, 
+        owner: player.username}).exec();
+
+    // Put them in a array :
+    const aroundValueArr = [];
+    const playerAroundValueArr = [];
+
+    for(let i = 0; i < aroundValue.length; i++) {
+        aroundValueArr.push(aroundValue[i].price)
+    }
+
+    for(let i = 0; i < playerAroundValue.length; i++) {
+        playerAroundValueArr.push(playerAroundValue[i].price);
+    }
+
+    // Calculate the sum of all :
+    let totalPlayerAroundValue = 1;
+
+    for(let i = 0; i < playerAroundValueArr.length; i++) {
+        totalPlayerAroundValue = playerAroundValueArr.reduce(function(a, b){
+            return a + b;
+        });
+    };
+
+    const totalAroundValue = aroundValueArr.reduce(function(a, b){
+        return a + b;
+    });
+
+    // Get lock price :
+    const lockPrice = (foundTree.price * 10) + ((totalAroundValue)*(playerAroundValueArr.length)) - ((totalPlayerAroundValue)/(playerAroundValueArr.length));
+
+    if (lockPrice <= money) {
+
+        const newAmount = money - lockPrice;
+        
+        // Lock the tree
+        const updateTree = await Tree.updateOne(
+            {name: nameCleaned}, 
+            {$set: 
+                {
+                    value: "locked",
+                    owner: player.username
+                }
+            });
+
+        const updatePlayer = await Player.updateOne(
+            { username: player.username},
+            {$set:
+                {
+                    leafs : newAmount
+                }
+            });
+        
+        res.status(200).json((updateTree, updatePlayer));
+    } else {
+        res.status(204).json("Sorry, you're too broke !");
+    }
+}
+
 module.exports = { 
     getTree, 
     displayComments,
     getPrice,
-    buyTree
+    buyTree,
+    lockTree
 };
-
