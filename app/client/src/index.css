@@ -76,6 +76,11 @@ button:focus-visible {
     display: none;
 }
 
+/* map */
+.leaflet-popup-content p {
+    margin: 0.6em !important;
+}
+
 /* picker color */
 .rcp,
 .rcp div,
