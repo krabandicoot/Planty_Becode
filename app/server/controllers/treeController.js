@@ -54,7 +54,7 @@ const getPrice = async(req,res) => {
     const name = treename.name;
     const nameCleaned = name.replaceAll('-',' ');
     const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
-    const price = foundTree.price;
+    let price = foundTree.price;
 
     // Ger player info :
     const username = req.body.username;
@@ -68,7 +68,7 @@ const getPrice = async(req,res) => {
 
         const rayon = 0.1/6371;
         const latT = Math.asin(Math.sin(foundTree.lat)/Math.cos(rayon))
-        const dLon = Math.acos((Math.cos(r) - Math.sin(latT) * Math.sin(foundTree.lat)) / (Math.cos(latT)*Math.cos(foundTree.lat)))
+        const dLon = Math.acos((Math.cos(rayon) - Math.sin(latT) * Math.sin(foundTree.lat)) / (Math.cos(latT) * Math.cos(foundTree.lat)));
 
         // Maximum and minimun lon for the 100m radius
         let maxLat = foundTree.lat + rayon;
@@ -80,7 +80,7 @@ const getPrice = async(req,res) => {
         const ownerAroundValue = await Tree.find(
             {lat:{$gte: minLat, $lte: maxLat }, 
             lon: {$gte: minLon, $lte: maxLon }, 
-            owner: owner.username})
+            owner: owner})
             .exec();
 
         const aroundValue = await Tree.find(
@@ -90,10 +90,13 @@ const getPrice = async(req,res) => {
         const playerAroundValue = await Tree.find(
             {lat:{$gte: minLat, $lte: maxLat }, 
             lon: {$gte: minLon, $lte: maxLon }, 
-            owner: player.username}).exec()
-        ;
+            owner: player.username}).exec();
 
         // Put them in a array :
+        const aroundValueArr = [];
+        const playerAroundValueArr = [];
+        const ownerAroundValueArr = [];
+
         for(let i = 0; i < aroundValue.length; i++) {
             aroundValueArr.push(aroundValue[i].price)
         }
@@ -107,15 +110,22 @@ const getPrice = async(req,res) => {
         }
 
         // Calculate the sum of all :
+        let totalPlayerAroundValue = 0;
+        let totalOwnerAroundValue = 0;
+
+        if(ownerAroundValueArr.length){
+            totalOwnerAroundValue = ownerAroundValueArr.reduce(function(a, b){
+                return a + b;
+            });
+        };
+
+        for(let i = 0; i < playerAroundValueArr.length; i++) {
+            totalPlayerAroundValue = playerAroundValueArr.reduce(function(a, b){
+                return a + b;
+            });
+        };
+
         const totalAroundValue = aroundValueArr.reduce(function(a, b){
-            return a + b;
-        });
-
-        const totalPlayerAroundValue = playerAroundValueArr.reduce(function(a, b){
-            return a + b;
-        });
-
-        const totalOwnerAroundValue = ownerAroundValueArr.reduce(function(a, b){
             return a + b;
         });
 
