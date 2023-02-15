@@ -76,8 +76,10 @@ const buyTree = async(req,res) => {
     const player = await Player.findOne({ username : username}).exec();
 
     const money = player.leafs;
-
     const price = foundTree.price;
+
+    const newAmount = money - price;
+    console.log(newAmount);
 
     if (price <= money) {
         
@@ -91,18 +93,18 @@ const buyTree = async(req,res) => {
                 }
             });
 
-        // const updatePlayer = await Player.updateOne(
-        //     { username: player.username},
-        //     {$set:
-        //         {
-        //             leafs :
-        //         }
-        //     }
-        // );
+        const updatePlayer = await Player.updateOne(
+            { username: player.username},
+            {$set:
+                {
+                    leafs : newAmount
+                }
+            }
+        );
 
         return updateTree, updatePlayer;
     } else {
-        console.log("Sorry, you're broke !");
+        res.status(204).send("Sorry, you're broke !");
     }
 }
 
