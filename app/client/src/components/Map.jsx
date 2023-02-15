@@ -1,26 +1,27 @@
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import MarkerClusterGroup from "react-leaflet-cluster";
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { AiOutlineInfoCircle } from "react-icons/ai";
 import axios from "../api/axios";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-cluster";
+import Modal from "../components/Modal";
+
+import { AiOutlineInfoCircle, AiFillLock } from "react-icons/ai";
 
 const TREES_URL = "/api/tree/all";
+
 
 export default function Map() {
   const latitude = 50.6327565;
   const longitude = 5.5686243;
 
-  //const urlIcon = ("./images/icon-tree.png");
   const iconTree = new L.Icon({
     iconUrl: ("http://localhost:5173/src/images/icon-tree.png"),
     iconSize: [20, 30],
     iconAnchor: [5, 30]
 });
-
 
   function MapView() {
     let map = useMap();
@@ -31,6 +32,7 @@ export default function Map() {
 
   const [trees, setTrees] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const getTrees = async () => {
     try {
@@ -48,16 +50,11 @@ export default function Map() {
     setIsLoading(false)
   }, []);
 
-  // const valueStatus = () =>{
-  //   if (tree.value != "available"){
-      
-  //   }
-  // }
-
   return (
 
     <MapContainer
       className="map"
+      id="map"
       center={[latitude, longitude]}
       zoom={15}
       scrollWheelZoom={true}
@@ -74,23 +71,23 @@ export default function Map() {
           return (
           <Marker position={{lat: tree.lat, lon: tree.lon}} key={index} icon={iconTree}>
             <Popup>
-              <div className="speciesTree flex flex-row m-2">
-                <h4 className="text-SmokyBlack">{tree.species.toUpperCase()}</h4>
-                <Link to="/tree" className="ml-2"><AiOutlineInfoCircle /></Link>
+              <div className="speciesTree flex flex-row justify-center m-2">
+                <h4 className="text-SmokyBlack capitalize">{tree.name}</h4>
+                <button onClick={() => setIsOpen(true)}><AiOutlineInfoCircle/></button> {isOpen && <Modal setIsOpen={setIsOpen} />}
               </div>
               <div>
                 {(() => {
                   if (tree.value === "locked") {
                     return (
-                      <div className="cardInfoTree">
-                        <p className="text-SmokyBlack">Owner : {tree.owner}</p>
-                        {/* icon lock */}
+                      <div className="cardInfoTree flex justify-around items-center">
+                        <p className="text-SmokyBlack text-[12px]">Owner : {tree.owner}</p>
+                        <AiFillLock/>
                       </div>
                     )
                   } else if (tree.value === "unavailable") {
                     return (
                       <div className="cardInfoTree">
-                        <p className="text-SmokyBlack">Owner : {tree.owner}</p>
+                        <p className="text-SmokyBlack text-center">Owner : {tree.owner}</p>
                         <div className="priceTree flex justify-center m-2">
                           <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack">Buy tree
                             <div className="buttonBuy_price flex items-center">
