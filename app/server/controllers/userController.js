@@ -11,17 +11,6 @@ const createToken = (_id) => {//id =  is part of the payload of the token
     return jwt.sign({ _id }, TOKEN, { expiresIn: '3d' });//the second is the secret string only know by the server, the third means the user stays logged in for 3 days before the token expires
 }
 
-
-// Take back half of leafs every hour
-const takeLeafs = async (username) => {
-    const player = await Player.findOne({username: username});
-
-    const leafAmout = player.leafs;
-    const newLeafAmout = Math.floor(leafAmout/2);
-
-    return newLeafAmout;
-}
-
 setTimeout(takeLeafs, 3600000);
 
 //login user 
