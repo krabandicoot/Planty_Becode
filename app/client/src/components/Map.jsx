@@ -11,6 +11,8 @@ import { AiOutlineInfoCircle, AiFillLock } from "react-icons/ai";
 
 // Informations all trees **
 const TREES_URL = "/api/tree/all";
+// Informations one tree **
+const SINGLE_TREE_URL = "api/tree/"; // + insert tree name
 // Buy a tree ** 
 const BUY_TREE_URL = "/api/tree/buy/" // + insert-tree-name
 
@@ -35,7 +37,6 @@ export default function Map() {
   const [trees, setTrees] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [buyTree, setBuyTree] = useState();
-  let { name } = useParams();
 
   const getTrees = async () => {
     try {
@@ -47,7 +48,7 @@ export default function Map() {
     }
   };
 
-  const handleBuy = async () => {
+  const handleBuy = async (name) => {
     try {
         const response = await axios.get(BUY_TREE_URL + name);
         console.log(response.data);
@@ -112,7 +113,7 @@ export default function Map() {
                         <p className="text-SmokyBlack text-center">Owner : {tree.owner}</p>
                         <p>{tree.species}</p>
                         <div className="priceTree flex justify-center m-2">
-                          <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack" onClick={handleBuy}>Buy tree
+                          <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack" onClick={handleBuy(tree.name)}>Buy tree
                             <div className="buttonBuy_price flex items-center">
                               {tree.price}
                               <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
@@ -124,7 +125,7 @@ export default function Map() {
                   } else {
                     return (
                       <div className="priceTree flex justify-center m-2">
-                        <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack" onClick={handleBuy}>Buy tree
+                        <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack" onClick={handleBuy(tree.name)}>Buy tree
                             <div className="buttonBuy_price flex items-center">
                               {tree.price}
                               <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
