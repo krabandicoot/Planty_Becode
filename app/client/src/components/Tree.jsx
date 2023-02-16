@@ -31,9 +31,8 @@ export function Tree() {
     const [errMsg, setErrMsg] = useState("");
     const [priceTree, setPriceTree] = useState();
     const [buyTree, setBuyTree] = useState();
-    const [lockTree, setLockTree] = useState();
-    const [unlockTree, setUnlockTree] = useState();
-    const [treeStatus, setTreeStatus] = useState("");
+    const [lockTree, setLockTree] = useState("");
+    const [unlockTree, setUnlockTree] = useState("");
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -72,25 +71,27 @@ export function Tree() {
     //     displayPrice();
     // }, [])
 
-    const handleBuy = async () => {
-        try {
-            const response = await axios.get(BUY_TREE_URL + name);
-            console.log(response.data);
-            setBuyTree(response.data);
-        } catch (err) {
-            console.log(err);
-        }
-    }
+    // const handleBuy = async () => {
+    //     try {
+    //         const response = await axios.get(BUY_TREE_URL + name);
+    //         console.log(response.data);
+    //         setBuyTree(response.data);
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // }
 
     // Lock the tree
 
-    const handleLock = async () => {
+    const handleLock = async (e) => {
+        e.preventDefault();
+
         try {
             const response = await axios.get(LOCK_TREE_URL + name);
             console.log(response.data);
             setLockTree(response.data);
-            setTreeStatus(response.data.value)
-            navigate(from, { replace: true })
+            window.location.reload(false);
+
         } catch (err) {
             console.log(err);
             if (!err?.response) {
@@ -103,12 +104,14 @@ export function Tree() {
     }
 
     // Unlock the tree
-    const handleUnlock = async () => {
+    const handleUnlock = async (e) => {
+        e.preventDefault();
+
         try {
             const response = await axios.get(UNLOCK_TREE_URL + name);
             console.log(response.data);
             setUnlockTree(response.data);
-            navigate(from, { replace: true })
+            window.location.reload(false);
         } catch (err) {
             console.log(err);
         }
@@ -156,7 +159,7 @@ export function Tree() {
                     :
                     (singleTree.value === "locked" && singleTree.owner === player.username ?
                         <div className="button-locked flex gap-2">
-                            <button className="absolute h-10 w-[150px] bg-Grey/40 text-SmokyBlack">Locked Tree</button>
+                            <button className="absolute h-10 w-[150px] bg-Grey/40 text-SmokyBlack">Locked</button>
                             <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey/50 flex flex-col justify-center items-center">
                                 <IoLockClosed />
                             </span>
@@ -170,7 +173,7 @@ export function Tree() {
                         <div div className="button__buy">
                             <button
                                 className="absolute h-10 w-[150px] text-SmokyBlack"
-                                onClick={handleBuy}
+                            // onClick={handleBuy}
                             >
                                 Buy Tree
                             </button>

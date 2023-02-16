@@ -8,7 +8,6 @@ const COMMENT_URL = "api/comment/create/";
 
 export function Comments() {
     const { auth } = useAuth();
-
     const { singleTree } = useAuth();
 
     const tree_id = singleTree._id;
@@ -16,7 +15,9 @@ export function Comments() {
     const [comments, setComments] = useState(false);
 
     const [username, setUsername] = useState(auth);
+    console.log(username)
     const [text, setText] = useState("");
+    console.log(text)
 
     const [commentsForm, setCommentsForm] = useState(false);
 
@@ -89,7 +90,7 @@ export function Comments() {
                                 type="text"
                                 name="username"
                                 value={username}
-                                onChange={() => setUsername(username)}
+                                // onChange={() => setUsername(username)}
                                 className="font-bold bg-transparent m-2"
                             />
                             <label htmlFor="text"></label>
