@@ -139,19 +139,10 @@ userSchema.statics.signup = async function (username, email, password, color) {
     const player = await Player.create({ username, email, password: hash, color });
     //Attribute three tree as you signed in
     const attributeTree = await Tree.getThree(username);
+    //Attribute the player leaf in his wallet as he signed up
     addLeafs(username);
-    //Start the timer to receives and remove leaves
-    let scheduledScore = cron.schedule('* */15 * * * *', () => {
-        addLeafs(username);
-        console.log("Adding every 15 minutes the amount of leaves to the user");
-        cron.schedule('* */60 * * * *', () => {
-            takeLeafs(username);
-            console.log("Retrieving half his leaf every hour");
-        });
-    });
 
-    scheduledScore.start();
-    return user, player, scheduledScore;
+    return user, player;
 }
 
 userSchema.statics.signin = async function (username, password) {
