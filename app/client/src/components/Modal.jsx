@@ -1,13 +1,15 @@
 import React from "react";
-//import styles from "./Modal.module.css";
 import { RiCloseLine } from "react-icons/ri";
 
 const Modal = ({ setIsOpen }) => {
   return (
     <>
-          <button className="closeBtn" onClick={() => setIsOpen(false)}>
-            <RiCloseLine style={{ marginBottom: "-3px" }} />
-          </button>
+      <div className="absolute z-10 bg-DarkSpringGreen rounded-md m-14 w-[50%] opacity-90">
+          <RiCloseLine className= "m-2" onClick={() => setIsOpen(false)}/>
+        <p>
+          Helloooooo !
+        </p>
+      </div>
     </>
   );
 };

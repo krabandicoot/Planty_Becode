@@ -51,74 +51,78 @@ export default function Map() {
   }, []);
 
   return (
-
-    <MapContainer
-      className="map"
-      id="map"
-      center={[latitude, longitude]}
-      zoom={15}
-      scrollWheelZoom={true}
-      preferCanvas
-      style={{ height: 80 + "vh"}}
-    >
-      <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> 
-          contributors'
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <MarkerClusterGroup>
-        {trees.map((tree, index) => {
-          return (
-          <Marker position={{lat: tree.lat, lon: tree.lon}} key={index} icon={iconTree}>
-            <Popup>
-              <div className="speciesTree flex flex-row justify-center m-2">
-                <h4 className="text-SmokyBlack capitalize">{tree.name}</h4>
-                <button onClick={() => setIsOpen(true)}><AiOutlineInfoCircle/></button> {isOpen && <Modal setIsOpen={setIsOpen} />}
-              </div>
-              <div>
-                {(() => {
-                  if (tree.value === "locked") {
-                    return (
-                      <div className="cardInfoTree flex justify-around items-center">
-                        <p className="text-SmokyBlack text-[12px]">Owner : {tree.owner}</p>
-                        <AiFillLock/>
-                      </div>
-                    )
-                  } else if (tree.value === "unavailable") {
-                    return (
-                      <div className="cardInfoTree">
-                        <p className="text-SmokyBlack text-center">Owner : {tree.owner}</p>
+    <div >
+      {isOpen?
+        <Modal setIsOpen={setIsOpen} />
+        : ""}
+      <MapContainer
+        className="map"
+        id="map"
+        center={[latitude, longitude]}
+        zoom={15}
+        scrollWheelZoom={true}
+        preferCanvas
+        style={{ height: 80 + "vh"}}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> 
+            contributors'
+            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <MarkerClusterGroup>
+          {trees.map((tree, index) => {
+            return (
+            <Marker position={{lat: tree.lat, lon: tree.lon}} key={index} icon={iconTree}>
+              <Popup>
+                <div className="speciesTree flex flex-row justify-center m-2">
+                  <h4 className="text-SmokyBlack capitalize">{tree.name}</h4>
+                  <AiOutlineInfoCircle className= "ml-2" onClick={() => setIsOpen(true)}/>
+                </div>
+                <div>
+                  {(() => {
+                    if (tree.value === "locked") {
+                      return (
+                        <div className="cardInfoTree flex justify-around items-center">
+                          <p className="text-SmokyBlack text-[12px]">Owner : {tree.owner}</p>
+                          <AiFillLock/>
+                        </div>
+                      )
+                    } else if (tree.value === "unavailable") {
+                      return (
+                        <div className="cardInfoTree">
+                          <p className="text-SmokyBlack text-center">Owner : {tree.owner}</p>
+                          <div className="priceTree flex justify-center m-2">
+                            <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack">Buy tree
+                              <div className="buttonBuy_price flex items-center">
+                              {tree.price}
+                              <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      )
+                    } else {
+                      return (
                         <div className="priceTree flex justify-center m-2">
                           <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack">Buy tree
-                            <div className="buttonBuy_price flex items-center">
-                            {tree.price}
-                            <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
-                            </div>
+                              <div className="buttonBuy_price flex items-center">
+                              {tree.price}
+                              <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
+                              </div>
                           </button>
                         </div>
-                      </div>
-                    )
-                  } else {
-                    return (
-                      <div className="priceTree flex justify-center m-2">
-                        <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack">Buy tree
-                            <div className="buttonBuy_price flex items-center">
-                            {tree.price}
-                            <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
-                            </div>
-                        </button>
-                      </div>
-                    )
-                  }
-                })()}
-              </div>
-            </Popup>  
-          </Marker>)
+                      )
+                    }
+                  })()}
+                </div>
+              </Popup>
+            </Marker>)
             })}
-        </MarkerClusterGroup>
+          </MarkerClusterGroup>
         <MapView />
       </MapContainer>
-    )};
+    </div>
+  )};
 
 
 
