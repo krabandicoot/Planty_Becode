@@ -1,7 +1,7 @@
 const Tree = require('../models/treeModel');
 const Player = require('../models/playerModel');
 
-// Get Tree
+// -------- Get Tree
 const getTree = async(req,res) => {
     try {
     const trees = await Tree.find({}).sort({value: -1});
@@ -13,7 +13,7 @@ const getTree = async(req,res) => {
     }
 }
 
-//Show the tree's comment
+// -------- Show the tree's comment
 const displayComments = async (req, res) => {
 
     const treename = req.params;
@@ -41,12 +41,11 @@ const displayComments = async (req, res) => {
 
     const cursor = await Tree.aggregate(pipeline, options).exec();
 
-    // cursor.save();
     res.status(200).json(cursor);
     console.log(cursor);
 }
 
-// Get price of a tree
+// -------- Get price of a tree
 const getPrice = async(req,res) => {
 
     // Get tree infos : 
@@ -145,27 +144,25 @@ const getPrice = async(req,res) => {
     }
 }
 
-// Buy a tree
+// -------- Buy a tree
 const buyTree = async(req,res) => {
-    // Get tree info :
+    // Get tree info
     const treename = req.params;
     const name = treename.name;
     const nameCleaned = name.replaceAll('-',' ');
     const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
-
-    //Get user price
+    //Get user info
     const username = req.body.username;
     const player = await Player.findOne({ username : username }).exec();
     const money = player.leafs;
-
-    // Get price : 
+    // Get base price
     let price = foundTree.price;
 
-    if(foundTree.value == "unavailable"){
-
-        // Get owner info :
+    if (foundTree.value == "unavailable") {
+        // Get owner info
         const treeOwner = foundTree.owner;
 
+        // Calculate a rayon
         const rayon = 0.1/6371;
         const latT = Math.asin(Math.sin(foundTree.lat)/Math.cos(rayon))
         const dLon = Math.acos((Math.cos(rayon) - Math.sin(latT) * Math.sin(foundTree.lat)) / (Math.cos(latT) * Math.cos(foundTree.lat)));
@@ -233,19 +230,16 @@ const buyTree = async(req,res) => {
 
         if(ownerAroundValueArr.length == 0){
             ownerAroundValueArr.length +=1;
-        } 
+        }
 
-        let price = foundTree.price + ((totalOwnerAroundValue) * ((aroundValueArr.length) / (ownerAroundValueArr.length))) + (totalAroundValue) - (totalPlayerAroundValue);
-
-        return price;
-
-    } else if (foundTree.value == "locked") {
-        res.status(204).json("Sorry, this tree is locked !");
+        price = foundTree.price + ((totalOwnerAroundValue) * ((aroundValueArr.length) / (ownerAroundValueArr.length))) + (totalAroundValue) - (totalPlayerAroundValue);
     }
 
     const newAmount = money - price; 
 
-    if (price <= money) {
+    if (price > money && foundTree.value !== "locked") {
+        res.status(204).json("Sorry, you're broke !");
+    } else if (price <= money && foundTree.value !== "locked") {
         // buy
         const updateTree = await Tree.updateOne(
             {name: nameCleaned}, 
@@ -255,7 +249,6 @@ const buyTree = async(req,res) => {
                     owner: player.username
                 }
             });
-            console.log(`updateTree ${updateTree}`)
 
         const updatePlayer = await Player.updateOne(
             { username: player.username},
@@ -264,15 +257,14 @@ const buyTree = async(req,res) => {
                     leafs : newAmount
                 }
             });
-            console.log(`updatePlayer ${updatePlayer}`)
 
-        res.status(200).json(updateTree, updatePlayer);
+        res.status(200).json((updateTree, updatePlayer));
     } else {
-        res.status(204).json("Sorry, you're broke !");
+        res.status(204).json("Sorry, this tree is locked !");
     }
 }
 
-// Get lock price
+// -------- Get lock price
 const getLockPrice = async(req,res) => {
     const treename = req.params;
     const name = treename.name;
@@ -333,7 +325,7 @@ const getLockPrice = async(req,res) => {
     res.status(200).json(lockPrice);
 }
 
-// Lock a tree
+// -------- Lock a tree
 const lockTree = async(req,res) => {
 
     const treename = req.params;
@@ -425,7 +417,7 @@ const lockTree = async(req,res) => {
     }
 }
 
-// Unlock tree :
+// -------- Unlock tree :
 const unlockTree = async(req,res) => {
 
     const treename = req.params;
