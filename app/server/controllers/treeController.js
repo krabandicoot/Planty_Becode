@@ -195,10 +195,10 @@ const buyTree = async(req,res) => {
 const lockTree = async(req,res) => {
 
     const treename = req.params;
-    const username = req.body.username;
     const name = treename.name;
     const nameCleaned = name.replaceAll('-',' ');
     const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
+    const username = foundTree.owner;
     const player = await Player.findOne({ username : username}).exec();
     const money = player.leafs;
 
