@@ -1,10 +1,12 @@
 import useAuth from "../hooks/useAuth"
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { IoLockClosed } from "react-icons/io5";
 import { MdOutlineDone } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import axios from "../api/axios";
+
+// Get tree **
 const SINGLE_TREE_URL = "api/tree/"; // + insert tree name
 
 // Buy a tree ** 
@@ -16,17 +18,24 @@ const PRICE_TREE_URL = "/api/tree/price/"  // + insert-tree-name
 // Lock a tree ** 
 const LOCK_TREE_URL = "/api/tree/lock/"  // + insert-tree-name
 
+// Unlock a tree ** 
+const UNLOCK_TREE_URL = "/api/tree/unlock/"  // + insert-tree-name
+
 export function Tree() {
     const { player } = useAuth();
     let { name } = useParams();
-    name = name.replace(/\s+/g, '-');
+
+    const errRef = useRef();
+    const [errMsg, setErrMsg] = useState("");
 
     const [singleTree, setSingleTree] = useState([]);
     const [priceTree, setPriceTree] = useState();
     const [buyTree, setBuyTree] = useState();
     const [lockTree, setLockTree] = useState();
+    const [unlockTree, setUnlockTree] = useState();
 
-    const to = "/"
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         let isMounted = true; // mounted true = the component is loaded to the site
@@ -73,13 +82,27 @@ export function Tree() {
             const response = await axios.get(LOCK_TREE_URL + name);
             console.log(response.data);
             setLockTree(response.data);
-            navigat('to')
+            // navigate(to, { replace: true })
+        } catch (err) {
+            console.log(err);
+            if (!err?.response) {
+                setErrMsg("Oops, the server is not responding");
+            } else if (err.response?.status === 204) {
+                setErrMsg("Sorry, you need more leaves");
+            }
+            errRef.current.focus();
+        }
+    }
+
+    const handleUnlock = async () => {
+        try {
+            const response = await axios.get(UNLOCK_TREE_URL + name);
+            console.log(response.data);
+            setUnlockTree(response.data);
         } catch (err) {
             console.log(err);
         }
     }
-
-    console.log(singleTree.value)
 
     return (
         <section className="tree__comments relative pl-8 grid grid-rows-3 grid-cols-2 bg-Magnolia">
@@ -119,6 +142,7 @@ export function Tree() {
                         >
                             <IoLockClosed />
                         </button>
+                        <p ref={errRef} className={"errMsg" ? "errmsg" : "offscreen"}>{errMsg}</p>
                     </div>
                     :
                     (singleTree.value === "locked " && singleTree.owner === player.username ?
@@ -144,7 +168,11 @@ export function Tree() {
                             <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey/50 flex flex-col justify-center items-center">
                                 <IoLockClosed />
                             </span>
-                            <p className="text-xs text-DarkSpringGreen relative top-0 left-[110px] flex items-center">Unlock</p>
+                            <a
+                                className="text-xs text-DarkSpringGreen relative top-0 left-[110px] flex items-center"
+                                onClick={handleUnlock}>
+                                Unlock
+                            </a>
                         </div>
                     )
 

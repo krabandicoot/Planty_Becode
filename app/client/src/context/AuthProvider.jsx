@@ -43,17 +43,6 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
         }
         getTrees();
 
-        const getTreesByOwner = async () => {
-            try {
-                const response = await axios.get(USER_TREES_URL + auth);
-                console.log(response.data)
-                isMounted && setUserTrees(response.data[0].trees);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        getTreesByOwner();
-
         return () => { // we clean up function of the useEffect
             isMounted = false; // means we don't mount the component and 
             controller.abort();

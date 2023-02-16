@@ -24,7 +24,6 @@ export function SignIn() {
     const [username, setUsername] = useState(""); // corresponds to user input
     const [password, setPassword] = useState(""); // corresponds to pwd input
     const [errMsg, setErrMsg] = useState(""); // corresponds to error msg we might display
-    // const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         userRef.current.focus()

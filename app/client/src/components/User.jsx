@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { AiOutlineLogout } from "react-icons/ai";
 import { MdOutlineModeEditOutline } from "react-icons/md"
@@ -12,11 +12,12 @@ import 'swiper/css/navigation';
 import axios from "../api/axios";
 const PLAYER_URL = "/api/account/username/";
 const SIGNOUT_URL = "/api/user/signout";
+const USER_TREES_URL = "api/account/username/tree/"; // + insert player name
 
 export function User() {
     const { auth, setAuth } = useAuth();
     const { player, setPlayer } = useAuth();
-    const { userTrees } = useAuth();
+    const { userTrees, setUserTrees } = useAuth();
 
     const errRef = useRef();
 
@@ -41,6 +42,17 @@ export function User() {
             }
         }
         getPlayer();
+
+        const getTreesByOwner = async () => {
+            try {
+                const response = await axios.get(USER_TREES_URL + auth);
+                console.log(response.data)
+                isMounted && setUserTrees(response.data[0].trees);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getTreesByOwner();
 
         return () => { // we clean up function of the useEffect
             isMounted = false; // means we don't mount the component and 
@@ -137,7 +149,7 @@ export function User() {
                         .map((userTree, id) =>
                             <SwiperSlide
                                 key={id}
-                                onClick={() => navigate(`/tree/${userTree.name}`, { replace: true })}>
+                                onClick={() => navigate(`/tree/${userTree.name.replace(/\s+/g, '-')}`, { replace: true })}>
                                 <p>{userTree.name}</p>
                                 <img src="../src/images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
                             </SwiperSlide>
