@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+//Modules
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+const cron = require('node-cron');
+//Schema
 const Player = require('./playerModel');
 const Tree = require('./treeModel');
-
-const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     username: {
@@ -29,13 +31,78 @@ const userSchema = new Schema({
         required: true,
         minLength: 4,
         maxLength: 7,
-        unique: false,
     }
 });
 
+// Functions to regulate the leaf amout
+// Add player trees x Leafs every 15 min
+const addLeafs = async (username) => {
+    const player = await Player.findOne({username: username});
+    const playerTrees = await Tree.find({owner: username});
+    let leafAmount = player.leafs;
+    console.log(`the leaf amount is ${leafAmount} after 15 minute`);
+    let leafGained = 0;
+    for(i= 0; i<playerTrees.length; i++){
+        leafGained += playerTrees[i].price;
+    }
+    const options = {
+        allowDiskUse: false
+    };
+
+    // const pipeline = [
+    //     {
+    //         "$match": {
+    //             "owner": username
+    //         }
+    //     }, 
+    //     {
+    //         "$count": "treeCount"
+    //     }
+    // ];
+
+    // const cursor = await Tree.aggregate(pipeline, options).exec();
+    // const treeCount = cursor[0].treeCount;
+    const newLeafAmount = Math.floor(leafAmount + leafGained);
+    // console.log(`the new amount added is ${newLeafAmount}`);
+    // console.log(`the new leaf amount is ${newLeafAmount} ❌`);
+
+    // inject new amount in player
+    const updateLeafPlayer = await Player.updateOne(        
+        {_id: player._id},
+        {$set :
+            {leafs: newLeafAmount}
+        });
+
+    return updateLeafPlayer;
+}
+// setTimeout(addLeafs, 900000);
+
+// Take back half of leafs every hour
+const takeLeafs = async (username) => {
+    const player = await Player.findOne({username: username});
+
+    const leafAmount = player.leafs;
+
+    const newLeafAmount = Math.floor(leafAmount/2);
+    console.log(`the leaf amount is ${newLeafAmount} after 1 hour`);
+
+    // inject new amount in player
+    const updateLeafPlayer = await Player.updateOne(        
+        {_id: player._id},
+        {$set :
+            {leafs: newLeafAmount}
+        });
+
+    // console.log(updateLeafPlayer);
+    return updateLeafPlayer;
+}
+
+// setTimeout(takeLeafs, 3600000);
+
 userSchema.statics.signup = async function (username, email, password, color) {
 
-    if (!email || !username || !color || !password) {
+    //Check every fields requirements
+    if (!email || !username || !password || !color){
         throw Error('All fields need to be filled');
     }
     if (!validator.isAlphanumeric(username) && !validator.isAlpha(username)) {
@@ -50,6 +117,8 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (!validator.isStrongPassword(password)) { //
         throw Error('The password must contain 8 character minimum, with an uppercase, a number and a symbol');
     }
+    
+    //check existence in DB
     const emailExist = await this.findOne({ email });
     const usernameExist = await this.findOne({ username });
     if (emailExist) {
@@ -58,14 +127,29 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (usernameExist) {
         throw Error('Username already used, please enter another name');
     }
+    //Protecting and hash the password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    const user = await this.create({ username, email, password: hash, color });
-    const player = await Player.create({ username, email, password: hash, color });
-    const attributeTree = await Tree.getThree({ username });
+    //Create a user in db
+    const user = await this.create({username, email, password: hash, color});
+    //Create player in db with sign-up infos
+    const player = await Player.create({username, email, password: hash, color});
+    //Attribute three tree as you signed in
+    const attributeTree = await Tree.getThree(username);
+    addLeafs(username);
+    //Start the timer to receives and remove leaves
+    let scheduledScore = cron.schedule('* */15 * * * *', () => {
+        addLeafs(username);
+        console.log("Adding every 15 minutes the amount of leaves to the user");
+        cron.schedule('* */60 * * * *', () => {
+            takeLeafs(username);
+            console.log("Retrieving half his leaf every hour");
+        });
+    });
 
-    return user, player;
+    scheduledScore.start();
+    return user, player, scheduledScore;
 }
 
 userSchema.statics.signin = async function (username, password) {
@@ -83,6 +167,7 @@ userSchema.statics.signin = async function (username, password) {
     if (!match) {
         throw Error('Wrong password');
     };
+    
     return user;
 }
 module.exports = mongoose.model('User', userSchema);

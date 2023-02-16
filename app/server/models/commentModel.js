@@ -12,9 +12,15 @@ const commentSchema = new Schema({
             type: String
             }
     },
-    tree_id:{
-        required: true,
-        type: String,
+    treeInfo:{
+        treeName:{
+            required: true,
+            type: String
+            },
+        tree_id:{
+            required: true,
+            type: String
+            }
     },
     text: {
         required: true,

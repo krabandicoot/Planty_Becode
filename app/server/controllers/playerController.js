@@ -1,6 +1,7 @@
 const { default: mongoose } = require('mongoose');
 const Player = require('../models/playerModel');
 const getUser = require('../models/userModel');
+const Tree = require('../models/treeModel');
 
 // Get all info of a player
 const getAccount = async (req, res) => {
@@ -62,16 +63,18 @@ const updatePlayer = async (req, res) => {
 // Delete the player
 const deletePlayer = async (req, res) => {
     const { username } = req.params;
-    const player = await Player.findOne({ username: username });
-    const deletePlayer = await Player.deleteOne({ username: username });
-    const deleteUser = await getUser.deleteOne({ username: username });
+
+    const player = await Player.findOne({username: username});
+    const deletePlayer = await Player.deleteOne({username: username});
+    const deleteUser = await getUser.deleteOne({username: username});22
+    const updateTree = await Tree.updateMany({owner: username}, {$set: {owner:"none",value:"available"}});
 
     try {
         if (!player) {
             throw Error(`This username doesn't exist`);
         }
 
-        res.status(200).json({ deletePlayer, deleteUser });
+        res.status(200).json(deletePlayer, deleteUser, updateTree);
         console.log('The player has been deleted');
 
     } catch (error) {
@@ -79,10 +82,40 @@ const deletePlayer = async (req, res) => {
     }
 }
 
+//Display the player tree's collection
+
+const displayTrees = async (req, res)=>{
+    const player = req.params;
+    
+    const options = {
+        allowDiskUse: true
+    };
+    
+    const pipeline = [
+        {
+            $lookup:{
+                "from": "trees",
+                "localField": "username",
+                "foreignField": "owner",
+                "as": "trees"
+            }}, 
+            {$match: {
+                "username": player.username
+            }
+        },
+    ];
+
+    const cursor = await Player.aggregate(pipeline, options).exec();
+
+    res.status(200).json(cursor);
+}
+
+
 // Export all the function
 module.exports = {
     getAccount,
     getPlayers,
     updatePlayer,
-    deletePlayer
+    deletePlayer,
+    displayTrees
 };

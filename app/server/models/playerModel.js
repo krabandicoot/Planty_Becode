@@ -16,16 +16,15 @@ const playerSchema = new Schema({
         unique: true,
         maxLength: 255,
     },
-    password: {
-        type: String,
-        required: true,
+    password:{
+        type:String,
+        required:true,
     },
-    color: {
-        type: String,
-        required: true,
+    color:{
+        type:String,
+        // required: true,
         minLength: 4,
         maxLength: 7,
-        unique: false,
     },
     bio: {
         type: String,
@@ -34,7 +33,7 @@ const playerSchema = new Schema({
     },
     leafs: {
         type: Number,
-        default: 90,
+        default: 0,
     },
     trees: {
         type: Map,
