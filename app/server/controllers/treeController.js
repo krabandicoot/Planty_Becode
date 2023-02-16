@@ -2,14 +2,14 @@ const Tree = require('../models/treeModel');
 const Player = require('../models/playerModel');
 
 // Get Tree
-const getTree = async(req,res) => {
+const getTree = async (req, res) => {
     try {
-    const trees = await Tree.find({}).sort({value: -1});
+        const trees = await Tree.find({}).sort({ value: -1 });
 
-    res.status(200).json(trees);
+        res.status(200).json(trees);
 
-    } catch(error) {
-        res.status(400).json({error: error.message});
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -18,13 +18,13 @@ const displayComments = async (req, res) => {
 
     const treename = req.params;
     const name = treename.name;
-    const nameCleaned = name.replaceAll('-',' ');
-    const foundTree = await Tree.findOne({ name : nameCleaned }).exec()
+    const nameCleaned = name.replaceAll('-', ' ');
+    const foundTree = await Tree.findOne({ name: nameCleaned }).exec()
 
     const options = {
         allowDiskUse: true
     };
-    
+
     const pipeline = [
         {
             $lookup: {
@@ -32,9 +32,11 @@ const displayComments = async (req, res) => {
                 "localField": "name",
                 "foreignField": "treeInfo.treeName",
                 "as": "comments"
-            }}, 
-            {$match: {
-                    "name": nameCleaned
+            }
+        },
+        {
+            $match: {
+                "name": nameCleaned
             }
         }
     ];
@@ -47,27 +49,27 @@ const displayComments = async (req, res) => {
 }
 
 // Get price of a tree
-const getPrice = async(req,res) => {
+const getPrice = async (req, res) => {
 
     // Get tree infos : 
     const treename = req.params;
     const name = treename.name;
-    const nameCleaned = name.replaceAll('-',' ');
-    const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
+    const nameCleaned = name.replaceAll('-', ' ');
+    const foundTree = await Tree.findOne({ name: nameCleaned }).exec();
     let price = foundTree.price;
 
     // Ger player info :
     const username = req.body.username;
-    const player = await Player.findOne({ username : username}).exec();
+    const player = await Player.findOne({ username: username }).exec();
 
-    if (foundTree.value == "unavailable"){
+    if (foundTree.value == "unavailable") {
 
         // Get owner info :
         const treeOwner = foundTree.owner;
         console.log(`owner ${treeOwner}`);
 
-        const rayon = 0.1/6371;
-        const latT = Math.asin(Math.sin(foundTree.lat)/Math.cos(rayon))
+        const rayon = 0.1 / 6371;
+        const latT = Math.asin(Math.sin(foundTree.lat) / Math.cos(rayon))
         const dLon = Math.acos((Math.cos(rayon) - Math.sin(latT) * Math.sin(foundTree.lat)) / (Math.cos(latT) * Math.cos(foundTree.lat)));
 
         // Maximum and minimun lon for the 100m radius
@@ -78,37 +80,43 @@ const getPrice = async(req,res) => {
 
         // Get trees in radius : 
         const ownerAroundValue = await Tree.find(
-            {lat:{$gte: minLat, $lte: maxLat }, 
-            lon: {$gte: minLon, $lte: maxLon }, 
-            owner: treeOwner})
+            {
+                lat: { $gte: minLat, $lte: maxLat },
+                lon: { $gte: minLon, $lte: maxLon },
+                owner: treeOwner
+            })
             .exec();
-            console.log(`owner aroundValue :  ${ownerAroundValue}`)
+        console.log(`owner aroundValue :  ${ownerAroundValue}`)
 
         const aroundValue = await Tree.find(
-            {lat:{$gte: minLat, $lte: maxLat }, 
-            lon: {$gte: minLon, $lte: maxLon } }).exec();
-            console.log(`aroundValue : ${aroundValue}`)
+            {
+                lat: { $gte: minLat, $lte: maxLat },
+                lon: { $gte: minLon, $lte: maxLon }
+            }).exec();
+        console.log(`aroundValue : ${aroundValue}`)
 
         const playerAroundValue = await Tree.find(
-            {lat:{$gte: minLat, $lte: maxLat }, 
-            lon: {$gte: minLon, $lte: maxLon }, 
-            owner: player.username}).exec();
-            console.log(`playerAroundValue : ${playerAroundValue}`)
+            {
+                lat: { $gte: minLat, $lte: maxLat },
+                lon: { $gte: minLon, $lte: maxLon },
+                owner: player.username
+            }).exec();
+        console.log(`playerAroundValue : ${playerAroundValue}`)
 
         // Put them in a array :
         const aroundValueArr = [];
         const playerAroundValueArr = [];
         const ownerAroundValueArr = [];
 
-        for(let i = 0; i < aroundValue.length; i++) {
+        for (let i = 0; i < aroundValue.length; i++) {
             aroundValueArr.push(aroundValue[i].price)
         }
 
-        for(let i = 0; i < playerAroundValue.length; i++) {
+        for (let i = 0; i < playerAroundValue.length; i++) {
             playerAroundValueArr.push(playerAroundValue[i].price);
         }
 
-        for(let i = 0; i < ownerAroundValue.length; i++){
+        for (let i = 0; i < ownerAroundValue.length; i++) {
             ownerAroundValueArr.push(ownerAroundValue[i].price);
         }
 
@@ -116,25 +124,25 @@ const getPrice = async(req,res) => {
         let totalPlayerAroundValue = 1;
         let totalOwnerAroundValue = 1;
 
-        if(ownerAroundValueArr.length){
-            totalOwnerAroundValue = ownerAroundValueArr.reduce(function(a, b){
+        if (ownerAroundValueArr.length) {
+            totalOwnerAroundValue = ownerAroundValueArr.reduce(function (a, b) {
                 return a + b;
             });
         };
 
-        for(let i = 0; i < playerAroundValueArr.length; i++) {
-            totalPlayerAroundValue = playerAroundValueArr.reduce(function(a, b){
+        for (let i = 0; i < playerAroundValueArr.length; i++) {
+            totalPlayerAroundValue = playerAroundValueArr.reduce(function (a, b) {
                 return a + b;
             });
         };
 
-        const totalAroundValue = aroundValueArr.reduce(function(a, b){
+        const totalAroundValue = aroundValueArr.reduce(function (a, b) {
             return a + b;
         });
 
-        if(ownerAroundValueArr.length == 0){
-            ownerAroundValueArr.length +=1;
-        } 
+        if (ownerAroundValueArr.length == 0) {
+            ownerAroundValueArr.length += 1;
+        }
 
         let price = foundTree.price + ((totalOwnerAroundValue) * ((aroundValueArr.length) / (ownerAroundValueArr.length))) + (totalAroundValue) - (totalPlayerAroundValue);
 
@@ -150,13 +158,13 @@ const getPrice = async(req,res) => {
 }
 
 // Buy a tree
-const buyTree = async(req,res) => {
+const buyTree = async (req, res) => {
     const treename = req.params;
     const username = req.body.username;
     const name = treename.name;
-    const nameCleaned = name.replaceAll('-',' ');
-    const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
-    const player = await Player.findOne({ username : username}).exec();
+    const nameCleaned = name.replaceAll('-', ' ');
+    const foundTree = await Tree.findOne({ name: nameCleaned }).exec();
+    const player = await Player.findOne({ username: username }).exec();
 
     const money = player.leafs;
     const price = foundTree.price;
@@ -165,25 +173,27 @@ const buyTree = async(req,res) => {
     // console.log(newAmount);
 
     if (price <= money) {
-        
+
         // buy
         const updateTree = await Tree.updateOne(
-            {name: nameCleaned}, 
-            {$set: 
+            { name: nameCleaned },
+            {
+                $set:
                 {
                     value: "unavailable",
                     owner: player.username
                 }
             });
-            console.log(`updateTree ${updateTree}`)
+        console.log(`updateTree ${updateTree}`)
         const updatePlayer = await Player.updateOne(
-            { username: player.username},
-            {$set:
+            { username: player.username },
+            {
+                $set:
                 {
-                    leafs : newAmount
+                    leafs: newAmount
                 }
             });
-            console.log(`updatePlayer ${updatePlayer}`)
+        console.log(`updatePlayer ${updatePlayer}`)
 
         return updateTree, updatePlayer;
     } else {
@@ -192,23 +202,24 @@ const buyTree = async(req,res) => {
 }
 
 // Lock a tree
-const lockTree = async(req,res) => {
+const lockTree = async (req, res) => {
 
     const treename = req.params;
-    const username = req.body.username;
     const name = treename.name;
-    const nameCleaned = name.replaceAll('-',' ');
-    const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
-    const player = await Player.findOne({ username : username}).exec();
+    const nameCleaned = name.replaceAll('-', ' ');
+    const foundTree = await Tree.findOne({ name: nameCleaned }).exec();
+    const username = foundTree.owner;
+    console.log(username)
+    const player = await Player.findOne({ username: username }).exec();
     const money = player.leafs;
 
-    if(foundTree.value == "locked"){
+    if (foundTree.value == "locked") {
         console.log("This tree is already locked !");
     }
 
     // Get radius : 
-    const rayon = 0.1/6371;
-    const latT = Math.asin(Math.sin(foundTree.lat)/Math.cos(rayon))
+    const rayon = 0.1 / 6371;
+    const latT = Math.asin(Math.sin(foundTree.lat) / Math.cos(rayon))
     const dLon = Math.acos((Math.cos(rayon) - Math.sin(latT) * Math.sin(foundTree.lat)) / (Math.cos(latT) * Math.cos(foundTree.lat)));
 
     // Maximum and minimun lon for the 100m radius
@@ -219,50 +230,55 @@ const lockTree = async(req,res) => {
 
     // Get trees in radius : 
     const aroundValue = await Tree.find(
-        {lat:{$gte: minLat, $lte: maxLat }, 
-        lon: {$gte: minLon, $lte: maxLon } }).exec();
+        {
+            lat: { $gte: minLat, $lte: maxLat },
+            lon: { $gte: minLon, $lte: maxLon }
+        }).exec();
 
     const playerAroundValue = await Tree.find(
-        {lat:{$gte: minLat, $lte: maxLat }, 
-        lon: {$gte: minLon, $lte: maxLon }, 
-        owner: player.username}).exec();
+        {
+            lat: { $gte: minLat, $lte: maxLat },
+            lon: { $gte: minLon, $lte: maxLon },
+            owner: player.username
+        }).exec();
 
     // Put them in a array :
     const aroundValueArr = [];
     const playerAroundValueArr = [];
 
-    for(let i = 0; i < aroundValue.length; i++) {
+    for (let i = 0; i < aroundValue.length; i++) {
         aroundValueArr.push(aroundValue[i].price)
     }
 
-    for(let i = 0; i < playerAroundValue.length; i++) {
+    for (let i = 0; i < playerAroundValue.length; i++) {
         playerAroundValueArr.push(playerAroundValue[i].price);
     }
 
     // Calculate the sum of all :
     let totalPlayerAroundValue = 1;
 
-    for(let i = 0; i < playerAroundValueArr.length; i++) {
-        totalPlayerAroundValue = playerAroundValueArr.reduce(function(a, b){
+    for (let i = 0; i < playerAroundValueArr.length; i++) {
+        totalPlayerAroundValue = playerAroundValueArr.reduce(function (a, b) {
             return a + b;
         });
     };
 
-    const totalAroundValue = aroundValueArr.reduce(function(a, b){
+    const totalAroundValue = aroundValueArr.reduce(function (a, b) {
         return a + b;
     });
 
     // Get lock price :
-    const lockPrice = (foundTree.price * 10) + ((totalAroundValue)*(playerAroundValueArr.length)) - ((totalPlayerAroundValue)/(playerAroundValueArr.length));
+    const lockPrice = (foundTree.price * 10) + ((totalAroundValue) * (playerAroundValueArr.length)) - ((totalPlayerAroundValue) / (playerAroundValueArr.length));
 
     if (lockPrice <= money) {
 
         const newAmount = money - lockPrice;
-        
+
         // Lock the tree
         const updateTree = await Tree.updateOne(
-            {name: nameCleaned}, 
-            {$set: 
+            { name: nameCleaned },
+            {
+                $set:
                 {
                     value: "locked",
                     owner: player.username
@@ -270,21 +286,22 @@ const lockTree = async(req,res) => {
             });
 
         const updatePlayer = await Player.updateOne(
-            { username: player.username},
-            {$set:
+            { username: player.username },
+            {
+                $set:
                 {
-                    leafs : newAmount
+                    leafs: newAmount
                 }
             });
-        
+
         res.status(200).json((updateTree, updatePlayer));
     } else {
         res.status(204).json("Sorry, you're too broke !");
     }
 }
 
-module.exports = { 
-    getTree, 
+module.exports = {
+    getTree,
     displayComments,
     getPrice,
     buyTree,
