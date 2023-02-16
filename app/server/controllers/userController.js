@@ -12,8 +12,6 @@ const createToken = (_id) => {//id =  is part of the payload of the token
 }
 
 
-// Take back half of leafs every hour
-
 //login user 
 const signInUser = async (req, res) => {
     const { username, password } = req.body;
@@ -43,6 +41,7 @@ const signUpUser = async (req, res) => {
         //create token
         const signInToken = createToken(user._id);
         res.status(200).json({ email, signInToken });
+
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

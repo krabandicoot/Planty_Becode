@@ -33,7 +33,7 @@ const playerSchema = new Schema({
     },
     leafs: {
         type: Number,
-        default: 90,
+        default: 0,
     },
     trees: {
         type: Map,

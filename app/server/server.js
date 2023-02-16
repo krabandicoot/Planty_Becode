@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
+
 const corsOptions = require('./cors');
 const fs = require('fs');
 
@@ -11,6 +12,11 @@ const playerRoutes = require('./routes/player');
 const treeRoutes = require('./routes/tree');
 const commentRoutes = require('./routes/comment');
 
+//test import - add in comment later 
+const Tree = require('../server/models/treeModel');
+const Player = require('../server/models/playerModel');
+// const {addLeafs, takeLeafs} = require('./models/userModel');
+const cron = require('node-cron');
 
 const app = express();
 const PORT = process.env.NODE_DOCKER_PORT;
@@ -43,6 +49,8 @@ app.use('/api/user', userRoutes);
 app.use('/api/account', playerRoutes);
 app.use('/api/tree', treeRoutes);
 app.use('/api/comment', commentRoutes);
+
+
 
 
 app.listen(PORT, () => {
