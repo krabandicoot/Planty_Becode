@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
         const getTreesByOwner = async () => {
             try {
                 const response = await axios.get(USER_TREES_URL + auth);
-                console.log(response.data)
+                //console.log(response.data)
                 isMounted && setUserTrees(response.data[0].trees);
             } catch (err) {
                 console.log(err);
