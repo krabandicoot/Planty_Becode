@@ -299,25 +299,22 @@ const lockTree = async (req, res) => {
     }
 }
 
-<<<<<<< HEAD
-module.exports = {
-    getTree,
-=======
 // Unlock tree :
-const unlockTree = async(req,res) => {
+const unlockTree = async (req, res) => {
 
     const treename = req.params;
     const name = treename.name;
-    const nameCleaned = name.replaceAll('-',' ');
-    const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
+    const nameCleaned = name.replaceAll('-', ' ');
+    const foundTree = await Tree.findOne({ name: nameCleaned }).exec();
     const username = foundTree.owner;
     const price = foundTree.price;
-    const player = await Player.findOne({ username : username}).exec();
+    const player = await Player.findOne({ username: username }).exec();
     const money = player.leafs;
 
     const updateTree = await Tree.updateOne(
-        {name: nameCleaned},
-        {$set:
+        { name: nameCleaned },
+        {
+            $set:
             {
                 value: "unavailable"
             }
@@ -326,10 +323,11 @@ const unlockTree = async(req,res) => {
     const newAmount = price + money;
 
     const updatePlayer = await Player.updateOne(
-        { username: player.username},
-        {$set:
+        { username: player.username },
+        {
+            $set:
             {
-                leafs : newAmount
+                leafs: newAmount
             }
         });
 
@@ -338,7 +336,6 @@ const unlockTree = async(req,res) => {
 
 module.exports = {
     getTree,
->>>>>>> backend
     displayComments,
     getPrice,
     buyTree,
