@@ -7,12 +7,25 @@ import { useEffect, useState } from "react";
 import axios from "../api/axios";
 const SINGLE_TREE_URL = "api/tree/"; // + insert tree name
 
+// Buy a tree ** 
+const BUY_TREE_URL = "/api/tree/buy/" // + insert-tree-name
+
+// Get price of a tree ** 
+const PRICE_TREE_URL = "/api/tree/price/"  // + insert-tree-name
+
+// Lock a tree ** 
+const LOCK_TREE_URL = "/api/tree/lock/"  // + insert-tree-name
+
 export function Tree() {
     const { tree } = useAuth();
     const { auth } = useAuth();
-    const { name } = useParams();
+    let { name } = useParams();
+    name = name.replace(/\s+/g, '-');
 
     const [singleTree, setSingleTree] = useState([]);
+    const [priceTree, setPriceTree] = useState();
+    const [buyTree, setBuyTree] = useState();
+    const [lockTree, setLockTree] = useState();
 
     const to = "/"
 
@@ -36,13 +49,38 @@ export function Tree() {
         }
     }, [])
 
-    console.log(singleTree);
-    console.log(singleTree.value);
-    console.log(singleTree.owner);
-    console.log(auth)
+    const displayPrice = async () => {
+        try {
+            const response = await axios.get(PRICE_TREE_URL + name);
+            console.log(response.data);
+            setPriceTree(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const handleBuy = async () => {
+        try {
+            const response = await axios.get(BUY_TREE_URL + name);
+            console.log(response.data);
+            setBuyTree(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const handleLock = async () => {
+        try {
+            const response = await axios.get(LOCK_TREE_URL + name);
+            console.log(response.data);
+            setLockTree(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
-        <section className="tree__comments relative ml-8 grid grid-rows-3 grid-cols-2 bg-Magnolia">
+        <section className="tree__comments relative pl-8 grid grid-rows-3 grid-cols-2 bg-Magnolia">
 
             <div className="row-start-2 col-start-1 self-end capitalize">
                 <h1 className="text-2xl">{singleTree.name}</h1>
@@ -61,16 +99,24 @@ export function Tree() {
             <img
                 src="../src/images/icon-tree.png"
                 alt="tree picture"
-                className="absolute col-start-2 z-10 cropped-image fill-image" />
+                className="absolute col-start-2 cropped-image fill-image" />
             {/* Condition to display the button according to tree status */}
 
             <div className="flex flex-col col-start-1 row-start-3 row-end-4 self-center">
                 {singleTree.value === "available" ?
                     <div className="button__buy">
-                        <button className="absolute h-10 w-[150px] text-SmokyBlack">Buy Tree</button>
+                        <button
+                            className="absolute h-10 w-[150px] text-SmokyBlack"
+                            onClick={handleBuy}
+                        >
+                            Buy Tree
+                        </button>
                         <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-[10px]">
-                            <img src="../src/images/icon-leaf.png" alt="leaf-icon" className="h-[20px] rotate-90 pl-2" />
-                            <p>{singleTree.price}</p>
+                            <img
+                                src="../src/images/icon-leaf.png"
+                                alt="leaf-icon"
+                                className="h-[20px] rotate-90 pl-2" />
+                            <p>{priceTree}</p>
                         </span>
                     </div>
                     :
@@ -85,18 +131,23 @@ export function Tree() {
                             </div>
                             :
                             <div className="button-locked flex gap-2">
-                                <button className="absolute h-10 w-[150px] text-SmokyBlack">Your Tree</button>
+                                <button
+                                    className="absolute h-10 w-[150px] text-SmokyBlack"
+                                >Your Tree</button>
                                 <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-green-800">
                                     <MdOutlineDone />
                                 </span>
-                                <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey/50 flex flex-col justify-center items-center">
+                                <button
+                                    className="opacity-none relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey flex flex-col justify-center items-center"
+                                    onClick={handleLock}
+                                >
                                     <IoLockClosed />
-                                </span>
+                                </button>
                             </div>
                     )
                 }
             </div>
-        </section>
+        </section >
 
     )
 }
