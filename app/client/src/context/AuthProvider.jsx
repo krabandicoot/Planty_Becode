@@ -7,7 +7,6 @@ const PLAYER_URL = "/api/account/username/";
 const USER_TREES_URL = "api/account/username/tree/"; // + insert player name
 //tree routes 
 const TREES_URL = "/api/tree/all";
-const SINGLE_TREE_URL = "api/tree/"; // + insert tree name
 const BUY_TREE_URL = "api/tree/buy/"; // + insert tree name
 
 const AuthContext = createContext({});
@@ -47,8 +46,8 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
         const getTreesByOwner = async () => {
             try {
                 const response = await axios.get(USER_TREES_URL + auth);
+                console.log(response.data)
                 isMounted && setUserTrees(response.data[0].trees);
-
             } catch (err) {
                 console.log(err);
             }
@@ -60,7 +59,6 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
             controller.abort();
         }
     }, [])
-
     //console.log(player);
 
     return (

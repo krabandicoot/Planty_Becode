@@ -4,13 +4,10 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { MdOutlineModeEditOutline } from "react-icons/md"
 import { useState, useRef, useEffect } from "react";
 
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-
 
 import axios from "../api/axios";
 const PLAYER_URL = "/api/account/username/";
@@ -19,11 +16,9 @@ const SIGNOUT_URL = "/api/user/signout";
 export function User() {
     const { auth, setAuth } = useAuth();
     const { player, setPlayer } = useAuth();
-    console.log(player);
     const { userTrees } = useAuth();
 
     const errRef = useRef();
-
 
     const [errMsg, setErrMsg] = useState(false);
     const [edit, setEdit] = useState(false);
@@ -56,7 +51,6 @@ export function User() {
     const handleLogout = async () => {
         try {
             const response = await axios.get(SIGNOUT_URL);
-            console.log(response.data);
         } catch (err) {
             console.log(err);
         }
@@ -131,14 +125,11 @@ export function User() {
             </div>
             <Swiper
                 // install Swiper modules
-                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                navigation={true}
+                modules={[Navigation]}
+                className="mySwiper"
                 spaceBetween={20}
-                slidesPerView={3}
-                navigation
-                pagination={{ clickable: true }}
-                scrollbar={{ draggable: true }}
-                onSwiper={(swiper) => console.log(swiper)}
-                onSlideChange={() => console.log('slide change')}
+                slidesPerView={2}
             >
 
                 {userTrees?.length ?

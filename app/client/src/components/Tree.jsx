@@ -12,9 +12,7 @@ export function Tree() {
     const { auth } = useAuth();
     const { name } = useParams();
 
-
     const [singleTree, setSingleTree] = useState([]);
-    const [treeStatus, setTreeStatus] = useState();
 
     const to = "/"
 

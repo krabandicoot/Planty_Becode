@@ -2,11 +2,16 @@ import { useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 
 import axios from "../api/axios";
+import { useParams } from "react-router-dom";
 const ACCOUNT_URL = "/api/account/leaderboard";
+const USER_TREES_URL = "api/account/username/tree/"; // + insert player name
 
 export function Leaderboard() {
     const { auth } = useAuth();
-    const { players, setPlayers } = useAuth();
+    const [players, setPlayers] = useState();
+    const { userTrees, setUserTrees } = useAuth([]);
+
+    const { username } = useParams();
 
     useEffect(() => {
         let isMounted = true; // mounted true = the component is loaded to the site
@@ -15,7 +20,6 @@ export function Leaderboard() {
         const getPlayers = async () => {
             try {
                 const response = await axios.get(ACCOUNT_URL);
-                //console.log(response.data);
                 isMounted && setPlayers(response.data); // if the component is mounted then set the player data with the data we fetch
             } catch (err) {
                 console.log(err);
@@ -27,9 +31,9 @@ export function Leaderboard() {
             isMounted = false; // means we don't mount the component and 
             controller.abort();
         }
+
     }, []);
 
-    ///console.log(players?.length)
     return (
         <section className="ml-8 mr-8">
             <div className="card__container mb-10">
@@ -50,7 +54,7 @@ export function Leaderboard() {
                                         <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
                                         <p>{player?.leafs}</p>
                                         <img src="../src/images/icon-tree.png" alt="Leaf score icon" className="h-[20px]" />
-                                        14
+                                        <p> {userTrees?.length}</p>
                                     </li>)}
                         </ul>
                     ) : <p>No players to display</p>
