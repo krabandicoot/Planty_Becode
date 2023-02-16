@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
     const [player, setPlayer] = useState({});
 
     const [trees, setTrees] = useState([]);
+    const [singleTree, setSingleTree] = useState([]);
     const [userTrees, setUserTrees] = useState([]);
 
     useEffect(() => {
@@ -51,7 +52,7 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
     //console.log(player);
 
     return (
-        <AuthContext.Provider value={{ auth, setAuth, players, setPlayers, player, setPlayer, userTrees, setUserTrees }}>
+        <AuthContext.Provider value={{ auth, setAuth, players, setPlayers, player, setPlayer, userTrees, setUserTrees, singleTree, setSingleTree }}>
             {children}
         </AuthContext.Provider>
     )
