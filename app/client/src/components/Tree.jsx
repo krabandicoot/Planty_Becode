@@ -36,6 +36,7 @@ export function Tree() {
 
     const navigate = useNavigate();
     const location = useLocation();
+    const from = location.state?.from?.pathname || `/tree/${name}`;
 
     useEffect(() => {
         let isMounted = true; // mounted true = the component is loaded to the site
@@ -57,15 +58,18 @@ export function Tree() {
         }
     }, [])
 
-    const displayPrice = async () => {
-        try {
-            const response = await axios.get(PRICE_TREE_URL + name);
-            console.log(response.data);
-            setPriceTree(response.data);
-        } catch (err) {
-            console.log(err);
+    useEffect(() => {
+        const displayPrice = async () => {
+            try {
+                const response = await axios.get(PRICE_TREE_URL + name);
+                console.log(response.data);
+                setPriceTree(response.data);
+            } catch (err) {
+                console.log(err);
+            }
         }
-    }
+        displayPrice();
+    })
 
     const handleBuy = async () => {
         try {
@@ -82,7 +86,7 @@ export function Tree() {
             const response = await axios.get(LOCK_TREE_URL + name);
             console.log(response.data);
             setLockTree(response.data);
-            // navigate(to, { replace: true })
+            navigate(from, { replace: true })
         } catch (err) {
             console.log(err);
             if (!err?.response) {
@@ -99,6 +103,7 @@ export function Tree() {
             const response = await axios.get(UNLOCK_TREE_URL + name);
             console.log(response.data);
             setUnlockTree(response.data);
+            navigate(from, { replace: true })
         } catch (err) {
             console.log(err);
         }
@@ -175,7 +180,6 @@ export function Tree() {
                             </a>
                         </div>
                     )
-
                 }
             </div>
         </section >
