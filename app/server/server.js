@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
+
 const corsOptions = require('./cors');
 const fs = require('fs');
 
@@ -10,6 +11,7 @@ const userRoutes = require('./routes/user');
 const playerRoutes = require('./routes/player');
 const treeRoutes = require('./routes/tree');
 const commentRoutes = require('./routes/comment');
+
 
 const app = express();
 const PORT = process.env.NODE_DOCKER_PORT;
@@ -35,13 +37,11 @@ app.get("/", (req, res) => {
     res.json("Welcome to planty application ☘️");
 });
 
-let rawdata = fs.readFileSync('./db/arbustum.json');
-let trees = JSON.parse(rawdata);
-
 app.use('/api/user', userRoutes);
 app.use('/api/account', playerRoutes);
 app.use('/api/tree', treeRoutes);
 app.use('/api/comment', commentRoutes);
+
 
 app.listen(PORT, () => {
     console.log(`Server Started at ${PORT} 🚀`)

@@ -11,7 +11,6 @@ const createToken = (_id) => {//id =  is part of the payload of the token
     return jwt.sign({ _id }, TOKEN, { expiresIn: '3d' });//the second is the secret string only know by the server, the third means the user stays logged in for 3 days before the token expires
 }
 
-setTimeout(takeLeafs, 3600000);
 
 //login user 
 const signInUser = async (req, res) => {
@@ -42,6 +41,7 @@ const signUpUser = async (req, res) => {
         //create token
         const signInToken = createToken(user._id);
         res.status(200).json({ email, signInToken });
+
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
