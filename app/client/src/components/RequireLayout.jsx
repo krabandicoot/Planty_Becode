@@ -5,7 +5,6 @@ export default function RequireLayout() {
 
     const { auth } = useAuth();
     const location = useLocation();
-    console.log(auth);
 
     return (
         auth ?

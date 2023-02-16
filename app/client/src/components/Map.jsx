@@ -21,7 +21,7 @@ export default function Map() {
     iconUrl: ("http://localhost:5173/src/images/icon-tree.png"),
     iconSize: [20, 30],
     iconAnchor: [5, 30]
-});
+  });
 
   function MapView() {
     let map = useMap();

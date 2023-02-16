@@ -1,5 +1,156 @@
+import useAuth from "../hooks/useAuth"
+import { Link, useParams } from "react-router-dom";
+import { IoLockClosed } from "react-icons/io5";
+import { MdOutlineDone } from "react-icons/md";
+import { useEffect, useState } from "react";
+
+import axios from "../api/axios";
+const SINGLE_TREE_URL = "api/tree/"; // + insert tree name
+
+// Buy a tree ** 
+const BUY_TREE_URL = "/api/tree/buy/" // + insert-tree-name
+
+// Get price of a tree ** 
+const PRICE_TREE_URL = "/api/tree/price/"  // + insert-tree-name
+
+// Lock a tree ** 
+const LOCK_TREE_URL = "/api/tree/lock/"  // + insert-tree-name
+
 export function Tree() {
+    const { player } = useAuth();
+    let { name } = useParams();
+    name = name.replace(/\s+/g, '-');
+
+    const [singleTree, setSingleTree] = useState([]);
+    const [priceTree, setPriceTree] = useState();
+    const [buyTree, setBuyTree] = useState();
+    const [lockTree, setLockTree] = useState();
+
+    const to = "/"
+
+    useEffect(() => {
+        let isMounted = true; // mounted true = the component is loaded to the site
+        const controller = new AbortController();
+
+        const getSinglreTree = async () => {
+            try {
+                const response = await axios.get(SINGLE_TREE_URL + name);
+                isMounted && setSingleTree(response.data[0]);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getSinglreTree();
+
+        return () => { // we clean up function of the useEffect
+            isMounted = false; // means we don't mount the component and 
+            controller.abort();
+        }
+    }, [])
+
+    const displayPrice = async () => {
+        try {
+            const response = await axios.get(PRICE_TREE_URL + name);
+            console.log(response.data);
+            setPriceTree(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const handleBuy = async () => {
+        try {
+            const response = await axios.get(BUY_TREE_URL + name);
+            console.log(response.data);
+            setBuyTree(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const handleLock = async () => {
+        try {
+            const response = await axios.get(LOCK_TREE_URL + name);
+            console.log(response.data);
+            setLockTree(response.data);
+            navigat('to')
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    console.log(singleTree.value)
+
     return (
-        <h1>Hello I am a Tree</h1>
+        <section className="tree__comments relative pl-8 grid grid-rows-3 grid-cols-2 bg-Magnolia">
+
+            <div className="row-start-2 col-start-1 self-end capitalize">
+                <h1 className="text-2xl">{singleTree.name}</h1>
+                <div className="text-xs text-DarkSpringGreen leading-6">
+                    <p>Owner : {singleTree.owner}</p>
+                    <p>Species : {singleTree.species}</p>
+                    <Link
+                        className="underline text-DarkSpringGreen font-bold italic"
+                        to={{
+                            pathname: singleTree.wikilink
+                        }}
+                        target="_blank">Wikipedia</Link>
+                </div>
+            </div>
+
+            <img
+                src="../src/images/icon-tree.png"
+                alt="tree picture"
+                className="absolute col-start-2 cropped-image fill-image" />
+            {/* Condition to display the button according to tree status */}
+
+            <div className="flex flex-col col-start-1 row-start-3 row-end-4 self-center">
+                {singleTree.value === "unavailable" && singleTree.owner === player.username ?
+                    <div div className="button__purchased flex gap-2">
+                        <button
+                            className="absolute h-10 w-[150px] text-SmokyBlack"
+                        >Your Tree</button>
+                        <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-green-800">
+                            <MdOutlineDone />
+                        </span>
+                        <button
+                            className="button__lock opacity-none relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey flex flex-col justify-center items-center"
+                            onClick={handleLock}
+                        >
+                            <IoLockClosed />
+                        </button>
+                    </div>
+                    :
+                    (singleTree.value === "locked " && singleTree.owner === player.username ?
+
+                        <div div className="button__buy">
+                            <button
+                                className="absolute h-10 w-[150px] text-SmokyBlack"
+                                onClick={handleBuy}
+                            >
+                                Buy Tree
+                            </button>
+                            <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-[10px]">
+                                <img
+                                    src="../src/images/icon-leaf.png"
+                                    alt="leaf-icon"
+                                    className="h-[20px] rotate-90 pl-2" />
+                                <p>{priceTree}</p>
+                            </span>
+                        </div>
+                        :
+                        <div className="button-locked flex gap-2">
+                            <button className="absolute h-10 w-[150px] bg-Grey/40 text-SmokyBlack">Locked Tree</button>
+                            <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey/50 flex flex-col justify-center items-center">
+                                <IoLockClosed />
+                            </span>
+                            <p className="text-xs text-DarkSpringGreen relative top-0 left-[110px] flex items-center">Unlock</p>
+                        </div>
+                    )
+
+                }
+            </div>
+        </section >
+
     )
 }

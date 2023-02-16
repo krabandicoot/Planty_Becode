@@ -2,7 +2,12 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { AiOutlineLogout } from "react-icons/ai";
 import { MdOutlineModeEditOutline } from "react-icons/md"
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+
+import { Navigation } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 import axios from "../api/axios";
 const PLAYER_URL = "/api/account/username/";
@@ -11,6 +16,8 @@ const SIGNOUT_URL = "/api/user/signout";
 export function User() {
     const { auth, setAuth } = useAuth();
     const { player, setPlayer } = useAuth();
+    const { userTrees } = useAuth();
+
     const errRef = useRef();
 
     const [errMsg, setErrMsg] = useState(false);
@@ -20,7 +27,26 @@ export function User() {
     const navigate = useNavigate();
     const to = "/";
 
-    console.log(player);
+
+    useEffect(() => {
+        let isMounted = true; // mounted true = the component is loaded to the site
+        const controller = new AbortController();
+
+        const getPlayer = async () => {
+            try {
+                const { data: response } = await axios.get(PLAYER_URL + auth);
+                isMounted && setPlayer(response);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getPlayer();
+
+        return () => { // we clean up function of the useEffect
+            isMounted = false; // means we don't mount the component and 
+            controller.abort();
+        }
+    }, [])
 
     const handleLogout = async () => {
         try {
@@ -71,9 +97,8 @@ export function User() {
             errRef.current.focus();
         };
     }
-    console.log(player.color)
-    const handleDelete = async () => {
 
+    const handleDelete = async () => {
         try {
             await axios.delete(PLAYER_URL + auth);
             navigate(to, { replace: true });
@@ -99,13 +124,29 @@ export function User() {
                     </a>
                 </div>
             </div>
-            <div className="player__tree">
-                {/* add loop to display 5 tree cards */}
-                <div className="player__tree--card bg-Magnolia p-2 w-24 flex flex-col items-center rounded-md">
-                    <p>Tree Title</p>
-                    <img src="../src/images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
-                </div>
-            </div>
+            <Swiper
+                // install Swiper modules
+                navigation={true}
+                modules={[Navigation]}
+                className="mySwiper"
+                spaceBetween={20}
+                slidesPerView={2}
+            >
+
+                {userTrees?.length ?
+                    userTrees
+                        .map((userTree, id) =>
+                            <SwiperSlide
+                                key={id}
+                                onClick={() => navigate(`/tree/${userTree.name}`, { replace: true })}>
+                                <p>{userTree.name}</p>
+                                <img src="../src/images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
+                            </SwiperSlide>
+                        )
+                    : <p>No Trees yet</p>
+                }
+            </Swiper>
+
             <div className="form__container player__data text-sm mt-10 mb-28 relative">
                 <div className="player__color absolute w-10 h-10 rounded-full top-[-10px] right-[-10px]"
                     style={{ backgroundColor: player.color }}>

@@ -84,22 +84,24 @@ const deletePlayer = async (req, res) => {
 
 //Display the player tree's collection
 
-const displayTrees = async (req, res)=>{
+const displayTrees = async (req, res) => {
     const player = req.params;
-    
+
     const options = {
         allowDiskUse: true
     };
-    
+
     const pipeline = [
         {
-            $lookup:{
+            $lookup: {
                 "from": "trees",
                 "localField": "username",
                 "foreignField": "owner",
                 "as": "trees"
-            }}, 
-            {$match: {
+            }
+        },
+        {
+            $match: {
                 "username": player.username
             }
         },
