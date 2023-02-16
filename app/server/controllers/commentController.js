@@ -11,8 +11,8 @@ const createComment = async (req, res) => {
 
     if (!username || !text) {
         return res.json({
-        success: false,
-        error: 'You must provide an author and comment'
+            success: false,
+            error: 'You must provide an author and comment'
         });
     }
 
@@ -31,6 +31,6 @@ const createComment = async (req, res) => {
 }
 
 // Export all the function
-module.exports = { 
+module.exports = {
     createComment
 };
