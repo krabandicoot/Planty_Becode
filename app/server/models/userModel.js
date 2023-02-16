@@ -34,71 +34,6 @@ const userSchema = new Schema({
     }
 });
 
-// Functions to regulate the leaf amout
-// Add player trees x Leafs every 15 min
-const addLeafs = async (username) => {
-    const player = await Player.findOne({username: username});
-    const playerTrees = await Tree.find({owner: username});
-    let leafAmount = player.leafs;
-    console.log(`the leaf amount is ${leafAmount} after 15 minute`);
-    let leafGained = 0;
-    for(i= 0; i<playerTrees.length; i++){
-        leafGained += playerTrees[i].price;
-    }
-    const options = {
-        allowDiskUse: false
-    };
-
-    // const pipeline = [
-    //     {
-    //         "$match": {
-    //             "owner": username
-    //         }
-    //     }, 
-    //     {
-    //         "$count": "treeCount"
-    //     }
-    // ];
-
-    // const cursor = await Tree.aggregate(pipeline, options).exec();
-    // const treeCount = cursor[0].treeCount;
-    const newLeafAmount = Math.floor(leafAmount + leafGained);
-    // console.log(`the new amount added is ${newLeafAmount}`);
-    // console.log(`the new leaf amount is ${newLeafAmount} ❌`);
-
-    // inject new amount in player
-    const updateLeafPlayer = await Player.updateOne(        
-        {_id: player._id},
-        {$set :
-            {leafs: newLeafAmount}
-        });
-
-    return updateLeafPlayer;
-}
-// setTimeout(addLeafs, 900000);
-
-// Take back half of leafs every hour
-const takeLeafs = async (username) => {
-    const player = await Player.findOne({username: username});
-
-    const leafAmount = player.leafs;
-
-    const newLeafAmount = Math.floor(leafAmount/2);
-    console.log(`the leaf amount is ${newLeafAmount} after 1 hour`);
-
-    // inject new amount in player
-    const updateLeafPlayer = await Player.updateOne(        
-        {_id: player._id},
-        {$set :
-            {leafs: newLeafAmount}
-        });
-
-    // console.log(updateLeafPlayer);
-    return updateLeafPlayer;
-}
-
-// setTimeout(takeLeafs, 3600000);
-
 userSchema.statics.signup = async function (username, email, password, color) {
 
     //Check every fields requirements
@@ -138,19 +73,10 @@ userSchema.statics.signup = async function (username, email, password, color) {
     const player = await Player.create({username, email, password: hash, color});
     //Attribute three tree as you signed in
     const attributeTree = await Tree.getThree(username);
+    //Attribute the player leaf in his wallet as he signed up
     addLeafs(username);
-    //Start the timer to receives and remove leaves
-    let scheduledScore = cron.schedule('* */15 * * * *', () => {
-        addLeafs(username);
-        console.log("Adding every 15 minutes the amount of leaves to the user");
-        cron.schedule('* */60 * * * *', () => {
-            takeLeafs(username);
-            console.log("Retrieving half his leaf every hour");
-        });
-    });
-
-    scheduledScore.start();
-    return user, player, scheduledScore;
+    
+    return user, player;
 }
 
 userSchema.statics.signin = async function (username, password) {
