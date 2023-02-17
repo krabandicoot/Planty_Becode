@@ -43,7 +43,8 @@ export default function Map() {
   const [isLoading, setIsLoading] = useState(true);
   const [priceTree, setPriceTree] = useState();
   const [treename, setTreeName] = useState("");
-  const [username, setUsername] = useState(player.username);
+
+  const username = player.username;
 
   console.log(username)
   console.log(treename);
@@ -58,26 +59,29 @@ export default function Map() {
       console.log(err);
     }
   };
+  useEffect(() => {
+    const handleBuy = async () => {
+      try {
+        const configuration = {
+          method: 'post',
+          url: BUY_TREE_URL + treename.replace(/\s+/g, '-'),
+          data: {
+            username,
+            treename
+          },
+          withCredentials: true,
+        }
 
-  const handleBuy = async () => {
-    try {
-      const configuration = {
-        method: 'post',
-        url: BUY_TREE_URL + treename.replace(/\s+/g, '-'),
-        data: {
-          username,
-          treename
-        },
-        withCredentials: true,
+        const response = await axios(configuration);
+        console.log(response.data);
+
+      } catch (err) {
+        console.log(err);
       }
-
-      const response = await axios(configuration);
-      console.log(response.data);
-
-    } catch (err) {
-      console.log(err);
     }
-  }
+    handleBuy();
+  }, [treename])
+
 
   useEffect(() => {
     getTrees()
@@ -146,7 +150,7 @@ export default function Map() {
                         <div className="priceTree flex justify-center m-2">
                           <button
                             className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack"
-                            onClick={(e) => { setTreeName(tree.name); setUsername(player.username); handleBuy(e) }}>Buy tree
+                            onClick={(e) => { setTreeName(tree.name); handleBuy(e) }}>Buy tree
                             <div className="buttonBuy_price flex items-center">
                               {tree.price}
                               <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />

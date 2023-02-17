@@ -63,18 +63,18 @@ export function Tree() {
         }
     }, [])
 
-    useEffect(() => {
-        const displayPrice = async () => {
-            try {
-                const response = await axios.get(PRICE_TREE_URL + name.replace(/\s+/g, '-'));
-                console.log(response.data);
-                setPriceTree(response.data);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        displayPrice();
-    }, [])
+    // useEffect(() => {
+    //     const displayPrice = async () => {
+    //         try {
+    //             const response = await axios.get(PRICE_TREE_URL + name.replace(/\s+/g, '-'));
+    //             console.log(response.data);
+    //             setPriceTree(response.data);
+    //         } catch (err) {
+    //             console.log(err);
+    //         }
+    //     }
+    //     displayPrice();
+    // }, [])
 
     const handleBuy = async () => {
         try {
