@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Player = require('./playerModel');
 
 const treeSchema = new Schema({
     value:{
