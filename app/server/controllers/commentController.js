@@ -1,4 +1,3 @@
-const Player = require('../models/playerModel');
 const Comment = require('../models/commentModel');
 const Tree = require('../models/treeModel');
 
@@ -6,8 +5,10 @@ const Tree = require('../models/treeModel');
 const createComment = async (req, res) => {
     const comment = new Comment();
     const { username, text } = req.body;
-    const { tree_id } = req.params;
-    const foundTree = await Tree.findById(tree_id).exec()
+    const treename = req.params;
+    const name = treename.name;
+    const nameCleaned = name.replaceAll('-',' ');
+    const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
 
     if (!username || !text) {
         return res.json({
@@ -17,17 +18,14 @@ const createComment = async (req, res) => {
     }
 
     // Add the different fields to the comment collection :
-    comment.author.username = username;
+    comment.username = username;
     comment.text = text;
-    comment.treeInfo.tree_id = foundTree._id;
     comment.treeInfo.treeName = foundTree.name;
-    // comment.author.id = await Player.findOne({username: username}).select('_id').exec();
+    comment.treeInfo.tree_id = foundTree._id;
 
     // Save the comment
-    comment.save(err => {
-        if (err) return res.json({ success: false, error: err });
-        return res.json(postTreeAndComment);
-    });
+    comment.save();
+    res.status(200).json('Comment posted !')
 }
 
 // Export all the function
