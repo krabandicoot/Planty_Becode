@@ -433,7 +433,7 @@ const lockTree = async (req, res) => {
                 }
             });
 
-        res.status(200).json((updateTree, updatePlayer));
+        res.status(200).json({ updateTree, updatePlayer });
     } else {
         res.status(204).json("Sorry, you're too broke !");
     }

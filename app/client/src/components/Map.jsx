@@ -42,10 +42,12 @@ export default function Map() {
   const [trees, setTrees] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [priceTree, setPriceTree] = useState();
-  const [buyTree, setBuyTree] = useState();
-  const [treeName, setTreeName] = useState("");
-  console.log(treeName);
-  const [playerLeafs, setPlayerLeafs] = useState(player.leafs);
+  const [treename, setTreeName] = useState("");
+  const [username, setUsername] = useState(player.username);
+
+  console.log(username)
+  console.log(treename);
+
 
   const getTrees = async () => {
     try {
@@ -57,17 +59,25 @@ export default function Map() {
     }
   };
 
-  const handleBuy = async (e) => {
-    e.preventDefault();
-
+  const handleBuy = async () => {
     try {
-      const response = await axios.get(BUY_TREE_URL + treeName.replace(/\s+/g, '-'));
+      const configuration = {
+        method: 'post',
+        url: BUY_TREE_URL + treename.replace(/\s+/g, '-'),
+        data: {
+          username,
+          treename
+        },
+        withCredentials: true,
+      }
+
+      const response = await axios(configuration);
       console.log(response.data);
-      setBuyTree(response.data);
+
     } catch (err) {
       console.log(err);
     }
-  };
+  }
 
   useEffect(() => {
     getTrees()
@@ -95,7 +105,7 @@ export default function Map() {
           return (
             <Marker position={{ lat: tree.lat, lon: tree.lon }} key={index} icon={iconTree}>
               <Popup>
-                <div onClick={() => setTreeName(tree.name)}>
+                <div>
                   <div className="speciesTree flex flex-row justify-center m-2">
                     <h4
                       className="text-SmokyBlack capitalize">{tree.name}</h4>
@@ -135,10 +145,8 @@ export default function Map() {
                       return (
                         <div className="priceTree flex justify-center m-2">
                           <button
-                            type="submit"
                             className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack"
-                            onSubmit={handleBuy}
-                          >Buy tree
+                            onClick={(e) => { setTreeName(tree.name); setUsername(player.username); handleBuy(e) }}>Buy tree
                             <div className="buttonBuy_price flex items-center">
                               {tree.price}
                               <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />

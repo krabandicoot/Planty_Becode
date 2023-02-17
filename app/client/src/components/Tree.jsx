@@ -26,6 +26,11 @@ export function Tree() {
     const { singleTree, setSingleTree } = useAuth();
     let { name } = useParams();
 
+    const treename = singleTree.name;
+    console.log(treename);
+    const username = player.username;
+    console.log(username);
+
     const errRef = useRef();
 
     const [errMsg, setErrMsg] = useState("");
@@ -58,28 +63,38 @@ export function Tree() {
         }
     }, [])
 
-    // useEffect(() => {
-    //     const displayPrice = async () => {
-    //         try {
-    //             const response = await axios.get(PRICE_TREE_URL + name);
-    //             console.log(response.data);
-    //             setPriceTree(response.data);
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     }
-    //     displayPrice();
-    // }, [])
+    useEffect(() => {
+        const displayPrice = async () => {
+            try {
+                const response = await axios.get(PRICE_TREE_URL + name.replace(/\s+/g, '-'));
+                console.log(response.data);
+                setPriceTree(response.data);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        displayPrice();
+    }, [])
 
-    // const handleBuy = async () => {
-    //     try {
-    //         const response = await axios.get(BUY_TREE_URL + name);
-    //         console.log(response.data);
-    //         setBuyTree(response.data);
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // }
+    const handleBuy = async () => {
+        try {
+            const configuration = {
+                method: 'post',
+                url: BUY_TREE_URL + name.replace(/\s+/g, '-'),
+                data: {
+                    username,
+                    treename
+                },
+                withCredentials: true,
+            }
+
+            const response = await axios(configuration);
+            console.log(response.data);
+            setBuyTree(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     // Lock the tree
 
@@ -173,7 +188,7 @@ export function Tree() {
                         <div div className="button__buy">
                             <button
                                 className="absolute h-10 w-[150px] text-SmokyBlack"
-                            // onClick={handleBuy}
+                                onClick={handleBuy}
                             >
                                 Buy Tree
                             </button>
