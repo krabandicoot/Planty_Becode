@@ -19,7 +19,6 @@ const displayComments = async (req, res) => {
     const treename = req.params;
     const name = treename.name;
     const nameCleaned = name.replaceAll('-',' ');
-    const foundTree = await Tree.findOne({ name : nameCleaned }).exec()
 
     const options = {
         allowDiskUse: true
@@ -48,7 +47,7 @@ const displayComments = async (req, res) => {
 // -------- Get price of a tree
 const getPrice = async(req,res) => {
 
-    // Get tree infos : 
+    // Get tree infos :
     const treename = req.params;
     const name = treename.name;
     const nameCleaned = name.replaceAll('-',' ');
@@ -60,17 +59,17 @@ const getPrice = async(req,res) => {
     const username = req.body.username;
     const player = await Player.findOne({ username : username}).exec();
 
-
     if (foundTree.value == "unavailable"){
 
         // Get owner info :
         const treeOwner = foundTree.owner;
 
+        // Get aryon of 100m : 
         const rayon = 0.1/6371;
         const latT = Math.asin(Math.sin(foundTree.lat)/Math.cos(rayon))
         const dLon = Math.acos((Math.cos(rayon) - Math.sin(latT) * Math.sin(foundTree.lat)) / (Math.cos(latT) * Math.cos(foundTree.lat)));
 
-        // Maximum and minimun lon for the 100m radius
+        // Maximum and minimun lon for the 100m radius :
         let maxLat = foundTree.lat + rayon;
         let minLat = foundTree.lat - rayon;
         let maxLon = foundTree.lon + dLon;
@@ -450,6 +449,7 @@ const unlockTree = async(req,res) => {
     res.status(200).json((updateTree, updatePlayer));
 }
 
+// Export all functions :
 module.exports = { 
     getTree, 
     displayComments,

@@ -15,7 +15,7 @@ router.patch(`/username/:username`, updatePlayer);
 // Delete a player
 router.delete('/username/:username', deletePlayer);
 
-//display the player trees
+// Display the player's trees
 router.get('/username/tree/:username', displayTrees);
 
 module.exports = router;

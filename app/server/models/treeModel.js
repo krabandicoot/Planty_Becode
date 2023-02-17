@@ -18,17 +18,14 @@ const treeSchema = new Schema({
     owner: {
         type: String,
         default: 'none',
-        required: true,
-        //get from player's tree 
+        required: true
     },
     species: {
         type: String,
         required: true
-        //get from arbustum 
     },
     wikilink: {
         type: String,
-        //+(species of the tree str.replace(" " , "_"));)
     },
     diameter:{
         type:Number,
@@ -48,6 +45,7 @@ const treeSchema = new Schema({
     }
 });
 
+// -------- Get 3 random trees at the beginning of the game
 treeSchema.statics.getThree = async function(username){
     try{
         const treeCount = await this.count();
