@@ -2,15 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const commentSchema = new Schema({
-    author: {
-        username:{
-            required: true,
-            type: String
-            },
-        id:{
-            required: true,
-            type: String
-            }
+    username:{
+        required: true,
+        type: String
     },
     treeInfo:{
         treeName:{
