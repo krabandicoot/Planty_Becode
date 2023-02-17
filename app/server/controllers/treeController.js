@@ -154,7 +154,7 @@ const buyTree = async(req,res) => {
     const nameCleaned = name.replaceAll('-',' ');
     const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
     //Get user info
-    const username = req.body.username;
+    const username = req.body.player.username;
     const player = await Player.findOne({ username : username }).exec();
     const money = player.leafs;
     // Get base price

@@ -38,7 +38,6 @@ export default function Map() {
   const navigate = useNavigate();
   const [trees, setTrees] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [priceTree, setPriceTree] = useState();
   const [buyTree, setBuyTree] = useState();
 
   const getTrees = async () => {
@@ -51,15 +50,15 @@ export default function Map() {
     }
   };
 
-  // const handleBuy = async (name) => {
-  //   try {
-  //       const response = await axios.get(BUY_TREE_URL + name);
-  //       console.log(response.data);
-  //       setBuyTree(response.data);
-  //   } catch (err) {
-  //       console.log(err);
-  //   }
-  // };
+  const handleBuy = async (name) => {
+    try {
+        const response = await axios.get(BUY_TREE_URL + name);
+        console.log(response.data);
+        setBuyTree(response.data);
+    } catch (err) {
+        console.log(err);
+    }
+  };
 
   useEffect(() => {
     getTrees()
@@ -125,7 +124,7 @@ export default function Map() {
                   } else {
                     return (
                       <div className="priceTree flex justify-center m-2">
-                        <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack">Buy tree
+                        <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack" onClick={handleBuy(tree.name)}>Buy tree
                             <div className="buttonBuy_price flex items-center">
                               {tree.price}
                               <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
