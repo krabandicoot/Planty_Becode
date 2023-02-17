@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const Tree = require('../models/treeModel');
 require('dotenv').config();
 const randomWords = require('project-name-generator');
-const { deleteMany } = require('../models/playerModel');
 const mongoString = process.env.DB_URL;
 
 function replaceAll(string, search, replace) {

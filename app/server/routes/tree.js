@@ -1,5 +1,4 @@
 const express = require('express');
-//import controllers functions 
 const { getTree, 
     displayComments,
     getPrice, 
@@ -8,10 +7,9 @@ const { getTree,
     unlockTree,
     getLockPrice } = require('../controllers/treeController');
 
-//instance of the express router 
 const router = express.Router();
 
-// GET all tree
+// GET all the trees
 router.get('/all', getTree);
 
 // GET a tree and his comments

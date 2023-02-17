@@ -4,13 +4,13 @@ require('dotenv').config();
 
 const TOKEN = process.env.NODE_TOKEN;
 
-//function to generate a token in the signin and signup user 
+// Function to generate a token in the signin and signup user 
 const createToken = (_id) => { 
     return jwt.sign({ _id }, TOKEN, { expiresIn: '3d' });
 }
 
 
-// -------- login user 
+// -------- Login user 
 const signInUser = async (req, res) => {
     const { username, password } = req.body;
     try {
@@ -48,13 +48,11 @@ const signUpUser = async (req, res) => {
 // -------- Sign out
 const signOutUser = async (req, res) => {
     res.cookie('jwt', 'expiredtoken');
-    //res.redirect('/');
     res.json("User successully log out");
 }
 
-// Export all the functions
+// Export all the functions : 
 module.exports = { 
     signInUser, 
     signUpUser, 
-    signOutUser 
-};
+    signOutUser };

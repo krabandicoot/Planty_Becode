@@ -1,9 +1,8 @@
-const { default: mongoose } = require('mongoose');
 const Player = require('../models/playerModel');
 const getUser = require('../models/userModel');
 const Tree = require('../models/treeModel');
 
-// -------- Get all info of a player
+// Get all info of a player
 const getAccount = async(req,res) => {
     const { username } = req.params;
     const player = await Player.findOne({username: username}).select('-password');
@@ -23,7 +22,7 @@ const getAccount = async(req,res) => {
     }
 }
 
-// -------- Get all players in a list
+// Get all players in a list
 const getPlayers = async(req,res) => {
     try {
         const players = await Player.find({}).sort({leafs: -1});
@@ -33,7 +32,7 @@ const getPlayers = async(req,res) => {
     }
 }
 
-// -------- Update the player
+// Update the player
 const updatePlayer = async (req, res) => {
     const { username } = req.params;
     const player = await Player.findOne({username: username});
@@ -45,7 +44,7 @@ const updatePlayer = async (req, res) => {
         if (!req.body) {
             throw error("This can not be empty!");
         } else if(!player) {
-                throw Error(`This username doesn't exist`);
+            throw Error(`This username doesn't exist`);
         }
 
         res.status(200).json(updatePlayer, UpdateUser);
@@ -55,8 +54,9 @@ const updatePlayer = async (req, res) => {
     }
 }
 
-// -------- Delete the player
+// Delete the player
 const deletePlayer = async (req, res) => {
+
     const { username } = req.params;
     const player = await Player.findOne({username: username});
     const deletePlayer = await Player.deleteOne({username: username});
@@ -77,11 +77,11 @@ const deletePlayer = async (req, res) => {
     }
 }
 
-// -------- Display the player tree's collection
+//Display the player tree's collection
 
 const displayTrees = async (req, res)=>{
     const player = req.params;
-    
+
     const options = {
         allowDiskUse: true
     };
@@ -106,7 +106,7 @@ const displayTrees = async (req, res)=>{
 }
 
 
-// Export all the functions
+// Export all the function
 module.exports = { 
     getAccount,
     getPlayers,

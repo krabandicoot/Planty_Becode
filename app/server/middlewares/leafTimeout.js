@@ -1,7 +1,8 @@
 const Player = require('../models/playerModel');
 const Tree = require('../models/treeModel');
+const cron = require('node-cron');
 
-// -------- Add player trees x Leafs every 15 mins
+// Add player trees x Leafs every 15 min
 const addLeafs = async (username) => {
     const player = await Player.findOne({username: username});
     const playerTrees = await Tree.find({owner: username});
@@ -27,7 +28,7 @@ const addLeafs = async (username) => {
     return updateLeafPlayer;
 };
 
-// -------- Take back half of leafs every hour
+// Take back half of leafs every hour
 const takeLeafs = async (username) => {
     const player = await Player.findOne({username: username});
     const leafAmount = player.leafs;
@@ -42,16 +43,11 @@ const takeLeafs = async (username) => {
     return updateLeafPlayer;
 }
 
-// Combine the leafs function :
-const cron = require('node-cron');
+// Manage the leafs calculus combined
 const leafWallet = async()=>{
     let allPlayer = await Player.find();
-    // console.log(`Ce console log fonctionne ${allPlayer}`);
     for(i=0; i< allPlayer.length; i++){
-        console.log(allPlayer);
         let username = allPlayer[i].username;
-        console.log (username);
-        // let checkPlayer = await Player.find({username});
         // Start the timer to receives and remove leaves
         let scheduledScore = cron.schedule('* */15 * * * *', () => {
             addLeafs(username);
@@ -59,7 +55,6 @@ const leafWallet = async()=>{
                 takeLeafs(username);
             });
         });
-
     scheduledScore.start();
     }
     

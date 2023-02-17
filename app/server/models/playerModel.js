@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const playerSchema = new Schema({
@@ -22,7 +21,6 @@ const playerSchema = new Schema({
     },
     color:{
         type:String,
-        // required: true,
         minLength: 4,
         maxLength: 7,
     },

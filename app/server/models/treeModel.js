@@ -18,7 +18,7 @@ const treeSchema = new Schema({
     owner: {
         type: String,
         default: 'none',
-        required: true,
+        required: true
     },
     species: {
         type: String,

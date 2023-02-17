@@ -7,12 +7,9 @@ const mongoString = "mongodb+srv://root:Stupide@leafappcluster.rjanuu6.mongodb.n
 
 mongoose.connect(mongoString);
 
-// Function call
 Tree.deleteMany({price: {$lte: 300 }}).then(function(){
     console.log("Data deleted");
-    // Success
 }).catch(function(error){
-    // Failure
     console.log(error);
 });
 

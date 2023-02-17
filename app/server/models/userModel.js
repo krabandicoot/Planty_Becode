@@ -30,8 +30,7 @@ const userSchema = new Schema({
         maxLength: 7,
     }
 });
-
-// -------- Sign up verification
+// --------- Sign up
 userSchema.statics.signup = async function (username, email, password, color) {
 
     // Check every fields requirements
@@ -44,10 +43,10 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if ((color.charAt(0) != '#') || (!validator.isHexColor(color))) {
         throw Error(`The color entered is not hexadecimal color, be sure you put '#' in front of the combination`);
     }
-    if (!validator.isEmail(email)) { //check is the email is a valid structure
+    if (!validator.isEmail(email)) { 
         throw Error('The email address entered is not valid');
     }
-    if (!validator.isStrongPassword(password)) { //
+    if (!validator.isStrongPassword(password)) {
         throw Error('The password must contain 8 character minimum, with an uppercase, a number and a symbol');
     }
     
@@ -61,13 +60,12 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (usernameExist) {
         throw Error('Username already used, please enter another name');
     }
-    // Protecting and hash the password
+    // Protecting and hashing the password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-
-    // Create a user in db
+    // Create the user in DB as you sign up
     const user = await this.create({username, email, password: hash, color});
-    // Create player in db with sign-up infos
+    // Create the playerin DB as you sign up
     const player = await Player.create({username, email, password: hash, color});
     // Attribute three tree as you signed in
     const attributeTree = await Tree.getThree(username);
@@ -77,7 +75,8 @@ userSchema.statics.signup = async function (username, email, password, color) {
     return user, player;
 }
 
-// -------- Sign in verification : 
+// --------- Sign in 
+
 userSchema.statics.signin = async function (username, password) {
     if (!username || !password) {
         throw Error('All fields need to be filled');
