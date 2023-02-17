@@ -2,7 +2,7 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const Tree = require('../models/treeModel');
 require('dotenv').config();
-const mongoString = process.env.DB_URL;;
+const mongoString = process.env.DB_URL;
 
 mongoose.connect(mongoString);
 
