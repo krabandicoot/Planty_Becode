@@ -154,12 +154,12 @@ const getPrice = async (req, res) => {
 // -------- Buy a tree
 const buyTree = async (req, res) => {
     // Get tree info
-    const treename = req.params;
-    const name = treename.name;
-    const nameCleaned = name.replaceAll('-', ' ');
-    const foundTree = await Tree.findOne({ name: nameCleaned }).exec();
+    const { treename, username } = req.body;
+    console.log(treename);
+    // const name = treename.name;
+    // const nameCleaned = name.replaceAll('-',' ');
+    const foundTree = await Tree.findOne({ name: treename }).exec();
     //Get user info
-    const username = req.body.username;
     const player = await Player.findOne({ username: username }).exec();
     const money = player.leafs;
     // Get base price
@@ -253,7 +253,7 @@ const buyTree = async (req, res) => {
     } else if (price <= money && foundTree.value !== "locked") {
         // buy
         const updateTree = await Tree.updateOne(
-            { name: nameCleaned },
+            { name: treename },
             {
                 $set:
                 {
@@ -262,7 +262,7 @@ const buyTree = async (req, res) => {
                 }
             });
         const updatePlayer = await Player.updateOne(
-            { username: player.username },
+            { username: username },
             {
                 $set:
                 {
@@ -270,7 +270,7 @@ const buyTree = async (req, res) => {
                 }
             });
 
-        res.status(200).json((updateTree, updatePlayer));
+        res.status(200).json({ updateTree, updatePlayer });
     } else {
         res.status(204).json("Sorry, this tree is locked !");
     }
