@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-//Modules
 const bcrypt = require('bcrypt');
 const validator = require('validator');
-const cron = require('node-cron');
-//Schema
 const Player = require('./playerModel');
 const Tree = require('./treeModel');
 
@@ -34,9 +31,10 @@ const userSchema = new Schema({
     }
 });
 
+// -------- Sign up verification
 userSchema.statics.signup = async function (username, email, password, color) {
 
-    //Check every fields requirements
+    // Check every fields requirements
     if (!email || !username || !password || !color){
         throw Error('All fields need to be filled');
     }
@@ -53,7 +51,7 @@ userSchema.statics.signup = async function (username, email, password, color) {
         throw Error('The password must contain 8 character minimum, with an uppercase, a number and a symbol');
     }
     
-    //check existence in DB
+    // Check existence in DB
     const emailExist = await this.findOne({ email });
     const usernameExist = await this.findOne({ username });
 
@@ -63,22 +61,23 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (usernameExist) {
         throw Error('Username already used, please enter another name');
     }
-    //Protecting and hash the password
+    // Protecting and hash the password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    //Create a user in db
+    // Create a user in db
     const user = await this.create({username, email, password: hash, color});
-    //Create player in db with sign-up infos
+    // Create player in db with sign-up infos
     const player = await Player.create({username, email, password: hash, color});
-    //Attribute three tree as you signed in
+    // Attribute three tree as you signed in
     const attributeTree = await Tree.getThree(username);
-    //Attribute the player leaf in his wallet as he signed up
+    // Attribute the player leaf in his wallet as he signed up
     addLeafs(username);
     
     return user, player;
 }
 
+// -------- Sign in verification : 
 userSchema.statics.signin = async function (username, password) {
     if (!username || !password) {
         throw Error('All fields need to be filled');
@@ -97,4 +96,5 @@ userSchema.statics.signin = async function (username, password) {
     
     return user;
 }
+
 module.exports = mongoose.model('User', userSchema);

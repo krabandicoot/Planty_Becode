@@ -12,7 +12,8 @@ Tree.deleteMany({price: {$lte: 300 }}).then(function(){
     console.log("Data deleted");
     // Success
 }).catch(function(error){
-    console.log(error); // Failure
+    // Failure
+    console.log(error);
 });
 
 
