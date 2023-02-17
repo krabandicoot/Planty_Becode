@@ -64,10 +64,10 @@ const updatePlayer = async (req, res) => {
 const deletePlayer = async (req, res) => {
     const { username } = req.params;
 
-    const player = await Player.findOne({ username: username });
-    const deletePlayer = await Player.deleteOne({ username: username });
-    const deleteUser = await getUser.deleteOne({ username: username }); 22
-    const updateTree = await Tree.updateMany({ owner: username }, { $set: { owner: "none", value: "available" } });
+    const player = await Player.findOne({username: username});
+    const deletePlayer = await Player.deleteOne({username: username});
+    const deleteUser = await getUser.deleteOne({username: username});22
+    const updateTree = await Tree.updateMany({owner: username}, {$set: {owner:"none",value:"available"}});
 
     try {
         if (!player) {
