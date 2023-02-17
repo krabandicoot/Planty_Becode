@@ -14,13 +14,6 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{7,254}$/;
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[a-z]{2,4}$/;
 const REGISTER_URL = "/api/user/signup";
 
-<<<<<<< HEAD
-//icon eye
-const eyeIcon = <FaEye />;
-const warningIcon = <RiErrorWarningLine />;
-
-=======
->>>>>>> jade
 export function SignUp() {
 
     const { setAuth } = useAuth();

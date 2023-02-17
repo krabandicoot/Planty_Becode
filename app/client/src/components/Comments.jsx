@@ -10,8 +10,8 @@ export function Comments() {
     const { auth } = useAuth();
     const { singleTree } = useAuth();
 
-    const tree_id = singleTree._id;
-
+    const tree_name = singleTree.name;
+    console.log(tree_name);
     const [comments, setComments] = useState(false);
 
     const [username, setUsername] = useState(auth);
@@ -25,7 +25,7 @@ export function Comments() {
         e.preventDefault();
 
         try {
-            const response = await axios.post(COMMENT_URL + tree_id,
+            const response = await axios.post(COMMENT_URL + tree_name,
                 JSON.stringify({ username, text }),
                 {
                     headers: { 'Content-Type': 'application/json' },
@@ -90,7 +90,7 @@ export function Comments() {
                                 type="text"
                                 name="username"
                                 value={username}
-                                // onChange={() => setUsername(username)}
+                                onChange={() => setUsername(username)}
                                 className="font-bold bg-transparent m-2"
                             />
                             <label htmlFor="text"></label>
