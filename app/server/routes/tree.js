@@ -5,7 +5,8 @@ const { getTree,
     getPrice, 
     buyTree, 
     lockTree, 
-    unlockTree } = require('../controllers/treeController');
+    unlockTree,
+    getLockPrice } = require('../controllers/treeController');
 
 //instance of the express router 
 const router = express.Router();
@@ -18,6 +19,8 @@ router.get(`/:name`, displayComments);
 router.get(`/price/:name`, getPrice);
 
 router.get(`/buy/:name`, buyTree);
+
+router.get(`/lockprice/:name`, getLockPrice)
 
 router.get(`/lock/:name`, lockTree);
 
