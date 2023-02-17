@@ -19,10 +19,10 @@ router.get(`/:name`, displayComments);
 router.get(`/price/:name`, getPrice);
 
 // Buy a tree
-router.get(`/buy/:name`, buyTree);
+router.post(`/buy/:name`, buyTree);
 
 // GET price to lock the tree
-router.get(`/lockprice/:name`, getLockPrice)
+router.get(`/lockprice/:name`, getLockPrice);
 
 // Lock the tree
 router.get(`/lock/:name`, lockTree);
