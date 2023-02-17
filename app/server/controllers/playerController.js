@@ -1,4 +1,3 @@
-const { default: mongoose } = require('mongoose');
 const Player = require('../models/playerModel');
 const getUser = require('../models/userModel');
 const Tree = require('../models/treeModel');
@@ -27,9 +26,7 @@ const getAccount = async (req, res) => {
 const getPlayers = async (req, res) => {
     try {
         const players = await Player.find({}).sort({ leafs: -1 });
-
         res.status(200).json(players);
-
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -38,10 +35,7 @@ const getPlayers = async (req, res) => {
 // Update the player
 const updatePlayer = async (req, res) => {
     const { username } = req.params;
-
     const player = await Player.findOne({ username: username });
-    const User = await getUser.findOne({ username: username });
-
     const updatePlayer = await Player.updateOne({ username: username }, { $set: req.body });
     const UpdateUser = await getUser.updateOne({ username: username }, { $set: req.body });
 
@@ -62,12 +56,12 @@ const updatePlayer = async (req, res) => {
 
 // Delete the player
 const deletePlayer = async (req, res) => {
-    const { username } = req.params;
 
-    const player = await Player.findOne({username: username});
-    const deletePlayer = await Player.deleteOne({username: username});
-    const deleteUser = await getUser.deleteOne({username: username});22
-    const updateTree = await Tree.updateMany({owner: username}, {$set: {owner:"none",value:"available"}});
+    const { username } = req.params;
+    const player = await Player.findOne({ username: username });
+    const deletePlayer = await Player.deleteOne({ username: username });
+    const deleteUser = await getUser.deleteOne({ username: username }); 22
+    const updateTree = await Tree.updateMany({ owner: username }, { $set: { owner: "none", value: "available" } });
 
     try {
         if (!player) {

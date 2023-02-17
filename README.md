@@ -3,28 +3,10 @@
 This project has been elaborate by the BeCode.org training. 
 
 ## Project description
->..
+> Planty is a MERN(Mongo, Express, React, Node.js) stack Web Application. It's an IDLE Game based in Liège, where players can buy and collect every trees in the city.
 
 ## Table of content
-..
-## Prerequisites
-- npm 
-```npm install npm@latest -g```
 
-Server wise :
-- mongoose
-- nodemon
-- express
-- dotenv
-- bcrypt
-- validator
-
-## Installation
-Clone repo :
-- ```git clone git@github.com:krabandicoot/Planty_Becode.git ```
-Install npm package : 
-- ```cd ./app/client && npm install```
-- ```cd ./app/server && npm install```
 
 ## Walkthrough
 ....
@@ -35,6 +17,6 @@ Install npm package :
 - [Khadja Paux](https://www.linkedin.com/in/khadja-paux/) | Backend |[GitHub](https://github.com/krabandicoot)
 
 ## Credits
-
 Database from [Belgium OpenData Initiative website](https://data.gov.be/en)
+
 ## License
