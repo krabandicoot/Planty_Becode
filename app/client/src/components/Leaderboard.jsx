@@ -53,8 +53,8 @@ export function Leaderboard() {
                                         <p className="w-10">{player?.username}</p>
                                         <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
                                         <p>{player?.leafs}</p>
-                                        <img src="../src/images/icon-tree.png" alt="Leaf score icon" className="h-[20px]" />
-                                        <p> {userTrees?.length}</p>
+                                        {/* <img src="../src/images/icon-tree.png" alt="Leaf score icon" className="h-[20px]" />
+                                        <p> {userTrees?.length}</p> */}
                                     </li>)}
                         </ul>
                     ) : <p>No players to display</p>
