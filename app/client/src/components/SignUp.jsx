@@ -5,7 +5,7 @@ import ColorPicker from "./PickColor";
 import useAuth from "../hooks/useAuth";
 
 import { FaEye } from "react-icons/fa";
-import {RiErrorWarningLine} from "react-icons/ri";
+import { RiErrorWarningLine } from "react-icons/ri";
 
 
 //input verification
@@ -46,8 +46,8 @@ export function SignUp() {
     const [isShownForm, setIsShownForm] = useState(true);
 
     // visibility password
-    const [passwordVisible, setPasswordVisible] = useState (false);
-    const [matchPasswordVisible, setMatchPasswordVisible] = useState (false);
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [matchPasswordVisible, setMatchPasswordVisible] = useState(false);
 
     //color user -> PickColor
     const [color, setColor] = useState("");
@@ -104,7 +104,8 @@ export function SignUp() {
             const response = await axios.post(REGISTER_URL,
                 JSON.stringify({ username, email, password, color }),
                 {
-                    headers: { 'Content-Type': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true,
 
                 })
 
@@ -138,7 +139,7 @@ export function SignUp() {
         <section className="signup__container-form relative -z-11 bg-zinc-200/[0.2] p-[20px] rounded-xl">
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <form method="POST" className="signup_form" onSubmit={handleSubmit} onKeyDown={(e) => checkKeyDown(e)}>
-    {/* username */}
+                {/* username */}
                 <div style={{ display: isShownForm ? 'block' : 'none' }}>
                     < div className="signup__form-username relative z-0 w-full mb-6 group">
                         <input
@@ -158,17 +159,17 @@ export function SignUp() {
                         <label
                             htmlFor="username"
                             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username
-                            </label>
-                            <p id="uidnote" className={usernameFocus && username && !validUsername ? "instructions" : "offscreen"}>
-                                <RiErrorWarningLine/> 
-                                4 to 30 characters, only letters and numbers<br />
-                            </p>
-                        </div>
-    {/* email */}
-                        <div className="signup__form-email relative z-0 w-full mb-6 group">
-                            <input 
-                            type="email" 
-                            name="email" 
+                        </label>
+                        <p id="uidnote" className={usernameFocus && username && !validUsername ? "instructions" : "offscreen"}>
+                            <RiErrorWarningLine />
+                            4 to 30 characters, only letters and numbers<br />
+                        </p>
+                    </div>
+                    {/* email */}
+                    <div className="signup__form-email relative z-0 w-full mb-6 group">
+                        <input
+                            type="email"
+                            name="email"
                             id="email"
                             autoComplete="off"
                             required
@@ -182,17 +183,17 @@ export function SignUp() {
                         <label
                             htmlFor="email"
                             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
-                            <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
-                                <RiErrorWarningLine/>
-                                Invalid email address<br />
-                            </p>
-                        </div>
-    {/* password */}
-                        <div className="signup__form-password relative z-0 w-full mb-6 group">
-                            <input 
-                            type={passwordVisible ? "text" : "password"} 
-                            name="password" 
-                            id="password" 
+                        <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
+                            <RiErrorWarningLine />
+                            Invalid email address<br />
+                        </p>
+                    </div>
+                    {/* password */}
+                    <div className="signup__form-password relative z-0 w-full mb-6 group">
+                        <input
+                            type={passwordVisible ? "text" : "password"}
+                            name="password"
+                            id="password"
                             onChange={(e) => setPassword(e.target.value)}
                             value={password}
                             required
@@ -200,24 +201,24 @@ export function SignUp() {
                             aria-describedby="pwdnote"
                             onFocus={() => setPasswordFocus(true)}
                             onBlur={() => setPasswordFocus(false)}
-                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
-                            placeholder=" "/>
-                            <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
-                                <RiErrorWarningLine/>
-                                8 characters minimum, with an uppercase, a number and a symbol <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
-                            </p>
-                            <label 
-                            htmlFor="password" 
+                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
+                            placeholder=" " />
+                        <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
+                            <RiErrorWarningLine />
+                            8 characters minimum, with an uppercase, a number and a symbol <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
+                        </p>
+                        <label
+                            htmlFor="password"
                             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Choose password
-                            </label>
-    {/* button visibility password */}                    
-                            <button type="button" onClick={()=> setPasswordVisible(! passwordVisible)} className="absolute top-0 right-0 w-min"><FaEye/></button>   
-                        </div>
-    {/* confirm password */}
-                        <div className="signup__form-repeat_password relative z-0 w-full mb-6 group">
-                            <input 
-                            type={matchPasswordVisible ? "text" : "password"}  
-                            name="confirmPassword" 
+                        </label>
+                        {/* button visibility password */}
+                        <button type="button" onClick={() => setPasswordVisible(!passwordVisible)} className="absolute top-0 right-0 w-min"><FaEye /></button>
+                    </div>
+                    {/* confirm password */}
+                    <div className="signup__form-repeat_password relative z-0 w-full mb-6 group">
+                        <input
+                            type={matchPasswordVisible ? "text" : "password"}
+                            name="confirmPassword"
                             id="confirmPassword"
                             onChange={(e) => setMatchPassword(e.target.value)}
                             value={matchPassword}
@@ -225,37 +226,37 @@ export function SignUp() {
                             aria-invalid={validMatch ? "false" : "true"}
                             aria-describedby="confirmnote"
                             onFocus={() => setMatchFocus(true)}
-                            onBlur={() => setMatchFocus(false)} 
-                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer" 
-                            placeholder=" "/>
-                            <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                                <RiErrorWarningLine/>
-                                Must match the first password input field.
-                            </p>
-                            <label 
-                            htmlFor="floating_repeat_password" 
+                            onBlur={() => setMatchFocus(false)}
+                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
+                            placeholder=" " />
+                        <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+                            <RiErrorWarningLine />
+                            Must match the first password input field.
+                        </p>
+                        <label
+                            htmlFor="floating_repeat_password"
                             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password
-                            </label>
-    {/* button visibility password */}                    
-                            <button type="button" onClick={()=> setMatchPasswordVisible(! matchPasswordVisible)} className="absolute top-0 right-0 w-min"><FaEye/></button>
-                        </div>
-    {/* button choose color */}
-                        <button
+                        </label>
+                        {/* button visibility password */}
+                        <button type="button" onClick={() => setMatchPasswordVisible(!matchPasswordVisible)} className="absolute top-0 right-0 w-min"><FaEye /></button>
+                    </div>
+                    {/* button choose color */}
+                    <button
                         type="button"
                         disabled={!validUsername || !validEmail || !validPassword || !validMatch ? true : false}
                         onClick={handleClickVisibility}
-                        className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Next</button> 
-                    </div>
-    {/* picker Color */}
-                    <div style ={{display: isShownPicker ? 'block' : 'none'}}>
-                        <ColorPicker chooseColor={chooseColor}/>
-                    </div>
-                </form>
-                <p style={{display: isShownForm ? 'block' : 'none'}}>
-                    Already registered?<br />
-                    <Link to="/signin">Sign In</Link>
-                </p>
-            </section>   
-        )
-    }
+                        className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Next</button>
+                </div>
+                {/* picker Color */}
+                <div style={{ display: isShownPicker ? 'block' : 'none' }}>
+                    <ColorPicker chooseColor={chooseColor} />
+                </div>
+            </form>
+            <p style={{ display: isShownForm ? 'block' : 'none' }}>
+                Already registered?<br />
+                <Link to="/signin">Sign In</Link>
+            </p>
+        </section>
+    )
+}
 

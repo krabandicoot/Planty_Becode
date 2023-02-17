@@ -24,7 +24,6 @@ export function SignIn() {
     const [username, setUsername] = useState(""); // corresponds to user input
     const [password, setPassword] = useState(""); // corresponds to pwd input
     const [errMsg, setErrMsg] = useState(""); // corresponds to error msg we might display
-    // const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         userRef.current.focus()
@@ -62,7 +61,7 @@ export function SignIn() {
             if (!err?.response) {
                 setErrMsg("No server Response");
             } else if (err.response?.status === 400) {
-                setErrMsg("Missing Username or Password");
+                setErrMsg("Wrong Username or Password");
             } else if (err.response?.status === 401) {
                 setErrMsg("Unauthorized");
             } else {

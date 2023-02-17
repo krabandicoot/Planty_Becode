@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-//Modules
 const bcrypt = require('bcrypt');
 const validator = require('validator');
-const cron = require('node-cron');
-//Schema
 const Player = require('./playerModel');
 const Tree = require('./treeModel');
 
@@ -33,10 +30,10 @@ const userSchema = new Schema({
         maxLength: 7,
     }
 });
-
+// --------- Sign up
 userSchema.statics.signup = async function (username, email, password, color) {
 
-    //Check every fields requirements
+    // Check every fields requirements
     if (!email || !username || !password || !color) {
         throw Error('All fields need to be filled');
     }
@@ -46,14 +43,14 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if ((color.charAt(0) != '#') || (!validator.isHexColor(color))) {
         throw Error(`The color entered is not hexadecimal color, be sure you put '#' in front of the combination`);
     }
-    if (!validator.isEmail(email)) { //check is the email is a valid structure
+    if (!validator.isEmail(email)) {
         throw Error('The email address entered is not valid');
     }
-    if (!validator.isStrongPassword(password)) { //
+    if (!validator.isStrongPassword(password)) {
         throw Error('The password must contain 8 character minimum, with an uppercase, a number and a symbol');
     }
 
-    //check existence in DB
+    // Check existence in DB
     const emailExist = await this.findOne({ email });
     const usernameExist = await this.findOne({ username });
     if (emailExist) {
@@ -62,21 +59,22 @@ userSchema.statics.signup = async function (username, email, password, color) {
     if (usernameExist) {
         throw Error('Username already used, please enter another name');
     }
-    //Protecting and hash the password
+    // Protecting and hashing the password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-
-    //Create a user in db
+    // Create the user in DB as you sign up
     const user = await this.create({ username, email, password: hash, color });
-    //Create player in db with sign-up infos
+    // Create the playerin DB as you sign up
     const player = await Player.create({ username, email, password: hash, color });
-    //Attribute three tree as you signed in
+    // Attribute three tree as you signed in
     const attributeTree = await Tree.getThree(username);
-    //Attribute the player leaf in his wallet as he signed up
+    // Attribute the player leaf in his wallet as he signed up
     addLeafs(username);
-    
+
     return user, player;
 }
+
+// --------- Sign in 
 
 userSchema.statics.signin = async function (username, password) {
     if (!username || !password) {
@@ -96,4 +94,5 @@ userSchema.statics.signin = async function (username, password) {
 
     return user;
 }
+
 module.exports = mongoose.model('User', userSchema);
