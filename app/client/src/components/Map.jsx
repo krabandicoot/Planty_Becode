@@ -74,6 +74,7 @@ export default function Map() {
 
         const response = await axios(configuration);
         console.log(response.data);
+        window.location.reload(false);
 
       } catch (err) {
         console.log(err);
@@ -150,7 +151,7 @@ export default function Map() {
                         <div className="priceTree flex justify-center m-2">
                           <button
                             className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack"
-                            onClick={(e) => { setTreeName(tree.name); handleBuy(e) }}>Buy tree
+                            onClick={(e) => { setTreeName(tree.name); handleBuy() }}>Buy tree
                             <div className="buttonBuy_price flex items-center">
                               {tree.price}
                               <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
