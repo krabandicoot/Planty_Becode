@@ -1,8 +1,4 @@
-import { useState } from "react"
-
 export function GameRules() {
-
-    const [readMore, setReadMore] = useState(false);
 
     return (
         <section className="ml-8 mr-8">
