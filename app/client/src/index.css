@@ -20,7 +20,7 @@ a {
 }
 
 a:hover {
-    color: #54A543;
+    font-weight: bold;
 }
 
 body {
@@ -350,8 +350,25 @@ button:focus-visible {
 
 
 @media screen and (min-width: 768px) {
+
+    .root {
+        display: flex;
+        flex-direction: column;
+        max-width: max-content;
+    }
+
+    button {
+        max-width: 200px;
+    }
+
+    header {
+        align-self: end;
+    }
+
     .rcp {
         width: 280px;
         height: 280px;
     }
+
+
 }
