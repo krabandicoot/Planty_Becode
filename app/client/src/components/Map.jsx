@@ -99,7 +99,7 @@ export default function Map() {
       zoom={15}
       scrollWheelZoom={true}
       preferCanvas
-      style={{ height: 80 + "vh" }}
+      style={{ height: 78 + "vh" }}
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> 

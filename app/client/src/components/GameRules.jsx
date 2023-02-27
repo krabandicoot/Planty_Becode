@@ -1,27 +1,22 @@
-import { useState } from "react"
-
 export function GameRules() {
-
-    const [readMore, setReadMore] = useState(false);
 
     return (
         <section className="ml-8 mr-8">
-            <div className="card__container mb-10">
+            <div className="card__container mb-2">
                 <h2 className="text-3xl mb-6">Game Rules</h2>
-                <p className="text-sm text-justify">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, minus tempore quasi sit delectus, quos deserunt, eligendi corporis quia labore modi facere eaque? Libero accusamus cum architecto reprehenderit. Vel, cum.
-                    Optio vero maxime harum alias aliquid magnam repudiandae mollitia amet odio suscipit eos dolorum molestias maiores similique incidunt eligendi commodi, id nam velit consequuntur? Blanditiis inventore assumenda laboriosam earum sequi?
-                    <p className={readMore ? "display" : "hide"}>
-                        Atque suscipit labore, aliquam ipsa officia commodi quidem fuga reiciendis perspiciatis possimus eligendi quos quaerat voluptatum rerum earum itaque velit delectus autem corporis dolorum deserunt aperiam! Praesentium neque porro consequuntur?
-                        Nemo expedita temporibus ipsam cumque laborum porro mollitia, quos laboriosam aut eaque aliquam consequatur quae culpa autem itaque sequi. Necessitatibus id ad, quo natus voluptates vitae. Aut veniam sint quam.
-                        Ex quaerat veniam sunt velit doloribus dolorum dicta asperiores libero tenetur atque maiores consequuntur fugiat, nulla numquam, mollitia et nesciunt. Non veritatis autem aspernatur voluptatibus sed consequuntur corrupti laborum modi.
-                    </p>
+                <p className="text-sm text-justify overflow-y-auto h-72">
+                Welcome to Planty !<br></br><br></br>
+                
+                The principle is simple: buy trees, always more trees !<br></br><br></br>
+                
+                When you created your account, you received three trees randomly. These trees bring you leaves (game currency) every 15 minutes. But beware, you will lose half of your leaves every hour. <br></br><br></br>
+                
+                Navigate through Liege with the map and buy new trees. By clicking on a tree, informations appears. If the tree is free, you can buy it directly. The price is equal to the amount of leaves it will make you win every 15 minutes. If the tree already has a owner, you can still buy it but its price will vary from the number of trees you have in the area and those of other players. The more trees you have around, the lower the price. <br></br><br></br>
+
+                To protect your trees, you have the possibility to lock them from your profile. The cost is high but it may be worth it. A locked tree can no longer be bought by another player.<br></br><br></br>
+
+                Check the leaderboard to compare yourself to other players and see your level. 
                 </p>
-                <a
-                    className="block text-sm text-right"
-                    onClick={() => { readMore ? setReadMore(false) : setReadMore(true) }}>
-                    {readMore === false ? "Read more ?" : "Read less"}
-                </a>
             </div>
         </section >
     )
