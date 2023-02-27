@@ -61,4 +61,4 @@ const leafWallet = async()=>{
 }
 
 // Export the function
-module.exports = {leafWallet};
+module.exports = {leafWallet,addLeafs};
