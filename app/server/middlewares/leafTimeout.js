@@ -16,7 +16,7 @@ const addLeafs = async (username) => {
         allowDiskUse: false
     };
 
-    const newLeafAmount = Math.floor(leafAmount + leafGained);
+    const newLeafAmount = Math.floor(leafAmount + (leafGained/2));
 
     // Inject new amount in player
     const updateLeafPlayer = await Player.updateOne(        
