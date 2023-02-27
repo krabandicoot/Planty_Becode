@@ -59,6 +59,7 @@ export default function Map() {
       console.log(err);
     }
   };
+
   useEffect(() => {
     const handleBuy = async () => {
       try {
