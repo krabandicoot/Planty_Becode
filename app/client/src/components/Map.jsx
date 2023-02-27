@@ -114,7 +114,7 @@ export default function Map() {
                   <div className="speciesTree flex flex-row justify-center m-2">
                     <h4
                       className="text-SmokyBlack capitalize">{tree.name}</h4>
-                    <AiOutlineInfoCircle className="ml-2" onClick={() => navigate(`/tree/${tree.name}`, { replace: true })} />
+                    <AiOutlineInfoCircle className="ml-2" onClick={() => navigate(`/tree/${tree.name.replace(/\s+/g, '-')}`, { replace: true })} />
                   </div>
                   <p>Species: {tree.species}</p>
                   <Link
