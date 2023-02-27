@@ -91,6 +91,7 @@ export function Tree() {
             const response = await axios(configuration);
             console.log(response.data);
             setBuyTree(response.data);
+            window.location.reload(false);
         } catch (err) {
             console.log(err);
         }
