@@ -7,7 +7,7 @@ export function Navbar() {
     const { auth } = useAuth();
 
     return (
-        <nav className="nav flex w-full h-8 justify-around items-center text-xl bg-Magnolia/80 rounded-tl-md rounded-tr-md">
+        <nav className="nav absolute bottom-6 flex w-full h-8 justify-around items-center text-xl bg-Magnolia/80 rounded-tl-md rounded-tr-md">
             <Link to="/map"><CgTrees /></Link>
             <Link to="/leaderboard"><AiOutlineTrophy /></Link>
             <Link to="/gamelog"><AiOutlineHistory /></Link>
