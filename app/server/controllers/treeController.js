@@ -48,15 +48,12 @@ const displayComments = async (req, res) => {
 const getPrice = async(req,res) => {
 
     // Get tree infos :
-    const treename = req.params;
-    const name = treename.name;
-    const nameCleaned = name.replaceAll('-',' ');
-    const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
+    const { treename, username } = req.body;
+    const foundTree = await Tree.findOne({ name : treename }).exec();
 
     let price = foundTree.price;
 
     // Ger player info :
-    const username = req.body.username;
     const player = await Player.findOne({ username : username}).exec();
 
     if (foundTree.value == "unavailable"){
@@ -147,9 +144,6 @@ const getPrice = async(req,res) => {
 const buyTree = async(req,res) => {
     // Get tree info
     const { treename, username } = req.body;
-    console.log(treename);
-    // const name = treename.name;
-    // const nameCleaned = name.replaceAll('-',' ');
     const foundTree = await Tree.findOne({ name : treename }).exec();
     //Get user info
     const player = await Player.findOne({ username : username }).exec();
@@ -265,10 +259,8 @@ const buyTree = async(req,res) => {
 
 // -------- Get lock price
 const getLockPrice = async(req,res) => {
-    const treename = req.params;
-    const name = treename.name;
-    const nameCleaned = name.replaceAll('-',' ');
-    const foundTree = await Tree.findOne({ name : nameCleaned }).exec();
+    const { treename } = req.body;
+    const foundTree = await Tree.findOne({ name : treename }).exec();
     const username = foundTree.owner;
     const player = await Player.findOne({ username : username}).exec();
 
