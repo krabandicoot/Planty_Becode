@@ -352,7 +352,7 @@ button:focus-visible {
 @media screen and (min-width: 768px) {
 
     .root {
-        display: flex;
+        display: flex !important;
         flex-direction: column;
         max-width: max-content;
     }
@@ -369,6 +369,4 @@ button:focus-visible {
         width: 280px;
         height: 280px;
     }
-
-
 }
