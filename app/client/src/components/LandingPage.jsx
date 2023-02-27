@@ -6,12 +6,12 @@ export function LandingPage() {
   return (
     <section className="flex flex-col">
       <div className="flex flex-col justify-center mt-10 mb-20 gap-2">
-        <button>
-          <Link to="signin">
+        <button className="signin__button">
+          <Link to="signin" className="hover:">
             Login
           </Link>
         </button>
-        <button>
+        <button className="signup__button">
           <Link to="signup">
             Sign Up
           </Link>

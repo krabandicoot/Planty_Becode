@@ -34,7 +34,7 @@ export function Tree() {
     const errRef = useRef();
 
     const [errMsg, setErrMsg] = useState("");
-    const [priceTree, setPriceTree] = useState();
+    const [priceTree, setPriceTree] = useState(singleTree.price);
     const [buyTree, setBuyTree] = useState();
     const [lockTree, setLockTree] = useState("");
     const [unlockTree, setUnlockTree] = useState("");
@@ -63,24 +63,33 @@ export function Tree() {
         }
     }, [])
 
-    // useEffect(() => {
-    //     const displayPrice = async () => {
-    //         try {
-    //             const response = await axios.get(PRICE_TREE_URL + name.replace(/\s+/g, '-'));
-    //             console.log(response.data);
-    //             setPriceTree(response.data);
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     }
-    //     displayPrice();
-    // }, [])
+    const displayPrice = async () => {
+        try {
+            const configuration = {
+                method: 'post',
+                url: PRICE_TREE_URL + name,
+                data: {
+                    username,
+                    treename
+                },
+                withCredentials: true,
+            }
+            const response = await axios(configuration);
+            console.log(response.data);
+            isMounted && setPriceTree(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    displayPrice();
+
+
 
     const handleBuy = async () => {
         try {
             const configuration = {
                 method: 'post',
-                url: BUY_TREE_URL + name.replace(/\s+/g, '-'),
+                url: BUY_TREE_URL + name,
                 data: {
                     username,
                     treename
@@ -141,6 +150,12 @@ export function Tree() {
                 <div className="text-xs text-DarkSpringGreen leading-6">
                     <p>Owner : {singleTree.owner}</p>
                     <p>Species : {singleTree.species}</p>
+                    <p className="flex items-baseline gap-2 ">Value : {priceTree}
+                        <img
+                            src="../src/images/icon-leaf.png"
+                            alt="leaf-icon"
+                            className="h-[20px] rotate-90 self-center" />
+                    </p>
                     <Link
                         className="underline text-DarkSpringGreen font-bold italic"
                         to={{
@@ -198,7 +213,7 @@ export function Tree() {
                                     src="../src/images/icon-leaf.png"
                                     alt="leaf-icon"
                                     className="h-[20px] rotate-90 pl-2" />
-                                <p>{priceTree}</p>
+                                <p>{displayPrice}</p>
                             </span>
                         </div>
                     )
