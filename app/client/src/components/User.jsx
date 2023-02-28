@@ -226,7 +226,7 @@ export function User() {
                                         type="text"
                                         name="bio"
                                         id="bio"
-                                        className="min-h-[100px] min-w-[300px]"
+                                        className="min-h-[100px] w-max"
                                         value={player.bio || ''}
                                         onChange={(e) => {
                                             setPlayer({ ...player, bio: e.target.value })

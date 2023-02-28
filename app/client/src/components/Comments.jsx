@@ -49,7 +49,7 @@ export function Comments() {
             <div className={comments ? "visible flex gap-2" : "hide"}>
                 {commentsForm === false ?
                     <>
-                        <div className="text-sm w-3/4 text-justify pb-2">
+                        <div className="text-sm w-3/4 min-h-[50px] text-justify pb-2">
                             {singleTree.comments?.length ?
                                 singleTree.comments.map((comment, id) =>
                                     <div key={id} className="flex flex-col justify-around gap-2 rounded-xl p-1 text-xs">

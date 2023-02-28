@@ -13,7 +13,7 @@ export function ModalDelAcc({ show, setShow, handleDelete }) {
                     onClick={() => { handleDelete() }}>
                     Yes
                 </button>
-                <button>
+                <button onClick={() => { setShow(!show) }}>
                     Cancel
                 </button>
             </div>

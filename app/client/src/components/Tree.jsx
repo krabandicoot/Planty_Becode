@@ -3,6 +3,7 @@ import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { IoLockClosed } from "react-icons/io5";
 import { MdOutlineDone } from "react-icons/md";
 import { useEffect, useState, useRef } from "react";
+import { Comments } from "./Comments"
 
 import axios from "../api/axios";
 
@@ -149,82 +150,85 @@ export function Tree() {
     console.log(singleTree)
 
     return (
-        <section className="tree__comments h-[84vh] relative pl-8 grid grid-rows-3 grid-cols-2 bg-Magnolia">
-
-            <div className="row-start-2 col-start-1 self-end capitalize">
-                <h1 className="text-2xl">{singleTree.name}</h1>
-                <div className="text-xs text-DarkSpringGreen leading-6">
-                    <p>Owner : {singleTree.owner}</p>
-                    <p>Species : {singleTree.species}</p>
-                    <p className="flex items-baseline gap-2 ">Value : {singleTree.price}
-                        <img
-                            src="../src/images/icon-leaf.png"
-                            alt="leaf-icon"
-                            className="h-[20px] rotate-90 self-center" />
-                    </p>
-                    <Link
-                        className="underline text-DarkSpringGreen font-bold italic"
-                        to={{
-                            pathname: singleTree.wikilink
-                        }}
-                        target="_blank">Wikipedia</Link>
-                </div>
-            </div>
-
-            <img
-                src="../src/images/icon-tree.png"
-                alt="tree picture"
-                className="absolute col-start-2 cropped-image fill-image" />
-            <div className="flex flex-col col-start-1 row-start-3 row-end-4 self-center">
-
-                {singleTree.value === "unavailable" && singleTree.owner === player.username ?
-                    <div div className="button__purchased flex gap-2">
-                        <button
-                            className="absolute h-10 w-[150px] text-SmokyBlack"
-                        >Your Tree</button>
-                        <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-green-800">
-                            <MdOutlineDone />
-                        </span>
-                        <button
-                            className="button__lock opacity-none relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey flex flex-col justify-center items-center"
-                            onClick={handleLock}
-                        >
-                            <IoLockClosed />
-                        </button>
-                        <p ref={errRef} className={"errMsg" ? "errmsg" : "offscreen"}>{errMsg}</p>
+        <section className="tree__comments h-screen  bg-Magnolia ">
+            <div className="relative max-h-fit pl-8 grid grid-rows-4 grid-cols-2">
+                <div className="row-start-2 col-start-1 self-end capitalize">
+                    <h1 className="text-2xl">{singleTree.name}</h1>
+                    <div className="text-xs text-DarkSpringGreen leading-6">
+                        <p>Owner : {singleTree.owner}</p>
+                        <p>Species : {singleTree.species}</p>
+                        <p className="flex items-baseline gap-2 ">Value : {singleTree.price}
+                            <img
+                                src="../src/images/icon-leaf.png"
+                                alt="leaf-icon"
+                                className="h-[20px] rotate-90 self-center" />
+                        </p>
+                        <Link
+                            className="underline text-DarkSpringGreen font-bold italic"
+                            to={{
+                                pathname: singleTree.wikilink
+                            }}
+                            target="_blank">Wikipedia</Link>
                     </div>
-                    :
-                    (singleTree.value === "locked" && singleTree.owner === player.username ?
-                        <div className="button-locked flex gap-2">
-                            <button className="absolute h-10 w-[150px] bg-Grey/40 text-SmokyBlack">Locked</button>
-                            <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey/50 flex flex-col justify-center items-center">
-                                <IoLockClosed />
-                            </span>
-                            <a
-                                className="text-xs text-DarkSpringGreen relative top-0 left-[110px] flex items-center"
-                                onClick={handleUnlock}>
-                                Unlock
-                            </a>
-                        </div>
-                        :
-                        <div div className="button__buy">
+                </div>
+                <img
+                    src="../src/images/icon-tree.png"
+                    alt="tree picture"
+                    className="absolute col-start-2 cropped-image fill-image" />
+                <div className="flex flex-col col-start-1 row-start-3 row-end-4 self-center">
+
+                    {singleTree.value === "unavailable" && singleTree.owner === player.username ?
+                        <div div className="button__purchased flex gap-2">
                             <button
                                 className="absolute h-10 w-[150px] text-SmokyBlack"
-                                onClick={handleBuy}
-                            >
-                                Buy Tree
-                            </button>
-                            <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-[10px]">
-                                <img
-                                    src="../src/images/icon-leaf.png"
-                                    alt="leaf-icon"
-                                    className="h-[20px] rotate-90 pl-2" />
-                                <p onLoad={(e) => displayPrice(e)}>{priceTree}</p>
+                            >Your Tree</button>
+                            <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-green-800">
+                                <MdOutlineDone />
                             </span>
+                            <button
+                                className="button__lock opacity-none relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey flex flex-col justify-center items-center"
+                                onClick={handleLock}
+                            >
+                                <IoLockClosed />
+                            </button>
+                            <p ref={errRef} className={"errMsg" ? "errmsg" : "offscreen"}>{errMsg}</p>
                         </div>
-                    )
-                }
+                        :
+                        (singleTree.value === "locked" && singleTree.owner === player.username ?
+                            <div className="button-locked flex gap-2">
+                                <button className="absolute h-10 w-[150px] bg-Grey/40 text-SmokyBlack">Locked</button>
+                                <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey/50 flex flex-col justify-center items-center">
+                                    <IoLockClosed />
+                                </span>
+                                <a
+                                    className="text-xs text-DarkSpringGreen relative top-0 left-[110px] flex items-center"
+                                    onClick={handleUnlock}>
+                                    Unlock
+                                </a>
+                            </div>
+                            :
+                            <div div className="button__buy">
+                                <button
+                                    className="absolute h-10 w-[150px] text-SmokyBlack"
+                                    onClick={handleBuy}
+                                >
+                                    Buy Tree
+                                </button>
+                                <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-[10px]">
+                                    <img
+                                        src="../src/images/icon-leaf.png"
+                                        alt="leaf-icon"
+                                        className="h-[20px] rotate-90 pl-2" />
+                                    <p onLoad={(e) => displayPrice(e)}>{priceTree}</p>
+                                </span>
+                            </div>
+                        )
+                    }
+
+                </div>
+
             </div>
+            <Comments />
         </section >
 
     )
