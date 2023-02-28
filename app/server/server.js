@@ -36,6 +36,9 @@ app.use(express.json());
 app.use(morgan('common'));
 
 // -------- Routes
+app.get("/", (req, res) => {
+    res.json("Welcome to planty application ☘️");
+});
 app.use('/api/user', userRoutes);
 app.use('/api/account', playerRoutes);
 app.use('/api/tree', treeRoutes);
