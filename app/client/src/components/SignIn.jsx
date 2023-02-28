@@ -43,7 +43,7 @@ export function SignIn() {
                 username,
                 password
             },
-            // withCredentials: true,
+            withCredentials: true,
         }
 
         try {
