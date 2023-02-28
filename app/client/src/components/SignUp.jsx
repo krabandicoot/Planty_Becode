@@ -159,7 +159,7 @@ export function SignUp() {
                             placeholder=" " />
                         <label
                             htmlFor="username"
-                            className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username
+                            className="peer-focus:font-medium absolute text-sm text-SmokyBlack duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username
                         </label>
                         <p id="uidnote" className={usernameFocus && username && !validUsername ? "instructions" : "offscreen"}>
                             <RiErrorWarningLine />
@@ -183,7 +183,7 @@ export function SignUp() {
                             placeholder=" " />
                         <label
                             htmlFor="email"
-                            className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                            className="peer-focus:font-medium absolute text-sm text-SmokyBlack duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
                         <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
                             <RiErrorWarningLine />
                             Invalid email address<br />
@@ -210,7 +210,7 @@ export function SignUp() {
                         </p>
                         <label
                             htmlFor="password"
-                            className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Choose password
+                            className="peer-focus:font-medium absolute text-sm text-SmokyBlack duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Choose password
                         </label>
                         {/* button visibility password */}
                         <button type="button" onClick={() => setPasswordVisible(!passwordVisible)} className="absolute top-0 right-0 w-min"><FaEye /></button>
@@ -236,7 +236,7 @@ export function SignUp() {
                         </p>
                         <label
                             htmlFor="floating_repeat_password"
-                            className="peer-focus:font-medium absolute text-sm text-gray-500duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password
+                            className="peer-focus:font-medium absolute text-sm text-SmokyBlack duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password
                         </label>
                         {/* button visibility password */}
                         <button type="button" onClick={() => setMatchPasswordVisible(!matchPasswordVisible)} className="absolute top-0 right-0 w-min"><FaEye /></button>

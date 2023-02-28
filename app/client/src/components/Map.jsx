@@ -114,7 +114,10 @@ export default function Map() {
                     <AiOutlineInfoCircle className="ml-2" onClick={() => navigate(`/tree/${tree.name.replace(/\s+/g, '-')}`, { replace: true })} />
                   </div>
                   <p>Species: {tree.species}</p>
-                  <p>Value: {tree.price}</p>
+                  <div className="flex items-center">
+                    <p>Value: {tree.price}</p>
+                    <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
+                  </div>
                   <Link
                     className="underline text-DarkSpringGreen font-bold italic m-2"
                     to={{
