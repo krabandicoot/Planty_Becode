@@ -29,7 +29,8 @@ database.once('connected', () => {
     console.log('Database Connected 📬');
 });
 
-app.use(cors({ origin: "https://planty.onrender.com/", credentials: true }));
+app.use(cors(corsOptions))
+// app.use(cors({ origin: "https://planty.onrender.com/", credentials: true }));
 app.use(express.json());
 
 // -------- Show the log done with the time 
@@ -49,6 +50,6 @@ app.listen(PORT, () => {
 });
 
 // -------- Timer for the users wallet
-const {leafWallet} = require('./middlewares/leafTimeout');
+const { leafWallet } = require('./middlewares/leafTimeout');
 
 leafWallet();
