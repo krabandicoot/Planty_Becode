@@ -12,10 +12,6 @@ const addLeafs = async (username) => {
     for(i= 0; i<playerTrees.length; i++){
         leafGained += playerTrees[i].price;
     }
-    const options = {
-        allowDiskUse: false
-    };
-
     const newLeafAmount = Math.floor(leafAmount + (leafGained/2));
 
     // Inject new amount in player
