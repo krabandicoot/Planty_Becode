@@ -28,8 +28,8 @@ database.once('connected', () => {
     console.log('Database Connected 📬');
 });
 
-app.use(cors(corsOptions));
-// app.use(cors({ origin: "https://planty.onrender.com/", credentials: true }));
+// app.use(cors(corsOptions));
+app.use(cors({ origin: ["http://planty-api.onrender.com/","http://planty.onrender.com/"], credentials: true }));
 app.use(express.json());
 
 // -------- Show the log done with the time 

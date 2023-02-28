@@ -1,6 +1,6 @@
 const allowedOrigins = [
-    'https://planty-api.onrender.com/',
-    'https://planty.onrender.com/',
+    'http://planty-api.onrender.com/',
+    'http://planty.onrender.com/',
 ]
 
 const corsOptions = {
