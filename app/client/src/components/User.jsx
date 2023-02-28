@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from "react";
 
 import { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { ModalDelAcc } from "./ModalDelAcc";
 import 'swiper/css';
 import 'swiper/css/navigation';
 
@@ -24,6 +25,7 @@ export function User() {
     const [errMsg, setErrMsg] = useState(false);
     const [edit, setEdit] = useState(false);
     const [dataPlayer, setDataPlayer] = useState({});
+    const [show, setShow] = useState(false);
 
     const navigate = useNavigate();
     const to = "/";
@@ -185,7 +187,8 @@ export function User() {
 
                                 </div>
                             </div>
-                            <a onClick={handleDelete} className="text-Red/80 m-4">Delete Account</a>
+                            <a onClick={() => { show ? setShow(false) : setShow(true) }} className="text-Red/80 m-4">Delete Account</a>
+                            {show && <ModalDelAcc show={show} setShow={setShow} handleDelete={handleDelete} />}
                         </div>
 
                         :
