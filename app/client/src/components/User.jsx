@@ -13,7 +13,7 @@ import 'swiper/css/navigation';
 import axios from "../api/axios";
 const PLAYER_URL = "/api/account/username/";
 const SIGNOUT_URL = "/api/user/signout";
-const USER_TREES_URL = "api/account/username/tree/"; // + insert player name
+const USER_TREES_URL = "/api/account/username/tree/"; // + insert player name
 
 export function User() {
     const { auth, setAuth } = useAuth();
