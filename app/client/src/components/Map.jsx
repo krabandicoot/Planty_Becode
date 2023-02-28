@@ -46,10 +46,6 @@ export default function Map() {
 
   const username = player.username;
 
-  console.log(username)
-  console.log(treename);
-
-
   const getTrees = async () => {
     try {
       const response = await axios.get(TREES_URL);
@@ -59,6 +55,7 @@ export default function Map() {
       console.log(err);
     }
   };
+
   useEffect(() => {
     const handleBuy = async () => {
       try {
@@ -98,9 +95,7 @@ export default function Map() {
       zoom={15}
       scrollWheelZoom={true}
       preferCanvas
-      style={{
-        height: 80 + "vh"
-      }}
+      style={{ height: 100 + "vh" }}
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> 
@@ -116,9 +111,13 @@ export default function Map() {
                   <div className="speciesTree flex flex-row justify-center m-2">
                     <h4
                       className="text-SmokyBlack capitalize">{tree.name}</h4>
-                    <AiOutlineInfoCircle className="ml-2" onClick={() => navigate(`/tree/${tree.name}`, { replace: true })} />
+                    <AiOutlineInfoCircle className="ml-2" onClick={() => navigate(`/tree/${tree.name.replace(/\s+/g, '-')}`, { replace: true })} />
                   </div>
                   <p>Species: {tree.species}</p>
+                  <div className="flex items-center">
+                    <p>Value: {tree.price}</p>
+                    <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
+                  </div>
                   <Link
                     className="underline text-DarkSpringGreen font-bold italic m-2"
                     to={{
@@ -153,7 +152,7 @@ export default function Map() {
                         <div className="priceTree flex justify-center m-2">
                           <button
                             className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack"
-                            onClick={(e) => { setTreeName(tree.name); handleBuy() }}>Buy tree
+                            onClick={(e) => { setTreeName(tree.name); handleBuy(e) }}>Buy tree
                             <div className="buttonBuy_price flex items-center">
                               {tree.price}
                               <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />

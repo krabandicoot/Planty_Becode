@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const validator = require('validator');
 const Player = require('./playerModel');
 const Tree = require('./treeModel');
+const { addLeafs } = require('../middlewares/leafTimeout');
+
 
 const userSchema = new Schema({
     username: {

@@ -16,6 +16,7 @@ import { GameRules } from "./components/GameRules";
 import { User } from "./components/User";
 import { Tree } from "./components/Tree";
 import { Comments } from "./components/Comments";
+import { NothingPage } from "./components/404";
 
 import { Routes, Route } from 'react-router-dom'
 import RequireLayout from "./components/RequireLayout";
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="gamerules" element={<GameRules />} />
         <Route path="account/:username" element={<User />} />
         <Route path="tree/:name" element={<><Tree /><Comments /></>} />
+        <Route path="*" element={<NothingPage />} />
       </Route>
     </Routes >
   );
