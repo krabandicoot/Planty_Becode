@@ -11,13 +11,10 @@ export function Comments() {
     const { singleTree } = useAuth();
 
     const tree_name = singleTree.name;
-    console.log(tree_name);
     const [comments, setComments] = useState(false);
 
     const [username, setUsername] = useState(auth);
-    console.log(username)
     const [text, setText] = useState("");
-    console.log(text)
 
     const [commentsForm, setCommentsForm] = useState(false);
 
@@ -33,8 +30,6 @@ export function Comments() {
                 })
 
             setText("");
-            console.log(response.data)
-
         } catch (err) {
             console.log(err);
         }

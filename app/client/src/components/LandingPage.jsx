@@ -5,7 +5,7 @@ export function LandingPage() {
 
   return (
     <section className="flex flex-col">
-      <div className="flex flex-col justify-center mt-10 mb-20 gap-2">
+      <div className="flex flex-col justify-center mt-10 mb-20 gap-2 md:gap-6">
         <button className="signin__button">
           <Link to="signin" className="hover:">
             Login
@@ -16,13 +16,11 @@ export function LandingPage() {
             Sign Up
           </Link>
         </button>
-      </div>
-      <div>
-        <p className="landingText rounded-lg p-5 mb-10 text-xs italic">
+        <p className="landingText rounded-lg p-5 mb-10 text-xs italic md:w-[300px]">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
           architecto tempore cum quia aperiam, soluta tempora?
         </p>
       </div>
-    </section>
+    </section >
   );
 }
