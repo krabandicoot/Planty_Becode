@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
 const corsOptions = require('./middlewares/cors');
-const fs = require('fs');
 
 // -------- Routes paths
 const userRoutes = require('./routes/user');
