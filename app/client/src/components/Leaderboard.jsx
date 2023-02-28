@@ -40,11 +40,11 @@ export function Leaderboard() {
                 <h2 className="text-3xl mb-6">Leaderboard</h2>
                 {players
                     ? (
-                        <ul className="text-sm">
+                        <ul className="text-sm flex flex-col gap-2 ">
                             {players
                                 .filter((player, id) => id < 10)
                                 .map((player, id) =>
-                                    <li key={id} className="flex items-center justify-around gap-2 mb-2 rounded-xl p-1"
+                                    <li key={id} className="flex justify-between mb-2 rounded-xl p-1"
                                         style={player.username === auth ? { backgroundColor: "#EAE6EC" } : { backgroundColor: "none" }} >
                                         <p>{id + 1}</p>
                                         <div className="player__color w-4 h-4 rounded-full"

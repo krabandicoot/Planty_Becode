@@ -75,13 +75,13 @@ export function SignIn() {
     // TODO Remember me Checkbox
 
     return (
-        <section className="form__container mb-10">
+        <section className="signin form__container mb-10 md:w-1/2 md:bg-transparent">
             <p ref={errRef} className={"errMsg" ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
 
-            <form method="POST" className="signin__form" onSubmit={handleSubmit}>
+            <form method="POST" className="signin__form" onSubmit={handleSubmit} >
 
                 {/* username */}
-                <div className="signin__form--username relative z-0 w-full mb-6 group" >
+                <div className="signin__form--username relative z-0 w-full mb-6 group">
                     <input
                         type="text"
                         name="username"
@@ -99,7 +99,7 @@ export function SignIn() {
                         className="peer-focus:font-medium absolute text-sm text-SmokyBlack duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Username
                     </label>
-                </div>
+                </div >
                 {/* password */}
                 <div className="signin__form--password relative z-0 w-full mb-6 group">
                     <input
@@ -120,7 +120,7 @@ export function SignIn() {
                     <a onClick={() => setPasswordVisible(!passwordVisible)} className="absolute top-3 right-0">{eyeIcon}</a>
                 </div>
                 {/* Remember me checkbox */}
-                <div className="signin__form--checkbox flex gap-2 z-0 mb-6 group">
+                <div div className="signin__form--checkbox flex gap-2 z-0 mb-6 group">
                     <input
                         type="checkbox"
                         name="rememberMe"
@@ -129,14 +129,17 @@ export function SignIn() {
                     <label>Remember me</label>
                 </div>
                 {/* button sign up */}
-                <button>
-                    Login
-                </button>
-            </form >
+                <div className="flex justify-center mb-2">
+                    <button>
+                        Login
+                    </button>
+                </div>
+
+            </form>
 
             {/* no account redirect */}
             < div className="flex items-center justify-center mt-6" >
-                <Link to="/signup" className="ml-2 text-DarkSpringGreen" replace>
+                <Link to="/signup" className="ml-2 text-DarkSpringGreen text-sm font-semibold" replace>
                     You don't have an account?
                 </Link>
             </div >

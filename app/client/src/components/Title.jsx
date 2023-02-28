@@ -5,7 +5,7 @@ import animationData from '../lotties/logo-Planty.json';
 export function Title() {
 
   return (
-    <header className="container__title max-w-[300px] pt-[40px] ml-8 mr-8 mb-10">
+    <header className="container__title max-w-[300px] pt-[40px] ml-8 mb-10 self-end">
       <Link to="/">
         <h1 className="text-3xl top-10 flex flex-col text-left">
           <span>Welcome to</span>
