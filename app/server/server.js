@@ -29,7 +29,7 @@ database.once('connected', () => {
     console.log('Database Connected 📬');
 });
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 // app.use(cors({ origin: "https://planty.onrender.com/", credentials: true }));
 app.use(express.json());
 
