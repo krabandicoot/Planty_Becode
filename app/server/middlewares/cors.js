@@ -1,6 +1,6 @@
 const allowedOrigins = [
-    'http://locahost:8080',
-    'http://locahost:5173/',
+    'https://planty-api.onrender.com/',
+    'https://planty.onrender.com/',
 ]
 
 const corsOptions = {
