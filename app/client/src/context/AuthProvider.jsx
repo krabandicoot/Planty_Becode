@@ -7,7 +7,7 @@ const PLAYER_URL = "/api/account/username/";
 const USER_TREES_URL = "api/account/username/tree/"; // + insert player name
 //tree routes 
 const TREES_URL = "/api/tree/all";
-const BUY_TREE_URL = "api/tree/buy/"; // + insert tree name
+const BUY_TREE_URL = "/api/tree/buy/"; // + insert tree name
 
 const AuthContext = createContext({});
 

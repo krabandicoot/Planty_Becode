@@ -8,7 +8,7 @@ import { Comments } from "./Comments"
 import axios from "../api/axios";
 
 // Get tree **
-const SINGLE_TREE_URL = "api/tree/"; // + insert tree name
+const SINGLE_TREE_URL = "/api/tree/"; // + insert tree name
 
 // Buy a tree ** 
 const BUY_TREE_URL = "/api/tree/buy/" // + insert-tree-name

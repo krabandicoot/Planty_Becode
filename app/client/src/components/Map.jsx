@@ -13,7 +13,7 @@ import { AiOutlineInfoCircle, AiFillLock } from "react-icons/ai";
 // Informations all trees **
 const TREES_URL = "/api/tree/all";
 // Informations one tree **
-const SINGLE_TREE_URL = "api/tree/"; // + insert tree name
+const SINGLE_TREE_URL = "/api/tree/"; // + insert tree name
 // Buy a tree ** 
 const BUY_TREE_URL = "/api/tree/buy/" // + insert-tree-name
 // Get price of a tree ** 
