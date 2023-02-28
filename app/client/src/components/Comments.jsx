@@ -4,7 +4,7 @@ import { BiCommentAdd } from "react-icons/bi";
 import { GrFormClose } from "react-icons/gr"
 
 import axios from "../api/axios";
-const COMMENT_URL = "api/comment/create/";
+const COMMENT_URL = "/api/comment/create/";
 
 export function Comments() {
     const { auth } = useAuth();

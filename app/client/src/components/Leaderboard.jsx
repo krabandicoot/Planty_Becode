@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import { useParams } from "react-router-dom";
 const ACCOUNT_URL = "/api/account/leaderboard";
-const USER_TREES_URL = "api/account/username/tree/"; // + insert player name
+const USER_TREES_URL = "/api/account/username/tree/"; // + insert player name
 
 export function Leaderboard() {
     const { auth } = useAuth();
