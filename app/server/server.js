@@ -29,7 +29,7 @@ database.once('connected', () => {
 });
 
 // app.use(cors(corsOptions));
-app.use(cors({ origin:"http://planty.onrender.com/", credentials: true }));
+app.use(cors({ origin:"https://planty.onrender.com/", credentials: true }));
 app.use(express.json());
 
 // -------- Show the log done with the time 
