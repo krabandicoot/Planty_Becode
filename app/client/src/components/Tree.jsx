@@ -63,28 +63,30 @@ export function Tree() {
     console.log(treename)
     const username = player.username;
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const displayPrice = async () => {
-            try {
-                const configuration = {
-                    method: 'post',
-                    url: PRICE_TREE_URL + name,
-                    data: {
-                        treename,
-                        username,
-                    },
-                    withCredentials: true,
-                }
-                const response = await axios(configuration);
-                console.log(response.data);
-                setPriceTree(response.data);
-            } catch (err) {
-                console.log(err);
+    const displayPrice = async (e) => {
+        e.preventDefault();
+        try {
+            const configuration = {
+                method: 'post',
+                url: PRICE_TREE_URL + name,
+                data: {
+                    treename,
+                    username,
+                },
+                withCredentials: true,
             }
+            const response = await axios(configuration);
+            console.log(response.data);
+            setPriceTree(response.data);
+        } catch (err) {
+            console.log(err);
         }
-        displayPrice();
-    }, [treename, username])
+    }
+    displayPrice();
+
+    // }, [treename, username])
 
 
     const handleBuy = async () => {
@@ -217,7 +219,7 @@ export function Tree() {
                                     src="../src/images/icon-leaf.png"
                                     alt="leaf-icon"
                                     className="h-[20px] rotate-90 pl-2" />
-                                <p onLoad={() => displayPrice()}>{priceTree}</p>
+                                <p onLoad={(e) => displayPrice(e)}>{priceTree}</p>
                             </span>
                         </div>
                     )
