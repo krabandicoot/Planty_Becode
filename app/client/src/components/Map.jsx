@@ -26,7 +26,7 @@ export default function Map() {
   const { player } = useAuth();
 
   const iconTree = new L.Icon({
-    iconUrl: ("http://localhost:5173/src/images/icon-tree.png"),
+    iconUrl: ("https://planty.onrender.com/src/images/icon-tree.png"),
     iconSize: [20, 30],
     iconAnchor: [5, 30]
   });
