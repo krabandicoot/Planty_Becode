@@ -99,7 +99,7 @@ export default function Map() {
       zoom={15}
       scrollWheelZoom={true}
       preferCanvas
-      style={{ height: 78 + "vh" }}
+      style={{ height: 79 + "vh" }}
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> 
@@ -118,6 +118,7 @@ export default function Map() {
                     <AiOutlineInfoCircle className="ml-2" onClick={() => navigate(`/tree/${tree.name.replace(/\s+/g, '-')}`, { replace: true })} />
                   </div>
                   <p>Species: {tree.species}</p>
+                  <p>Value: {tree.price}</p>
                   <Link
                     className="underline text-DarkSpringGreen font-bold italic m-2"
                     to={{

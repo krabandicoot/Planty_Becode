@@ -370,3 +370,10 @@ button:focus-visible {
         height: 280px;
     }
 }
+
+@media screen and (min-width: 1024px) {
+    .map{
+        height: 90vh;
+
+    }
+}
