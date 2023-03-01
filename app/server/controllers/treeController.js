@@ -19,7 +19,7 @@ const displayComments = async (req, res) => {
     const treename = req.params;
     const name = treename.name;
     const nameCleaned = name.replaceAll('-', ' ');
-
+    console.log("This is nameCleaned :" + nameCleaned);
     const options = {
         allowDiskUse: true
     };
@@ -51,7 +51,10 @@ const getPrice = async (req, res) => {
 
     // Get tree infos :
     const { treename, username } = req.body;
+    console.log("This is treename :" + treename);
+
     const foundTree = await Tree.findOne({ name: treename }).exec();
+    console.log("This is foundtree :" + foundTree);
 
     let price = foundTree.price;
 
