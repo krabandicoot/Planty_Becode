@@ -109,6 +109,8 @@ export function SignUp() {
 
                 })
 
+            console.log(response?.data);
+
             // console.log(response?.accessToken);
             // console.log(JSON.stringify(response))
             setAuth(response?.data?.username);
@@ -122,11 +124,10 @@ export function SignUp() {
             navigate("/map", { replace: true });
 
         } catch (err) {
-            console.log(err);
             if (!err?.response) {
                 setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
+            } else if (err.response?.status === 400) {
+                setErrMsg('Username or Email taken');
             } else {
                 setErrMsg('Registration Failed')
             }
@@ -136,7 +137,7 @@ export function SignUp() {
 
 
     return (
-        <section className="signup__container-form relative -z-11 bg-zinc-200/[0.2] p-[20px] rounded-xl">
+        <section className="signup__container-form relative -z-11 bg-zinc-200/[0.2] p-[20px] rounded-xl md:w-1/2 md:bg-transparent">
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <form method="POST" className="signup_form" onSubmit={handleSubmit} onKeyDown={(e) => checkKeyDown(e)}>
                 {/* username */}
@@ -154,11 +155,11 @@ export function SignUp() {
                             aria-describedby="uidnote"
                             onFocus={() => setUsernameFocus(true)}
                             onBlur={() => setUsernameFocus(false)}
-                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
+                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
                             placeholder=" " />
                         <label
                             htmlFor="username"
-                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username
+                            className="peer-focus:font-medium absolute text-sm text-SmokyBlack duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username
                         </label>
                         <p id="uidnote" className={usernameFocus && username && !validUsername ? "instructions" : "offscreen"}>
                             <RiErrorWarningLine />
@@ -178,11 +179,11 @@ export function SignUp() {
                             onFocus={() => setEmailFocus(true)}
                             onBlur={() => setEmailFocus(false)}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
+                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
                             placeholder=" " />
                         <label
                             htmlFor="email"
-                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                            className="peer-focus:font-medium absolute text-sm text-SmokyBlack duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
                         <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
                             <RiErrorWarningLine />
                             Invalid email address<br />
@@ -201,7 +202,7 @@ export function SignUp() {
                             aria-describedby="pwdnote"
                             onFocus={() => setPasswordFocus(true)}
                             onBlur={() => setPasswordFocus(false)}
-                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
+                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
                             placeholder=" " />
                         <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
                             <RiErrorWarningLine />
@@ -209,7 +210,7 @@ export function SignUp() {
                         </p>
                         <label
                             htmlFor="password"
-                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Choose password
+                            className="peer-focus:font-medium absolute text-sm text-SmokyBlack duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Choose password
                         </label>
                         {/* button visibility password */}
                         <button type="button" onClick={() => setPasswordVisible(!passwordVisible)} className="absolute top-0 right-0 w-min"><FaEye /></button>
@@ -227,7 +228,7 @@ export function SignUp() {
                             aria-describedby="confirmnote"
                             onFocus={() => setMatchFocus(true)}
                             onBlur={() => setMatchFocus(false)}
-                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none dark:text-Magnolia dark:border-gray-600 dark:focus:border-Crayola/60 focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
+                            className="block py-2.5 px-0 w-full text-sm text-SmokyBlack bg-transparent border-0 border-b-[1px] border-zinc-200 appearance-none focus:outline-none focus:ring-0 focus:border-zinc-200 peer"
                             placeholder=" " />
                         <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
                             <RiErrorWarningLine />
@@ -235,26 +236,29 @@ export function SignUp() {
                         </p>
                         <label
                             htmlFor="floating_repeat_password"
-                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password
+                            className="peer-focus:font-medium absolute text-sm text-SmokyBlack duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-SmokyBlack peer-focus:dark:text-Magnolia peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password
                         </label>
                         {/* button visibility password */}
                         <button type="button" onClick={() => setMatchPasswordVisible(!matchPasswordVisible)} className="absolute top-0 right-0 w-min"><FaEye /></button>
                     </div>
                     {/* button choose color */}
-                    <button
-                        type="button"
-                        disabled={!validUsername || !validEmail || !validPassword || !validMatch ? true : false}
-                        onClick={handleClickVisibility}
-                        className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGreen">Next</button>
+                    <div className="flex justify-center mb-2">
+                        <button
+                            type="button"
+                            disabled={!validUsername || !validEmail || !validPassword || !validMatch ? true : false}
+                            onClick={handleClickVisibility}
+                            className="text-SmokyBlack bg-Crayola/40 hover:bg-Crayola focus:outline-none focus:ring-2 border-none focus:ring-Crayola font-medium rounded-3xl text-sm w-[215px] px-5 py-2.5 text-center dark:bg-Crayola dark:hover:bg-GreenPantum dark:focus:ring-DarkSpringGree ">Next</button>
+                    </div>
+
                 </div>
                 {/* picker Color */}
                 <div style={{ display: isShownPicker ? 'block' : 'none' }}>
                     <ColorPicker chooseColor={chooseColor} />
                 </div>
             </form>
-            <p style={{ display: isShownForm ? 'block' : 'none' }}>
-                Already registered?<br />
-                <Link to="/signin">Sign In</Link>
+            <p className="text-center text-sm" style={{ display: isShownForm ? 'block' : 'none' }}>
+                Already registered?
+                <Link to="/signin" className="text-GreenPantum font-semibold"> Sign In</Link>
             </p>
         </section>
     )

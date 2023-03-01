@@ -26,15 +26,10 @@ export function Tree() {
     const { singleTree, setSingleTree } = useAuth();
     let { name } = useParams();
 
-    const treename = singleTree.name;
-    console.log(treename);
-    const username = player.username;
-    console.log(username);
-
     const errRef = useRef();
 
     const [errMsg, setErrMsg] = useState("");
-    const [priceTree, setPriceTree] = useState();
+    const [priceTree, setPriceTree] = useState(singleTree.price);
     const [buyTree, setBuyTree] = useState();
     const [lockTree, setLockTree] = useState("");
     const [unlockTree, setUnlockTree] = useState("");
@@ -57,30 +52,48 @@ export function Tree() {
         }
         getSinglreTree();
 
+
         return () => { // we clean up function of the useEffect
             isMounted = false; // means we don't mount the component and 
             controller.abort();
         }
     }, [])
 
+    const treename = singleTree.name;
+    console.log(treename)
+    const username = player.username;
+
     // useEffect(() => {
-    //     const displayPrice = async () => {
-    //         try {
-    //             const response = await axios.get(PRICE_TREE_URL + name.replace(/\s+/g, '-'));
-    //             console.log(response.data);
-    //             setPriceTree(response.data);
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     }
-    //     displayPrice();
-    // }, [])
+
+    const displayPrice = async (e) => {
+        e.preventDefault();
+        try {
+            const configuration = {
+                method: 'post',
+                url: PRICE_TREE_URL + name,
+                data: {
+                    treename,
+                    username,
+                },
+                withCredentials: true,
+            }
+            const response = await axios(configuration);
+            console.log(response.data);
+            setPriceTree(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    displayPrice();
+
+    // }, [treename, username])
+
 
     const handleBuy = async () => {
         try {
             const configuration = {
                 method: 'post',
-                url: BUY_TREE_URL + name.replace(/\s+/g, '-'),
+                url: BUY_TREE_URL + name,
                 data: {
                     username,
                     treename
@@ -133,14 +146,22 @@ export function Tree() {
         }
     }
 
+    console.log(singleTree)
+
     return (
-        <section className="tree__comments relative pl-8 grid grid-rows-3 grid-cols-2 bg-Magnolia">
+        <section className="tree__comments h-[84vh] relative pl-8 grid grid-rows-3 grid-cols-2 bg-Magnolia">
 
             <div className="row-start-2 col-start-1 self-end capitalize">
                 <h1 className="text-2xl">{singleTree.name}</h1>
                 <div className="text-xs text-DarkSpringGreen leading-6">
                     <p>Owner : {singleTree.owner}</p>
                     <p>Species : {singleTree.species}</p>
+                    <p className="flex items-baseline gap-2 ">Value : {singleTree.price}
+                        <img
+                            src="../src/images/icon-leaf.png"
+                            alt="leaf-icon"
+                            className="h-[20px] rotate-90 self-center" />
+                    </p>
                     <Link
                         className="underline text-DarkSpringGreen font-bold italic"
                         to={{
@@ -198,7 +219,7 @@ export function Tree() {
                                     src="../src/images/icon-leaf.png"
                                     alt="leaf-icon"
                                     className="h-[20px] rotate-90 pl-2" />
-                                <p>{priceTree}</p>
+                                <p onLoad={(e) => displayPrice(e)}>{priceTree}</p>
                             </span>
                         </div>
                     )

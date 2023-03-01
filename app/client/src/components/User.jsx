@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { AiOutlineLogout } from "react-icons/ai";
-import { MdOutlineModeEditOutline } from "react-icons/md"
+import { MdDisabledByDefault, MdOutlineModeEditOutline } from "react-icons/md"
 import { useState, useRef, useEffect } from "react";
 
 import { Navigation } from 'swiper';
@@ -123,7 +123,7 @@ export function User() {
 
     return (
         <section className="ml-8 mr-8">
-            <div className="player__header flex justify-between mb-10">
+            <div className="player__header flex justify-between mb-10 md:max-w-xs">
                 <h2 className="player__header--title text-3xl w-1/2 flex flex-col">Welcome, <span className="self-end leading-6">{player.username}!</span>
                 </h2>
                 <div className="flex items-end gap-4">
@@ -159,7 +159,7 @@ export function User() {
                 }
             </Swiper>
 
-            <div className="form__container player__data text-sm mt-10 mb-28 relative">
+            <div className="form__container player__data text-sm mt-10 mb-28 relative md:max-w-md">
                 <div className="player__color absolute w-10 h-10 rounded-full top-[-10px] right-[-10px]"
                     style={{ backgroundColor: player.color }}>
                 </div>
@@ -171,19 +171,23 @@ export function User() {
                 </div>
                 <>
                     {edit === false ?
-                        <div className="player__info--container flex gap-3 text-xs">
-                            <div className="player__info--title flex flex-col gap-y-2">
-                                <p>Username</p>
-                                <p>Email</p>
-                                <p>Description</p>
-                            </div>
-                            <div className="text-SmokyBlack/50 player__info--data flex flex-col gap-y-2">
-                                <p>{player.username}</p>
-                                <p>{player.email}</p>
-                                <p>{player.bio}</p>
+                        <div>
+                            <div className="player__info--container flex gap-3 text-xs">
+                                <div className="player__info--title flex flex-col gap-y-2">
+                                    <p>Username</p>
+                                    <p>Email</p>
+                                    <p>Description</p>
+                                </div>
+                                <div className="text-SmokyBlack/50 player__info--data flex flex-col gap-y-2">
+                                    <p>{player.username}</p>
+                                    <p>{player.email}</p>
+                                    <p>{player.bio}</p>
 
+                                </div>
                             </div>
+                            <a onClick={handleDelete} className="text-Red/80 m-4">Delete Account</a>
                         </div>
+
                         :
                         <form method="post" onSubmit={editPlayer}>
                             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
@@ -202,6 +206,7 @@ export function User() {
                                         onChange={(e) => {
                                             setPlayer({ ...player, username: e.target.value })
                                         }}
+
                                         required
                                     />
                                     <input
@@ -218,7 +223,7 @@ export function User() {
                                         type="text"
                                         name="bio"
                                         id="bio"
-                                        className="min-h-[100px] min-w-[150px]"
+                                        className="min-h-[100px] min-w-[300px]"
                                         value={player.bio || ''}
                                         onChange={(e) => {
                                             setPlayer({ ...player, bio: e.target.value })
@@ -226,25 +231,27 @@ export function User() {
                                     />
                                 </div>
                             </div>
-                            <div className="flex gap-2">
+                            <div className="flex justify-center gap-2">
                                 <button
                                     type="button"
                                     onClick={() => {
                                         setPlayer(...player)
                                     }}
+                                    className="w-1/4 bg-Crayola"
                                 >
                                     Cancel
                                 </button>
                                 <button
-                                    type="submit">
+                                    type="submit"
+                                    className="w-1/4 bg-Crayola"
+                                >
                                     Save
                                 </button>
-
                             </div>
                         </form>
                     }
                 </>
-                <a onClick={handleDelete} className="text-Red/80 mt-2">Delete Account</a>
+
 
             </div >
         </section >
