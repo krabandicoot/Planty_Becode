@@ -28,8 +28,6 @@ export function Tree() {
     const { name } = useParams();
 
     console.log(name);
-    console.log(window.location.href);
-
 
     const errRef = useRef();
 
@@ -57,14 +55,13 @@ export function Tree() {
             }
         }
         getSinglreTree();
-
+        console.log(singleTree)
 
         return () => { // we clean up function of the useEffect
             isMounted = false; // means we don't mount the component and 
             controller.abort();
         }
     }, [])
-
     const treename = singleTree.name;
     const username = player.username;
 
