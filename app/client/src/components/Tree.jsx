@@ -26,8 +26,9 @@ export function Tree() {
     const { player } = useAuth();
     const { singleTree, setSingleTree } = useAuth();
     let { name } = useParams();
+    console.log(name);
 
-    console.log(window.location.href)
+    console.log(window.location.href);
 
 
     const errRef = useRef();
