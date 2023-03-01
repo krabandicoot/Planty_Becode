@@ -17,11 +17,14 @@ const getTree = async (req, res) => {
 const displayComments = async (req, res) => {
 
     try {
+
+        function replaceAll(string, search, replace) {
+            return string?.split(search).join(replace);
+        }
+
         const treename = req.params;
-        console.log("This is treename displayComment :", treename);
         const name = treename.name;
-        console.log("This is the name (not cleaned)", name);
-        const nameCleaned = name.replaceAll('-', ' ');
+        const nameCleaned = replaceAll(name,'-', ' ');
         console.log("This is nameCleaned :", nameCleaned);
 
         const options = {
@@ -346,9 +349,13 @@ const getLockPrice = async (req, res) => {
 // -------- Lock a tree
 const lockTree = async (req, res) => {
 
+    function replaceAll(string, search, replace) {
+        return string?.split(search).join(replace);
+    }
+
     const treename = req.params;
     const name = treename.name;
-    const nameCleaned = name.replaceAll('-', ' ');
+    const nameCleaned = replaceAll(name,'-', ' ');
     const foundTree = await Tree.findOne({ name: nameCleaned }).exec();
     const username = foundTree.owner;
     const player = await Player.findOne({ username: username }).exec();
@@ -444,9 +451,13 @@ const lockTree = async (req, res) => {
 // -------- Unlock tree :
 const unlockTree = async (req, res) => {
 
+    function replaceAll(string, search, replace) {
+        return string?.split(search).join(replace);
+    }
+
     const treename = req.params;
     const name = treename.name;
-    const nameCleaned = name.replaceAll('-', ' ');
+    const nameCleaned = replaceAll(name,'-', ' ');
     const foundTree = await Tree.findOne({ name: nameCleaned }).exec();
     const username = foundTree.owner;
     const price = foundTree.price;
