@@ -66,8 +66,8 @@ export function Tree() {
 
     // useEffect(() => {
 
-    const displayPrice = async (e) => {
-        e.preventDefault();
+    const displayPrice = async () => {
+        // e.preventDefault();
         try {
             const configuration = {
                 method: 'post',
@@ -114,7 +114,7 @@ export function Tree() {
     // Lock the tree
 
     const handleLock = async (e) => {
-        e.preventDefault();
+        // e.preventDefault();
 
         try {
             const response = await axios.get(LOCK_TREE_URL + name);
@@ -135,7 +135,7 @@ export function Tree() {
 
     // Unlock the tree
     const handleUnlock = async (e) => {
-        e.preventDefault();
+        // e.preventDefault();
 
         try {
             const response = await axios.get(UNLOCK_TREE_URL + name);
@@ -219,7 +219,7 @@ export function Tree() {
                                         src="../../images/icon-leaf.png"
                                         alt="leaf-icon"
                                         className="h-[20px] rotate-90 pl-2" />
-                                    <p onLoad={(e) => displayPrice(e)}>{priceTree}</p>
+                                    <p onLoad={() => displayPrice()}>{priceTree}</p>
                                 </span>
                             </div>
                         )
