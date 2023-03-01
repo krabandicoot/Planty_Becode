@@ -17,9 +17,11 @@ const getTree = async (req, res) => {
 const displayComments = async (req, res) => {
 
     const treename = req.params;
+    console.log("This is treename displayComment :" + treename);
     const name = treename.name;
     const nameCleaned = name.replaceAll('-', ' ');
     console.log("This is nameCleaned :" + nameCleaned);
+
     const options = {
         allowDiskUse: true
     };
