@@ -27,6 +27,9 @@ export function Tree() {
     const { singleTree, setSingleTree } = useAuth();
     let { name } = useParams();
 
+    console.log(window.location.href)
+
+
     const errRef = useRef();
 
     const [errMsg, setErrMsg] = useState("");
