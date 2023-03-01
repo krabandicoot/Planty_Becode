@@ -25,9 +25,9 @@ const UNLOCK_TREE_URL = "/api/tree/unlock/"  // + insert-tree-name
 export function Tree() {
     const { player } = useAuth();
     const { singleTree, setSingleTree } = useAuth();
-    let { name } = useParams();
-    console.log(name);
+    const { name } = useParams();
 
+    console.log(name);
     console.log(window.location.href);
 
 
@@ -65,7 +65,6 @@ export function Tree() {
     }, [])
 
     const treename = singleTree.name;
-    console.log(treename)
     const username = player.username;
 
     // useEffect(() => {
@@ -83,7 +82,6 @@ export function Tree() {
                 withCredentials: true,
             }
             const response = await axios(configuration);
-            console.log(response.data);
             setPriceTree(response.data);
         } catch (err) {
             console.log(err);
@@ -107,7 +105,6 @@ export function Tree() {
             }
 
             const response = await axios(configuration);
-            console.log(response.data);
             setBuyTree(response.data);
             window.location.reload(false);
         } catch (err) {
@@ -122,12 +119,10 @@ export function Tree() {
 
         try {
             const response = await axios.get(LOCK_TREE_URL + name);
-            console.log(response.data);
             setLockTree(response.data);
             window.location.reload(false);
 
         } catch (err) {
-            console.log(err);
             if (!err?.response) {
                 setErrMsg("Oops, the server is not responding");
             } else if (err.response?.status === 204) {

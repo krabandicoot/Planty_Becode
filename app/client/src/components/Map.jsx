@@ -70,7 +70,6 @@ export default function Map() {
         }
 
         const response = await axios(configuration);
-        console.log(response.data);
         window.location.reload(false);
 
       } catch (err) {

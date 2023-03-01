@@ -48,7 +48,6 @@ export function User() {
         const getTreesByOwner = async () => {
             try {
                 const response = await axios.get(USER_TREES_URL + auth);
-                console.log(response.data)
                 isMounted && setUserTrees(response.data[0].trees);
             } catch (err) {
                 console.log(err);
@@ -72,9 +71,6 @@ export function User() {
 
         setAuth(null);
         localStorage.clear();
-
-        console.log("you are logged out");
-
         navigate(to, { replace: true });
     };
 
@@ -98,7 +94,6 @@ export function User() {
             setEdit(false);
 
         } catch (err) {
-            console.log(err)
             if (!err?.response) {
                 setErrMsg("No server Response");
             } else if (err.response?.status === 400) {
