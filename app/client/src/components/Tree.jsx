@@ -159,7 +159,7 @@ export function Tree() {
                         <p>Species : {singleTree.species}</p>
                         <p className="flex items-baseline gap-2 ">Value : {singleTree.price}
                             <img
-                                src="../../public/icon-leaf.png"
+                                src="/icon-leaf.png"
                                 alt="leaf-icon"
                                 className="h-[20px] rotate-90 self-center" />
                         </p>
@@ -172,7 +172,7 @@ export function Tree() {
                     </div>
                 </div>
                 <img
-                    src="../../public/icon-tree.png"
+                    src="/icon-tree.png"
                     alt="tree picture"
                     className="absolute col-start-2 cropped-image fill-image" />
                 <div className="flex flex-col col-start-1 row-start-3 row-end-4 self-center">
@@ -216,7 +216,7 @@ export function Tree() {
                                 </button>
                                 <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-[10px]">
                                     <img
-                                        src="../../public/icon-leaf.png"
+                                        src="/icon-leaf.png"
                                         alt="leaf-icon"
                                         className="h-[20px] rotate-90 pl-2" />
                                     <p onLoad={() => displayPrice()}>{priceTree}</p>
