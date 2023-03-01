@@ -25,7 +25,7 @@ const UNLOCK_TREE_URL = "/api/tree/unlock/"  // + insert-tree-name
 export function Tree() {
     const { player } = useAuth();
     const { singleTree, setSingleTree } = useAuth();
-    const { name } = useParams();
+    const { name } = useParams("");
 
     console.log(name);
 
