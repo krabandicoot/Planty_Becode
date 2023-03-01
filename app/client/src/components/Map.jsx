@@ -26,7 +26,7 @@ export default function Map() {
   const { player } = useAuth();
 
   const iconTree = new L.Icon({
-    iconUrl: ("https://planty.onrender.com/images/icon-tree.png"),
+    iconUrl: ("https://planty.onrender.com/public/icon-tree.png"),
     iconSize: [20, 30],
     iconAnchor: [5, 30]
   });
@@ -116,7 +116,7 @@ export default function Map() {
                   <p>Species: {tree.species}</p>
                   <div className="flex items-center">
                     <p>Value: {tree.price}</p>
-                    <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
+                    <img src="../../public/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
                   </div>
                   <Link
                     className="underline text-DarkSpringGreen font-bold italic m-2"
@@ -141,7 +141,7 @@ export default function Map() {
                           <div className="priceTree flex justify-center m-2">
                             <button className="buttonBuy flex flex-row justify-around items-center w-[150px] text-[12px] text-SmokyBlack" onClick={() => navigate(`/tree/${tree.name}`, { replace: true })}>Buy tree?
                               <div className="buttonBuy_price flex items-center">
-                                <img src="../../images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
+                                <img src="../../public/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
                               </div>
                             </button>
                           </div>
@@ -155,7 +155,7 @@ export default function Map() {
                             onClick={(e) => { setTreeName(tree.name); handleBuy(e) }}>Buy tree
                             <div className="buttonBuy_price flex items-center">
                               {tree.price}
-                              <img src="../../images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
+                              <img src="../../public/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
                             </div>
                           </button>
                         </div>

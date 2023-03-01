@@ -51,9 +51,9 @@ export function Leaderboard() {
                                             style={{ backgroundColor: player.color }}>
                                         </div>
                                         <p className="w-10">{player?.username}</p>
-                                        <img src="../../images/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
+                                        <img src="../../public/icon-leaf.png" alt="Leaf score icon" className="h-[20px]" />
                                         <p>{player?.leafs}</p>
-                                        {/* <img src="../src/images/icon-tree.png" alt="Leaf score icon" className="h-[20px]" />
+                                        {/* <img src="../../public/icon-tree.png" alt="Leaf score icon" className="h-[20px]" />
                                         <p> {userTrees?.length}</p> */}
                                     </li>)}
                         </ul>
