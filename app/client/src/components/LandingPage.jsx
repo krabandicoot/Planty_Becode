@@ -17,8 +17,7 @@ export function LandingPage() {
           </Link>
         </button>
         <p className="landingText rounded-lg p-5 mb-10 text-xs italic md:w-[300px]">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
-          architecto tempore cum quia aperiam, soluta tempora?
+        "In a forest of a hundred thousand trees, no two leaves are alike."
         </p>
       </div>
     </section >
