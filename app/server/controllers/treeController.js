@@ -17,36 +17,36 @@ const getTree = async (req, res) => {
 const displayComments = async (req, res) => {
 
     try {
-    const treename = req.params;
-    console.log("This is treename displayComment :" + treename);
-    const name = treename.name;
-    const nameCleaned = name.replaceAll('-', ' ');
-    console.log("This is nameCleaned :" + nameCleaned);
+        const treename = req.params;
+        console.log("This is treename displayComment :", treename);
+        const name = treename.name;
+        const nameCleaned = name.replaceAll('-', ' ');
+        console.log("This is nameCleaned :", nameCleaned);
 
-    const options = {
-        allowDiskUse: true
-    };
+        const options = {
+            allowDiskUse: true
+        };
 
-    const pipeline = [
-        {
-            $lookup: {
-                "from": "comments",
-                "localField": "name",
-                "foreignField": "treeInfo.treeName",
-                "as": "comments"
+        const pipeline = [
+            {
+                $lookup: {
+                    "from": "comments",
+                    "localField": "name",
+                    "foreignField": "treeInfo.treeName",
+                    "as": "comments"
+                }
+            },
+            {
+                $match: {
+                    "name": nameCleaned
+                }
             }
-        },
-        {
-            $match: {
-                "name": nameCleaned
-            }
-        }
-    ];
+        ];
 
-    const cursor = await Tree.aggregate(pipeline, options).exec();
+        const cursor = await Tree.aggregate(pipeline, options).exec();
 
-    res.status(200).json(cursor);
-    console.log(cursor);
+        res.status(200).json(cursor);
+        console.log(cursor);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }   
