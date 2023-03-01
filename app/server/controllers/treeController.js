@@ -20,6 +20,7 @@ const displayComments = async (req, res) => {
         const treename = req.params;
         console.log("This is treename displayComment :", treename);
         const name = treename.name;
+        console.log("This is the name (not cleaned)", name);
         const nameCleaned = name.replaceAll('-', ' ');
         console.log("This is nameCleaned :", nameCleaned);
 
