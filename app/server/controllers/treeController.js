@@ -16,6 +16,7 @@ const getTree = async (req, res) => {
 // -------- Show the tree's comment
 const displayComments = async (req, res) => {
 
+    try {
     const treename = req.params;
     console.log("This is treename displayComment :" + treename);
     const name = treename.name;
@@ -46,6 +47,9 @@ const displayComments = async (req, res) => {
 
     res.status(200).json(cursor);
     console.log(cursor);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }   
 }
 
 // -------- Get price of a tree
