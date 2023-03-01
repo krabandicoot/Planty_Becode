@@ -30,7 +30,7 @@ export function Header() {
         </div>
         {/* Score */}
         <div className="header__user--score flex gap-1">
-          <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="h-[15px]" />
+          <img src="../../images/icon-leaf.png" alt="Leaf score icon" className="h-[15px]" />
           <p>{player.leafs}</p>
         </div>
       </div>

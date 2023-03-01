@@ -130,7 +130,7 @@ export function User() {
                 </h2>
                 <div className="flex items-end gap-4">
                     <div className="bg-Magnolia player__header--score flex gap-1 p-1 rounded-md text-xs items-center">
-                        <img src="../src/images/icon-leaf.png" alt="Leaf score icon" className="rotate-90 h-[20px]" />
+                        <img src="../../images/icon-leaf.png" alt="Leaf score icon" className="rotate-90 h-[20px]" />
                         <p className="border-l border-solid border-SmokyBlack pl-2 pr-2">{player.leafs}</p>
                     </div>
                     <a className="bg-Red/80 w-min rounded-full p-1 player__header--signout flex h-min" onClick={handleLogout}>
@@ -154,7 +154,7 @@ export function User() {
                                 key={id}
                                 onClick={() => navigate(`/tree/${userTree.name.replace(/\s+/g, '-')}`, { replace: true })}>
                                 <p>{userTree.name}</p>
-                                <img src="../src/images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
+                                <img src="../../images/icon-tree.png" alt="Tree Picture" className="w-[50px]" />
                             </SwiperSlide>
                         )
                     : <p>No Trees yet</p>
