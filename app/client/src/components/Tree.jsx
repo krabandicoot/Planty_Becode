@@ -51,7 +51,7 @@ export function Tree() {
             try {
                 const response = await axios.get(SINGLE_TREE_URL + name);
                 isMounted && setSingleTree(response.data[0]);
-                console.log(response.data[0]);
+                console.log(response.data);
             } catch (err) {
                 console.log(err);
             }
