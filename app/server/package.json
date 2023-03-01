@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A web-based game of conquests in Liege",
   "main": "server.js",
+  "engines": {
+    "node": "19.5.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/krabandicoot/Planty_Becode.git"
