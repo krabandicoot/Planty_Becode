@@ -37,11 +37,11 @@ export function Comments() {
     }
 
     return (
-        <section className="bg-Magnolia drop-shadow pl-8 rounded-t">
+        <section className=" bg-Magnolia drop-shadow pl-8 rounded-t">
             {/* Title */}
             <a
                 className="focus:text-SmokyBlack hover:text-SmokyBlack"
-                onClick={() => { comments === false ? setComments(true) : setComments(false) }}>
+                onClick={() => { comments === true ? setComments(true) : setComments(false) }}>
                 <h4 className="text-center p-1">Comments</h4>
             </a>
             {/* Comments Section */}

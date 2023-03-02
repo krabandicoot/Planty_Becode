@@ -16,7 +16,6 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
     const [players, setPlayers] = useState();
     const [player, setPlayer] = useState({});
 
-    const [trees, setTrees] = useState([]);
     const [singleTree, setSingleTree] = useState([]);
     const [userTrees, setUserTrees] = useState([]);
 
@@ -33,16 +32,6 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
             }
         }
         getPlayer();
-
-        const getTrees = async () => {
-            try {
-                const response = await axios.get(TREES_URL);
-                isMounted && setTrees(response.data);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        getTrees();
 
         const getTreesByOwner = async () => {
             try {

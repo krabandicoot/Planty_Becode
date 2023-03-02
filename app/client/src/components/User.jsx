@@ -122,7 +122,7 @@ export function User() {
     }
 
     return (
-        <section className="ml-8 mr-8">
+        <section className="h-screen ml-8 mr-8">
             <div className="player__header flex justify-between mb-10 md:max-w-xs">
                 <h2 className="player__header--title text-3xl w-1/2 flex flex-col">Welcome, <span className="self-end leading-6">{player.username}!</span>
                 </h2>
