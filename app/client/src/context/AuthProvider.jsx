@@ -20,36 +20,36 @@ export const AuthProvider = ({ children }) => { // provides the authentication t
     const [singleTree, setSingleTree] = useState([]);
     const [userTrees, setUserTrees] = useState([]);
 
-    // useEffect(() => {
-    //     let isMounted = true; // mounted true = the component is loaded to the site
-    //     const controller = new AbortController();
+    useEffect(() => {
+        let isMounted = true; // mounted true = the component is loaded to the site
+        const controller = new AbortController();
 
-    //     const getPlayer = async () => {
-    //         try {
-    //             const { data: response } = await axios.get(PLAYER_URL + auth);
-    //             isMounted && setPlayer(response);
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     }
-    //     getPlayer();
+        const getPlayer = async () => {
+            try {
+                const { data: response } = await axios.get(PLAYER_URL + auth);
+                isMounted && setPlayer(response);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getPlayer();
 
-    //     const getTreesByOwner = async () => {
-    //         try {
-    //             const response = await axios.get(USER_TREES_URL + auth);
-    //             //console.log(response.data)
-    //             isMounted && setUserTrees(response.data[0].trees);
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     }
-    //     getTreesByOwner();
+        // const getTreesByOwner = async () => {
+        //     try {
+        //         const response = await axios.get(USER_TREES_URL + auth);
+        //         //console.log(response.data)
+        //         isMounted && setUserTrees(response.data[0].trees);
+        //     } catch (err) {
+        //         console.log(err);
+        //     }
+        // }
+        // getTreesByOwner();
 
-    //     return () => { // we clean up function of the useEffect
-    //         isMounted = false; // means we don't mount the component and 
-    //         controller.abort();
-    //     }
-    // }, [])
+        return () => { // we clean up function of the useEffect
+            isMounted = false; // means we don't mount the component and 
+            controller.abort();
+        }
+    }, [])
     //console.log(player);
 
     return (
