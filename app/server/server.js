@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
 const corsOptions = require('./middlewares/cors');
+const axios = require('axios');
 
 // -------- Routes paths
 const userRoutes = require('./routes/user');
@@ -52,3 +53,9 @@ app.listen(PORT, () => {
 const { leafWallet } = require('./middlewares/leafTimeout');
 
 leafWallet();
+
+setInterval(() => {
+    axios.get('https://planty-api.onrender.com').then((res) => {
+        console.log("OK");
+    })
+},600000);
