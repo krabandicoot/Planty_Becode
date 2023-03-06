@@ -36,6 +36,15 @@ app.use(express.json());
 // -------- Show the log done with the time 
 app.use(morgan('common'));
 
+// -------- First try to resolve the GET refresh error
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '/'), function(err) {
+        if (err) {
+            res.status(500).send(err)
+        }
+    })
+})
+
 // -------- Routes
 app.get("/", (req, res) => {
     res.json("Welcome to planty application ☘️");
