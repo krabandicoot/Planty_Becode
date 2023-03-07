@@ -30,7 +30,7 @@ database.once('connected', () => {
 });
 
 // app.use(cors(corsOptions));
-app.use(cors({ origin: "https://planty.onrender.com", credentials: true }));
+app.use(cors({ origin: "https://planty-app.onrender.com", credentials: true }));
 app.use(express.json());
 
 // -------- Show the log done with the time 
@@ -53,9 +53,3 @@ app.listen(PORT, () => {
 const { leafWallet } = require('./middlewares/leafTimeout');
 
 leafWallet();
-
-setInterval(() => {
-    axios.get('https://planty-api.onrender.com').then((res) => {
-        console.log("OK");
-    })
-},600000);
