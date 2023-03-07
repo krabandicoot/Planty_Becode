@@ -1,26 +1,26 @@
-import useAuth from "../hooks/useAuth"
+import useAuth from "../hooks/useAuth";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { IoLockClosed } from "react-icons/io5";
 import { MdOutlineDone } from "react-icons/md";
 import { useEffect, useState, useRef } from "react";
-import { Comments } from "./Comments"
+import { Comments } from "./Comments";
 
 import axios from "../api/axios";
 
 // Get tree **
 const SINGLE_TREE_URL = "/api/tree/"; // + insert tree name
 
-// Buy a tree ** 
-const BUY_TREE_URL = "/api/tree/buy/" // + insert-tree-name
+// Buy a tree **
+const BUY_TREE_URL = "/api/tree/buy/"; // + insert-tree-name
 
-// Get price of a tree ** 
-const PRICE_TREE_URL = "/api/tree/price/"  // + insert-tree-name
+// Get price of a tree **
+const PRICE_TREE_URL = "/api/tree/price/"; // + insert-tree-name
 
-// Lock a tree ** 
-const LOCK_TREE_URL = "/api/tree/lock/"  // + insert-tree-name
+// Lock a tree **
+const LOCK_TREE_URL = "/api/tree/lock/"; // + insert-tree-name
 
-// Unlock a tree ** 
-const UNLOCK_TREE_URL = "/api/tree/unlock/"  // + insert-tree-name
+// Unlock a tree **
+const UNLOCK_TREE_URL = "/api/tree/unlock/"; // + insert-tree-name
 
 export function Tree() {
     const { player } = useAuth();
@@ -53,15 +53,16 @@ export function Tree() {
             } catch (err) {
                 console.log(err);
             }
-        }
+        };
         getSinglreTree();
-        console.log(singleTree)
+        console.log(singleTree);
 
-        return () => { // we clean up function of the useEffect
-            isMounted = false; // means we don't mount the component and 
+        return () => {
+            // we clean up function of the useEffect
+            isMounted = false; // means we don't mount the component and
             controller.abort();
-        }
-    }, [])
+        };
+    }, []);
     const treename = singleTree.name;
     const username = player.username;
 
@@ -71,44 +72,42 @@ export function Tree() {
         // e.preventDefault();
         try {
             const configuration = {
-                method: 'post',
+                method: "post",
                 url: PRICE_TREE_URL + name,
                 data: {
                     treename,
                     username,
                 },
                 withCredentials: true,
-            }
+            };
             const response = await axios(configuration);
             setPriceTree(response.data);
         } catch (err) {
             console.log(err);
         }
-    }
+    };
     displayPrice();
 
     // }, [treename, username])
 
-
     const handleBuy = async () => {
         try {
             const configuration = {
-                method: 'post',
+                method: "post",
                 url: BUY_TREE_URL + name,
                 data: {
                     username,
-                    treename
+                    treename,
                 },
                 withCredentials: true,
-            }
+            };
 
             const response = await axios(configuration);
             setBuyTree(response.data);
-            window.location.reload(false);
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 
     // Lock the tree
 
@@ -118,8 +117,6 @@ export function Tree() {
         try {
             const response = await axios.get(LOCK_TREE_URL + name);
             setLockTree(response.data);
-            window.location.reload(false);
-
         } catch (err) {
             if (!err?.response) {
                 setErrMsg("Oops, the server is not responding");
@@ -128,7 +125,7 @@ export function Tree() {
             }
             errRef.current.focus();
         }
-    }
+    };
 
     // Unlock the tree
     const handleUnlock = async (e) => {
@@ -138,13 +135,12 @@ export function Tree() {
             const response = await axios.get(UNLOCK_TREE_URL + name);
             console.log(response.data);
             setUnlockTree(response.data);
-            window.location.reload(false);
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 
-    console.log(singleTree)
+    console.log(singleTree);
 
     return (
         <section className="tree__comments h-screen  bg-Magnolia ">
@@ -154,31 +150,37 @@ export function Tree() {
                     <div className="text-xs text-DarkSpringGreen leading-6">
                         <p>Owner : {singleTree.owner}</p>
                         <p>Species : {singleTree.species}</p>
-                        <p className="flex items-baseline gap-2 ">Value : {singleTree.price}
+                        <p className="flex items-baseline gap-2 ">
+                            Value : {singleTree.price}
                             <img
                                 src="/icon-leaf.png"
                                 alt="leaf-icon"
-                                className="h-[20px] rotate-90 self-center" />
+                                className="h-[20px] rotate-90 self-center"
+                            />
                         </p>
                         <Link
                             className="underline text-DarkSpringGreen font-bold italic"
                             to={{
-                                pathname: singleTree.wikilink
+                                pathname: singleTree.wikilink,
                             }}
-                            target="_blank">Wikipedia</Link>
+                            target="_blank"
+                        >
+                            Wikipedia
+                        </Link>
                     </div>
                 </div>
                 <img
                     src="/icon-tree.png"
                     alt="tree picture"
-                    className="absolute col-start-2 cropped-image fill-image" />
+                    className="absolute col-start-2 cropped-image fill-image"
+                />
                 <div className="flex flex-col col-start-1 row-start-3 row-end-4 self-center">
-
-                    {singleTree.value === "unavailable" && singleTree.owner === player.username ?
+                    {singleTree.value === "unavailable" &&
+                    singleTree.owner === player.username ? (
                         <div div className="button__purchased flex gap-2">
-                            <button
-                                className="absolute h-10 w-[150px] text-SmokyBlack"
-                            >Your Tree</button>
+                            <button className="absolute h-10 w-[150px] text-SmokyBlack">
+                                Your Tree
+                            </button>
                             <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-green-800">
                                 <MdOutlineDone />
                             </span>
@@ -188,45 +190,50 @@ export function Tree() {
                             >
                                 <IoLockClosed />
                             </button>
-                            <p ref={errRef} className={"errMsg" ? "errmsg" : "offscreen"}>{errMsg}</p>
+                            <p
+                                ref={errRef}
+                                className={"errMsg" ? "errmsg" : "offscreen"}
+                            >
+                                {errMsg}
+                            </p>
                         </div>
-                        :
-                        (singleTree.value === "locked" && singleTree.owner === player.username ?
-                            <div className="button-locked flex gap-2">
-                                <button className="absolute h-10 w-[150px] bg-Grey/40 text-SmokyBlack">Locked</button>
-                                <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey/50 flex flex-col justify-center items-center">
-                                    <IoLockClosed />
-                                </span>
-                                <a
-                                    className="text-xs text-DarkSpringGreen relative top-0 left-[110px] flex items-center"
-                                    onClick={handleUnlock}>
-                                    Unlock
-                                </a>
-                            </div>
-                            :
-                            <div div className="button__buy">
-                                <button
-                                    className="absolute h-10 w-[150px] text-SmokyBlack"
-                                    onClick={handleBuy}
-                                >
-                                    Buy Tree
-                                </button>
-                                <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-[10px]">
-                                    <img
-                                        src="/icon-leaf.png"
-                                        alt="leaf-icon"
-                                        className="h-[20px] rotate-90 pl-2" />
-                                    <p onLoad={() => displayPrice()}>{priceTree}</p>
-                                </span>
-                            </div>
-                        )
-                    }
-
+                    ) : singleTree.value === "locked" &&
+                      singleTree.owner === player.username ? (
+                        <div className="button-locked flex gap-2">
+                            <button className="absolute h-10 w-[150px] bg-Grey/40 text-SmokyBlack">
+                                Locked
+                            </button>
+                            <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Grey/50 flex flex-col justify-center items-center">
+                                <IoLockClosed />
+                            </span>
+                            <a
+                                className="text-xs text-DarkSpringGreen relative top-0 left-[110px] flex items-center"
+                                onClick={handleUnlock}
+                            >
+                                Unlock
+                            </a>
+                        </div>
+                    ) : (
+                        <div div className="button__buy">
+                            <button
+                                className="absolute h-10 w-[150px] text-SmokyBlack"
+                                onClick={handleBuy}
+                            >
+                                Buy Tree
+                            </button>
+                            <span className="relative top-0 left-[110px] w-10 h-10 rounded-full bg-Crayola/80 flex flex-col justify-center items-center text-[10px]">
+                                <img
+                                    src="/icon-leaf.png"
+                                    alt="leaf-icon"
+                                    className="h-[20px] rotate-90 pl-2"
+                                />
+                                <p onLoad={() => displayPrice()}>{priceTree}</p>
+                            </span>
+                        </div>
+                    )}
                 </div>
-
             </div>
             <Comments />
-        </section >
-
-    )
+        </section>
+    );
 }
