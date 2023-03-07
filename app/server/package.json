@@ -4,7 +4,7 @@
   "description": "A web-based game of conquests in Liege",
   "main": "server.js",
   "engines": {
-    "node": "18.x"
+    "node": "17.x"
   },
   "repository": {
     "type": "git",
