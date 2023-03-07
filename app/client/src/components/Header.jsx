@@ -5,6 +5,8 @@ import { AiOutlineUser } from "react-icons/ai";
 import useAuth from "../hooks/useAuth";
 import { useEffect } from "react";
 
+const PLAYER_URL = "/api/account/username/";
+
 export function Header() {
     const { auth } = useAuth();
     const { player, setPlayer } = useAuth();
