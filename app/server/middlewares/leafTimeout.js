@@ -17,7 +17,7 @@ const addLeafs = async (username) => {
       allowDiskUse: false,
     };
 
-    const newLeafAmount = Math.floor(leafAmount + leafGained);
+    const newLeafAmount = Math.floor(leafAmount + leafGained / 2);
 
     console.log(newLeafAmount);
     console.log(player._id);
