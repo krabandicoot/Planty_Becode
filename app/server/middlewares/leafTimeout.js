@@ -19,6 +19,8 @@ const addLeafs = async (username) => {
 
     const newLeafAmount = Math.floor(leafAmount + leafGained);
 
+    console.log(newLeafAmount);
+    console.log(player._id);
     // Inject new amount in player
     const updateLeafPlayer = await Player.updateOne(
       { _id: player._id },
