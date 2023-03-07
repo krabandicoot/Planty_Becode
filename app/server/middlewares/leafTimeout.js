@@ -24,7 +24,9 @@ const addLeafs = async (username) => {
       { _id: player._id },
       { $set: { leafs: newLeafAmount } }
     );
-
+    updateLeafPlayer.then((res) => {
+      console.log(res);
+    });
     return updateLeafPlayer;
   } catch (err) {
     console.log(err);

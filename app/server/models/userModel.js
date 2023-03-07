@@ -79,7 +79,6 @@ userSchema.statics.signup = async function (username, email, password, color) {
   const attributeTree = await Tree.getThree(username);
   // Attribute the player leaf in his wallet as he signed up
   addLeafs(username);
-  console.log(addLeafs(username));
 
   return user, player;
 };
