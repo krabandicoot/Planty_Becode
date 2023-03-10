@@ -4,8 +4,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
-const corsOptions = require('./middlewares/cors');
-const axios = require('axios');
 
 // -------- Routes paths
 const userRoutes = require('./routes/user');
@@ -14,8 +12,9 @@ const treeRoutes = require('./routes/tree');
 const commentRoutes = require('./routes/comment');
 
 const app = express();
-const PORT = process.env.NODE_DOCKER_PORT;
+const PORT = process.env.NODE_PORT;
 const mongoString = process.env.DB_URL;
+const FRONT_HOST = process.env.FRONTEND_LOCAHOST; 
 
 // --------- connect to DB 
 mongoose.connect(mongoString);
@@ -30,7 +29,7 @@ database.once('connected', () => {
 });
 
 // app.use(cors(corsOptions));
-app.use(cors({ origin: "https://planty.onrender.com", credentials: true }));
+app.use(cors({ origin: FRONT_HOST, credentials: true }));
 app.use(express.json());
 
 // -------- Show the log done with the time 
@@ -53,9 +52,3 @@ app.listen(PORT, () => {
 const { leafWallet } = require('./middlewares/leafTimeout');
 
 leafWallet();
-
-setInterval(() => {
-    axios.get('https://planty-api.onrender.com').then((res) => {
-        console.log("OK");
-    })
-},600000);
