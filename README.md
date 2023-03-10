@@ -3,7 +3,7 @@
   <img src="./public/banner.png" width="800" alt="banner idle game planty">
 </p>
 <p align="center">
-<img src=" 	https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React logo" title="React" height="25" />
+<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React logo" title="React" height="25" />
 <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind logo" title="Tailwind" height="25" />
 <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge" alt="Express logo" title="Express.js" height="25" />
 <img src="https://img.shields.io/badge/Node.js-282C34?logo=node.js&logoColor=339933" alt="Node.js logo" title="Node.js" height="25" />
@@ -12,17 +12,17 @@
 _The idea for the project has been elaborate by the BeCode.org training._
 
 ## 🌱 Project description
->Planty is a MERN(Mongo, Express, React, Node.js) stack Web Application. It's an IDLE based in Liège/Luik. The purpose is to collect trees existing in the city and become the biggest owner on the map by buying and locking every trees available.
+>Planty is a MERN (Mongo, Express, React, Node.js) stack Web Application. It's an IDLE based in Liège/Luik. The purpose is to collect trees existing in the city and become the biggest owner on the map by buying and locking every trees available.
 The player receives a wallet with leafs(the game money) at the beginning and this wallet decreases and increase throughout the game. More explanation in the **[walkthrough](#walk)** .  
 
 ## Table of content
 
 
-1. **[Techs used](#tech)**<br>
-2. **[Walkthrough of the game](#walk)**<br>
-3. **[How to run the project](#run)**<br>
-4. **[The Project Team ](#team)**<br>
-5. **[Credits](#credits)**<br>
+**1. [Techs used](#tech)**<br>
+**2. [Walkthrough of the game](#walk)**<br>
+**3. [How to run the project](#run)**<br>
+**4. [The Project Team ](#team)**<br>
+**5. [Credits](#credits)**<br>
 
 <a name="tech"></a>
 
@@ -106,7 +106,7 @@ As the player logs in, he arrives on the map. He can wander around to buy tree a
 For more precision on the game mechanics here the [Backend repository](https://github.com/krabandicoot/Planty_Backend).
 
 <p align="center">
-  <img src="./public/leaderboard" width="360" alt="Preview of the user's profile">
+  <img src="./public/leaderboard.png" width="360" alt="Preview of leaderboard">
 </p>
 
 Finally, you can check the scores status of all the players in the leaderboard, to know it you are a good conqueror. 
@@ -154,8 +154,8 @@ Once the server run, check the locahost your receive with vite on the client ter
 
 ## 🤝 Team 
 
-- Jade Muratet | Frontend | [LinkedIn](https://www.linkedin.com/in/jademuratet/) | Frontend |[GitHub](https://github.com/TreshMiralissa)
-- Lisa Mazzarisi | Frontend | [LinkedIn](https://www.linkedin.com/in/lisa-mazzarisi/) |[GitHub](https://github.com/lilouMazzarisi)
+- Jade Muratet | Frontend | [LinkedIn](https://www.linkedin.com/in/jademuratet/) | [GitHub](https://github.com/TreshMiralissa)
+- Lisa Mazzarisi | Frontend | [LinkedIn](https://www.linkedin.com/in/lisa-mazzarisi/) | [GitHub](https://github.com/lilouMazzarisi)
 - Danaé Grosjean | Backend | [LinkedIn](linkedin.com/in/danae-grosjean/) | [GitHub](https://github.com/Da-nae)
 - Khadja Paux | Backend | [LinkedIn](https://www.linkedin.com/in/khadja-paux/) | [GitHub](https://github.com/krabandicoot)
 
@@ -168,4 +168,4 @@ The logo was made by [Sheikh Sohel](https://lottiefiles.com/sheikhsohel)
 
 Design comes from [Freepik](https://fr.freepik.com/vecteurs-libre/fond-paysage-automne-plat_5138058.htm#page=3&query=paysage%20automne&position=30&from_view=search&track=ais) and have been modified for our color palette. 
 
-Special thanks to Luna Muylkens |[GitHub](https://github.com/LunashaGit) | For helping us debugging and optimize for the deployment. 
+Special thanks to Luna Muylkens | [GitHub](https://github.com/LunashaGit) | For helping us debugging and optimize for the deployment. 
